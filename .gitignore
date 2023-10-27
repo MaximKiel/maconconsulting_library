@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### Local Properties ###
-.properties
-.sql
+src/main/resources/*.properties
+src/main/resources/*.sql
