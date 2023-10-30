@@ -1,24 +1,48 @@
 package ru.maconconsulting.library.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
+@Entity
+@Table(name = "project")
 public class Project extends AbstractBasedEntity {
 
+    @Column(name = "number")
+    @NotNull
     private Integer number;
 
+    @Column(name = "year")
+    @NotNull
+    private Integer year;
+
+    @Column(name = "title")
+    @NotBlank
     private String title;
 
+    @Column(name = "countries")
+    @NotNull
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> countries;
 
+    @Column(name = "regions")
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> regions;
 
+    @Column(name = "towns")
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> towns;
 
+    @Column(name = "segments")
+    @NotNull
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> segments;
 
+    @Column(name = "type")
+    @NotNull
     private String type;
-
-    private Integer year;
 
     public Project() {
     }

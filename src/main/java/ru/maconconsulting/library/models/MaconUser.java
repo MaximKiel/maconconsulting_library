@@ -1,19 +1,36 @@
 package ru.maconconsulting.library.models;
 
-public class User extends AbstractBasedEntity {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "macon_user")
+public class MaconUser extends AbstractBasedEntity {
+
+    @Column(name = "name")
+    @NotNull
     private String name;
 
+    @Column(name = "email")
+    @NotNull
+    @Email
     private String email;
 
+    @Column(name = "password")
+    @NotNull
     private String password;
 
+    @Column(name = "role")
+    @NotNull
     private Role role;
 
-    public User() {
+    public MaconUser() {
     }
 
-    public User(String name, String email, String password, Role role) {
+    public MaconUser(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -54,7 +71,7 @@ public class User extends AbstractBasedEntity {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "MaconUser{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

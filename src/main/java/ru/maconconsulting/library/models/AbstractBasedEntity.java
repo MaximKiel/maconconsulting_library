@@ -1,11 +1,21 @@
 package ru.maconconsulting.library.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
+@MappedSuperclass
 public abstract class AbstractBasedEntity {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "created_at")
+    @NotNull
+    @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     public AbstractBasedEntity() {
