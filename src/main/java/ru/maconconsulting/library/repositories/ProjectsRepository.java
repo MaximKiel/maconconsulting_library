@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.maconconsulting.library.models.Project;
 
 @Repository
-public interface ProjectsRepository extends JpaRepository<Integer, Project> {
+public interface ProjectsRepository extends JpaRepository<Project, Integer> {
 }

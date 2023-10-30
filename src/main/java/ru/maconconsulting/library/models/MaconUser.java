@@ -23,14 +23,15 @@ public class MaconUser extends AbstractBasedEntity {
     @NotNull
     private String password;
 
+//    Only "ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"
     @Column(name = "role")
     @NotNull
-    private Role role;
+    private String role;
 
     public MaconUser() {
     }
 
-    public MaconUser(String name, String email, String password, Role role) {
+    public MaconUser(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -61,11 +62,11 @@ public class MaconUser extends AbstractBasedEntity {
         this.password = password;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
