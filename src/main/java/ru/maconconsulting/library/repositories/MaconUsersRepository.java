@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface MaconUsersRepository extends JpaRepository<MaconUser, Integer> {
-    Optional<MaconUser> findByName(String name);
+    Optional<MaconUser> findByEmail(String email);
 }

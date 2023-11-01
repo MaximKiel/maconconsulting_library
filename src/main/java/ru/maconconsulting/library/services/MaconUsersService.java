@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.repositories.MaconUsersRepository;
+import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,8 +26,13 @@ public class MaconUsersService {
         return maconUsersRepository.findAll();
     }
 
-    public Optional<MaconUser> findById(int id) {
-        return maconUsersRepository.findById(id);
+    public MaconUser findById(int id) {
+        return maconUsersRepository.findById(id)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с id " + id + " не найден"));
+    }
+
+    public Optional<MaconUser> findByEmail(String email) {
+        return maconUsersRepository.findByEmail(email);
     }
 
     @Transactional
