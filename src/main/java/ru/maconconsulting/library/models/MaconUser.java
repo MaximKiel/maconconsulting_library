@@ -23,7 +23,7 @@ public class MaconUser extends AbstractBasedEntity {
     @NotNull
     private String password;
 
-//    Only "ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"
+//    Use Enum Role.java
     @Column(name = "role")
     @NotNull
     private String role;
