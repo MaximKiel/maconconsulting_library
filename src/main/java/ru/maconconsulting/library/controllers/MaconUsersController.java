@@ -44,7 +44,8 @@ public class MaconUsersController {
 
     @GetMapping("/{id}")
     public MaconUserDTO getMaconUser(@PathVariable("id") int id) {
-        return convertToMaconUserDTO(maconUsersService.findById(id));
+        return convertToMaconUserDTO(maconUsersService.findById(id)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с id " + id + " не найден")));
     }
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -64,12 +65,6 @@ public class MaconUsersController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<MaconUserErrorResponse> handleException(MaconUserNotCreateException e) {
-        MaconUserErrorResponse response = new MaconUserErrorResponse(e.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") int id) {
@@ -80,6 +75,12 @@ public class MaconUsersController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") int id, @RequestBody @Valid MaconUserDTO maconUserDTO) {
         maconUsersService.update(id, convertToMaconUser(maconUserDTO));
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<MaconUserErrorResponse> handleException(MaconUserNotCreateException e) {
+        MaconUserErrorResponse response = new MaconUserErrorResponse(e.getMessage(), System.currentTimeMillis());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
