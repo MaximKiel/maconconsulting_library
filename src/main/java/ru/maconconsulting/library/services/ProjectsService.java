@@ -29,6 +29,14 @@ public class ProjectsService {
         return projectsRepository.findById(id);
     }
 
+    public Optional<Project> findByNumber(int number) {
+        return projectsRepository.findByNumber(number);
+    }
+
+    public Optional<Project> findByTitle(String title) {
+        return projectsRepository.findByTitle(title);
+    }
+
     @Transactional
     public void save(Project project) {
         enrichProject(project);

@@ -37,7 +37,7 @@ public class MaconUsersController {
     }
 
     @GetMapping
-    public MaconUsersResponse getMaconUsers() {
+    public MaconUsersResponse getAllMaconUsers() {
         return new MaconUsersResponse(maconUsersService.findAll().stream().map(this::convertToMaconUserDTO)
                 .collect(Collectors.toList()));
     }
@@ -71,7 +71,7 @@ public class MaconUsersController {
         maconUsersService.delete(id);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") int id, @RequestBody @Valid MaconUserDTO maconUserDTO) {
         maconUsersService.update(id, convertToMaconUser(maconUserDTO));
