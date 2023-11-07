@@ -42,6 +42,7 @@ public class MaconUsersService {
     @Transactional
     public void update(int id, MaconUser updatedMaconUser) {
         updatedMaconUser.setId(id);
+        updatedMaconUser.setPassword(findById(id).get().getPassword());
         maconUsersRepository.save(updatedMaconUser);
     }
 
@@ -51,6 +52,7 @@ public class MaconUsersService {
     }
 
     private void enrichMaconUser(MaconUser maconUser) {
+        maconUser.setPassword("test");
         maconUser.setCreatedAt(LocalDateTime.now());
     }
 }
