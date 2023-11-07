@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProjectsController {
 
     private final ProjectsService projectsService;
