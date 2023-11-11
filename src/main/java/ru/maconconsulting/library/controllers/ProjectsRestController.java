@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.rest;
+package ru.maconconsulting.library.controllers;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
