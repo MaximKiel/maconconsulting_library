@@ -1,5 +1,5 @@
 function showList(){
-    fetch("http://localhost:8080/users")
+    fetch("http://localhost:8080/rest/users")
         .then(response => response.json())
         .then(data => createTable(data));
 }
