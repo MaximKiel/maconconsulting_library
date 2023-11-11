@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers;
+package ru.maconconsulting.library.controllers.rest;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MaconUsersController {
 
     private final MaconUsersService maconUsersService;
@@ -48,7 +48,7 @@ public class MaconUsersController {
                 .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с id " + id + " не найден")));
     }
 
-    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult) {
         maconUserValidator.validate(maconUserDTO, bindingResult);
 
