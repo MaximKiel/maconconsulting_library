@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/rest/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProjectsRestController {
+@RequestMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
+public class ProjectsController {
 
     private final ProjectsService projectsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsRestController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;

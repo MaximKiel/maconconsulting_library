@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/rest/users", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MaconUsersRestController {
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MaconUsersController {
 
     private final MaconUsersService maconUsersService;
     private final ModelMapper modelMapper;
     private final MaconUserValidator maconUserValidator;
 
     @Autowired
-    public MaconUsersRestController(MaconUsersService maconUsersService, ModelMapper modelMapper, MaconUserValidator maconUserValidator) {
+    public MaconUsersController(MaconUsersService maconUsersService, ModelMapper modelMapper, MaconUserValidator maconUserValidator) {
         this.maconUsersService = maconUsersService;
         this.modelMapper = modelMapper;
         this.maconUserValidator = maconUserValidator;
