@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers;
+package ru.maconconsulting.library.controllers.rest;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProjectsController {
+@RequestMapping(value = "/rest/projects", produces = MediaType.APPLICATION_JSON_VALUE)
+public class ProjectsRestController {
 
     private final ProjectsService projectsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsRestController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
