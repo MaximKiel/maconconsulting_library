@@ -3,6 +3,7 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 
@@ -22,20 +23,20 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String title;
 
-    @Column(name = "countries")
+    @Column(name = "countries", columnDefinition = "text[]")
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> countries;
 
-    @Column(name = "regions")
+    @Column(name = "regions", columnDefinition = "text[]")
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> regions;
 
-    @Column(name = "towns")
+    @Column(name = "towns", columnDefinition = "text[]")
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> towns;
 
-    @Column(name = "segments")
+    @Column(name = "segments", columnDefinition = "text[]")
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> segments;

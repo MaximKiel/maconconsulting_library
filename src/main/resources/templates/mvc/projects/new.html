@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Новый проект</title>
 </head>
 <body>
 
+<form th:method="POST" th:action="@{/projects/create}" th:object="${project}">
+    <label for="number">Введите номер проекта: </label>
+    <input type="text" th:field="*{number}" id="number">
+    <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
+    <br/>
+    <label for="year">Введите год проекта: </label>
+    <input type="number" th:field="*{year}" id="year">
+    <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
+    <br/>
+    <label for="title">Введите название проекта: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+    <br/>
+    <label for="countries">Введите страны проекта: </label>
+    <input type="text" th:field="*{countries}" id="countries">
+    <div style="color: red" th:if="${#fields.hasErrors('countries')}" th:errors="*{countries}">countries error</div>
+    <br/>
+    <label for="regions">Введите регионы проекта: </label>
+    <input type="text" th:field="*{regions}" id="regions">
+    <div style="color: red" th:if="${#fields.hasErrors('regions')}" th:errors="*{regions}">regions error</div>
+    <br/>
+    <label for="towns">Введите города проекта: </label>
+    <input type="text" th:field="*{towns}" id="towns">
+    <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
+    <br/>
+    <label for="segments">Введите сегменты рынка проекта: </label>
+    <input type="text" th:field="*{segments}" id="segments">
+    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
+    <br/>
+    <label for="type">Введите тип проекта: </label>
+    <input type="text" th:field="*{type}" id="type">
+    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
+    <br/>
+    <input type="submit" value="Добавить"/>
+</form>
 </body>
 </html>
