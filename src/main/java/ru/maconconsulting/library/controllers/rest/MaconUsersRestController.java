@@ -71,7 +71,7 @@ public class MaconUsersRestController {
         maconUsersService.delete(id);
     }
 
-    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") int id, @RequestBody @Valid MaconUserDTO maconUserDTO) {
         maconUsersService.update(id, convertToMaconUser(maconUserDTO));

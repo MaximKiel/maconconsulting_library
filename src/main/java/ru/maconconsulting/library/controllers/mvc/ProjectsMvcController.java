@@ -62,16 +62,27 @@ public class ProjectsMvcController {
         return "mvc/projects/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
-                         @PathVariable("id") int id) {
+    @PatchMapping
+    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "mvc/projects/edit";
         }
 
+        int id = projectsService.findByNumber(projectDTO.getNumber()).get().getId();
         projectsService.update(id, convertToProject(projectDTO));
         return "redirect:/projects";
     }
+
+//    @PatchMapping("/{id}")
+//    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
+//                         @PathVariable("id") int id) {
+//        if (bindingResult.hasErrors()) {
+//            return "mvc/projects/edit";
+//        }
+//
+//        projectsService.update(id, convertToProject(projectDTO));
+//        return "redirect:/projects";
+//    }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {

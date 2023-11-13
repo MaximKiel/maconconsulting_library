@@ -71,7 +71,7 @@ public class ProjectsRestController {
         projectsService.delete(id);
     }
 
-    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") int id, @RequestBody @Valid ProjectDTO projectDTO) {
         projectsService.update(id, convertToProject(projectDTO));

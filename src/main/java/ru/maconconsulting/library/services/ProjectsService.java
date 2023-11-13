@@ -46,6 +46,7 @@ public class ProjectsService {
     @Transactional
     public void update(int id, Project updatedProject) {
         updatedProject.setId(id);
+        updatedProject.setCreatedAt(findById(id).get().getCreatedAt());
         projectsRepository.save(updatedProject);
     }
 
