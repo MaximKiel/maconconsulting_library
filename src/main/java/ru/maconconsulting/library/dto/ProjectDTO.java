@@ -16,6 +16,9 @@ public class ProjectDTO {
     @NotBlank
     private String title;
 
+    @NotBlank
+    private String client;
+
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
     private String countries;
@@ -36,10 +39,11 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(Integer number, Integer year, String title, String countries, String regions, String towns, String segments, String type) {
+    public ProjectDTO(Integer number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type) {
         this.number = number;
         this.year = year;
         this.title = title;
+        this.client = client;
         this.countries = countries;
         this.regions = regions;
         this.towns = towns;
@@ -109,5 +113,13 @@ public class ProjectDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 }

@@ -15,23 +15,27 @@
     <input type="number" th:field="*{year}" id="year">
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
     <br/>
-    <label for="title">Введите название проекта: </label>
+    <label for="title">Введите название: </label>
     <input type="text" th:field="*{title}" id="title">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
-    <label for="countries">Введите страны проекта: </label>
+    <label for="client">Введите заказчика: </label>
+    <input type="text" th:field="*{client}" id="client">
+    <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
+    <br/>
+    <label for="countries">Введите страны: </label>
     <input type="text" th:field="*{countries}" id="countries">
     <div style="color: red" th:if="${#fields.hasErrors('countries')}" th:errors="*{countries}">countries error</div>
     <br/>
-    <label for="regions">Введите регионы проекта: </label>
+    <label for="regions">Введите регионы: </label>
     <input type="text" th:field="*{regions}" id="regions">
     <div style="color: red" th:if="${#fields.hasErrors('regions')}" th:errors="*{regions}">regions error</div>
     <br/>
-    <label for="towns">Введите города проекта: </label>
+    <label for="towns">Введите города: </label>
     <input type="text" th:field="*{towns}" id="towns">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
-    <label for="segments">Введите сегменты рынка проекта: </label>
+    <label for="segments">Введите сегменты рынка: </label>
     <input type="text" th:field="*{segments}" id="segments">
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <br/>
