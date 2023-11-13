@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Страница проекта</title>
 </head>
 <body>
+<a style="color: black; font-size: larger" href="/projects"><b>На главную</b></a><br/>
+<hr/>
+<p th:text="${'Номер проекта: ' + project.getNumber()}">Value</p>
+<p th:text="${'Название: ' + project.getTitle()}">Value</p>
+<p th:text="${'Тип проекта: ' + project.getType()}">Value</p>
+<p th:text="${'Локация: ' + project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p>
+<p th:text="${'Сегмент рынка: ' + project.getSegments()}">Value</p>
+<p th:text="${'Год: ' + project.getYear()()}">Value</p>
 
+<a th:href="@{/library/projects/{id}/edit(id=${project.getId()})}">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/library/projects/{id}(id=${project.getId()})}">
+    <input type="submit" value="Удалить">
+</form>
 </body>
 </html>
