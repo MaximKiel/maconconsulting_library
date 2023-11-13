@@ -3,9 +3,6 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.Type;
-
-import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -23,23 +20,19 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String title;
 
-    @Column(name = "countries", columnDefinition = "text[]")
+    @Column(name = "countries")
     @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> countries;
+    private String countries;
 
-    @Column(name = "regions", columnDefinition = "text[]")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> regions;
+    @Column(name = "regions")
+    private String regions;
 
-    @Column(name = "towns", columnDefinition = "text[]")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> towns;
+    @Column(name = "towns")
+    private String towns;
 
-    @Column(name = "segments", columnDefinition = "text[]")
+    @Column(name = "segments")
     @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> segments;
+    private String segments;
 
     @Column(name = "type")
     @NotNull
@@ -48,7 +41,7 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(Integer number, String title, List<String> countries, List<String> regions, List<String> towns, List<String> segments, String type, Integer year) {
+    public Project(Integer number, String title, String countries, String regions, String towns, String segments, String type, Integer year) {
         this.number = number;
         this.title = title;
         this.countries = countries;
@@ -75,35 +68,35 @@ public class Project extends AbstractBasedEntity {
         this.title = title;
     }
 
-    public List<String> getCountries() {
+    public String getCountries() {
         return countries;
     }
 
-    public void setCountries(List<String> countries) {
+    public void setCountries(String countries) {
         this.countries = countries;
     }
 
-    public List<String> getRegions() {
+    public String getRegions() {
         return regions;
     }
 
-    public void setRegions(List<String> regions) {
+    public void setRegions(String regions) {
         this.regions = regions;
     }
 
-    public List<String> getTowns() {
+    public String getTowns() {
         return towns;
     }
 
-    public void setTowns(List<String> towns) {
+    public void setTowns(String towns) {
         this.towns = towns;
     }
 
-    public List<String> getSegments() {
+    public String getSegments() {
         return segments;
     }
 
-    public void setSegments(List<String> segments) {
+    public void setSegments(String segments) {
         this.segments = segments;
     }
 

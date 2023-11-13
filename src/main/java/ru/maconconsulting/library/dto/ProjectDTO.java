@@ -5,9 +5,6 @@ import jakarta.persistence.FetchType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class ProjectDTO {
 
     @NotNull
@@ -21,27 +18,25 @@ public class ProjectDTO {
 
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> countries;
+    private String countries;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> regions;
+    private String regions;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> towns;
+    private String towns;
 
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> segments;
+    private String segments;
 
     @NotNull
     private String type;
 
-    public static final String STRING_SPLIT = "; ";
-
     public ProjectDTO() {
     }
 
-    public ProjectDTO(Integer number, Integer year, String title, List<String> countries, List<String> regions, List<String> towns, List<String> segments, String type) {
+    public ProjectDTO(Integer number, Integer year, String title, String countries, String regions, String towns, String segments, String type) {
         this.number = number;
         this.year = year;
         this.title = title;
@@ -76,36 +71,36 @@ public class ProjectDTO {
         this.title = title;
     }
 
-    public List<String> getCountries() {
+    public String getCountries() {
         return countries;
     }
 
     public void setCountries(String countries) {
-        this.countries = Arrays.stream(countries.split(STRING_SPLIT)).toList();
+        this.countries = countries;
     }
 
-    public List<String> getRegions() {
+    public String getRegions() {
         return regions;
     }
 
     public void setRegions(String regions) {
-        this.regions = Arrays.stream(regions.split(STRING_SPLIT)).toList();
+        this.regions = regions;
     }
 
-    public List<String> getTowns() {
+    public String getTowns() {
         return towns;
     }
 
     public void setTowns(String towns) {
-        this.towns = Arrays.stream(towns.split(STRING_SPLIT)).toList();
+        this.towns = towns;
     }
 
-    public List<String> getSegments() {
+    public String getSegments() {
         return segments;
     }
 
     public void setSegments(String segments) {
-        this.segments = Arrays.stream(segments.split(STRING_SPLIT)).toList();
+        this.segments = segments;
     }
 
     public String getType() {
