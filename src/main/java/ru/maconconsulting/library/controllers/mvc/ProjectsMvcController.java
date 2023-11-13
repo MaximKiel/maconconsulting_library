@@ -34,10 +34,10 @@ public class ProjectsMvcController {
         return "mvc/projects/manage";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
-                .orElseThrow(() -> new MaconUserNotFoundException("Проект с id " + id + " не найден"))));
+    @GetMapping("/{number}")
+    public String show(@PathVariable("number") int number, Model model) {
+        model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
+                .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден"))));
         return "mvc/projects/show";
     }
 
@@ -56,37 +56,27 @@ public class ProjectsMvcController {
         return "redirect:/projects";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("project", projectsService.findById(id));
+    @GetMapping("/{number}/edit")
+    public String edit(Model model, @PathVariable("number") int number) {
+        model.addAttribute("project", projectsService.findByNumber(number)
+                .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден")));
         return "mvc/projects/edit";
     }
 
-    @PatchMapping
-    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
+    @PatchMapping("/{number}")
+    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
+                         @PathVariable("number") int number) {
         if (bindingResult.hasErrors()) {
             return "mvc/projects/edit";
         }
 
-        int id = projectsService.findByNumber(projectDTO.getNumber()).get().getId();
-        projectsService.update(id, convertToProject(projectDTO));
+        projectsService.update(number, convertToProject(projectDTO));
         return "redirect:/projects";
     }
 
-//    @PatchMapping("/{id}")
-//    public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
-//                         @PathVariable("id") int id) {
-//        if (bindingResult.hasErrors()) {
-//            return "mvc/projects/edit";
-//        }
-//
-//        projectsService.update(id, convertToProject(projectDTO));
-//        return "redirect:/projects";
-//    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        projectsService.delete(id);
+    @DeleteMapping("/{number}")
+    public String delete(@PathVariable("number") int number) {
+        projectsService.delete(number);
         return "redirect:/projects";
     }
 

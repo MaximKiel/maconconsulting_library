@@ -42,10 +42,10 @@ public class ProjectsRestController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
-    public ProjectDTO getProject(@PathVariable("id") int id) {
-        return convertToProjectDTO(projectsService.findById(id)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект с id " + id + " не найден")));
+    @GetMapping("/{number}")
+    public ProjectDTO getProject(@PathVariable("number") int number) {
+        return convertToProjectDTO(projectsService.findByNumber(number)
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден")));
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -65,16 +65,16 @@ public class ProjectsRestController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{number}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") int id) {
-        projectsService.delete(id);
+    public void delete(@PathVariable("number") int number) {
+        projectsService.delete(number);
     }
 
-    @PatchMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/edit/{number}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, @RequestBody @Valid ProjectDTO projectDTO) {
-        projectsService.update(id, convertToProject(projectDTO));
+    public void update(@PathVariable("number") int number, @RequestBody @Valid ProjectDTO projectDTO) {
+        projectsService.update(number, convertToProject(projectDTO));
     }
 
     @ExceptionHandler

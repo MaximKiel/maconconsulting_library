@@ -1,14 +1,17 @@
 package ru.maconconsulting.library.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "macon_user")
 public class MaconUser extends AbstractBasedEntity {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "name")
     @NotNull
@@ -78,5 +81,13 @@ public class MaconUser extends AbstractBasedEntity {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

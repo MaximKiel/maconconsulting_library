@@ -6,8 +6,7 @@
 </head>
 <body>
 
-<!--<form th:method="PATCH" th:action="@{/projects/{id}(id=${project.getId()})}" th:object="${project}">-->
-<form th:method="PATCH" th:action="@{/projects}" th:object="${project}">
+<form th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
     <label for="number">Введите номер проекта: </label>
     <input type="text" th:field="*{number}" id="number">
     <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "project")
 public class Project extends AbstractBasedEntity {
 
+    @Id
     @Column(name = "number")
     @NotNull
     private Integer number;

@@ -8,15 +8,15 @@
 <a style="color: black; font-size: larger" href="/projects"><b>На главную</b></a><br/>
 <hr/>
 <p th:text="${'Номер проекта: ' + project.getNumber()}">Value</p>
+<p th:text="${'Год: ' + project.getYear()}">Value</p>
 <p th:text="${'Название: ' + project.getTitle()}">Value</p>
 <p th:text="${'Тип проекта: ' + project.getType()}">Value</p>
 <p th:text="${'Локация: ' + project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p>
 <p th:text="${'Сегмент рынка: ' + project.getSegments()}">Value</p>
-<p th:text="${'Год: ' + project.getYear()()}">Value</p>
 
-<a th:href="@{/library/projects/{id}/edit(id=${project.getId()})}">Редактировать</a>
+<a th:href="@{/projects/{number}/edit(number=${project.getNumber()})}">Редактировать</a>
 
-<form th:method="DELETE" th:action="@{/library/projects/{id}(id=${project.getId()})}">
+<form th:method="DELETE" th:action="@{/projects/{number}(number=${project.getNumber()})}">
     <input type="submit" value="Удалить">
 </form>
 </body>

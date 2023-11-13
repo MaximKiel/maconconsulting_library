@@ -25,10 +25,6 @@ public class ProjectsService {
         return projectsRepository.findAll();
     }
 
-    public Optional<Project> findById(int id) {
-        return projectsRepository.findById(id);
-    }
-
     public Optional<Project> findByNumber(int number) {
         return projectsRepository.findByNumber(number);
     }
@@ -44,15 +40,14 @@ public class ProjectsService {
     }
 
     @Transactional
-    public void update(int id, Project updatedProject) {
-        updatedProject.setId(id);
-        updatedProject.setCreatedAt(findById(id).get().getCreatedAt());
+    public void update(int number, Project updatedProject) {
+        updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
         projectsRepository.save(updatedProject);
     }
 
     @Transactional
-    public void delete(int id) {
-        projectsRepository.deleteById(id);
+    public void delete(int number) {
+        projectsRepository.deleteById(number);
     }
 
     private void enrichProject(Project project) {
