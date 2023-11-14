@@ -30,7 +30,7 @@ public class ProjectsMvcController {
 
     @GetMapping
     public String getAllProjects(Model model) {
-        model.addAttribute("projects", projectsService.findAll().stream().map(this::convertToProjectDTO));
+//        model.addAttribute("projects", projectsService.findAll().stream().map(this::convertToProjectDTO));
         return "mvc/projects/manage";
     }
 

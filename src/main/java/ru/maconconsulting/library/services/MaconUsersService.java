@@ -53,6 +53,12 @@ public class MaconUsersService {
     }
 
     private void enrichMaconUser(MaconUser maconUser) {
+        maconUser.setLogin(defineLogin(maconUser.getEmail()));
         maconUser.setCreatedAt(LocalDateTime.now());
+    }
+
+    private String defineLogin(String email) {
+        String[] splitStrings = email.split("@");
+        return splitStrings[0];
     }
 }

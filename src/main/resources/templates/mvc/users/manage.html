@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Управление пользователями</title>
+
+    <link rel="stylesheet" href="users.css">
 </head>
 <body>
 
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Login</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Редактировать</th>
+        <th>Удалить</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="maconUser : ${maconUsers}">
+        <td th:text="${maconUser.getName()}">name</td>
+        <td th:text="${maconUser.getLogin()}">login</td>
+        <td th:text="${maconUser.getEmail()}">email</td>
+        <td th:text="${maconUser.getRole}">role</td>
+        <td>
+            <a th:href="@{/users/{login}/edit(login=${maconUser.getLogin()})}">Редактировать</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/users/{login}(login=${maconUser.getLogin()})}">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/users/new">Добавить пользователя</a><br/>
 </body>
 </html>

@@ -13,6 +13,8 @@ import ru.maconconsulting.library.services.MaconUsersService;
 import ru.maconconsulting.library.utils.MaconUserValidator;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/users")
 public class MaconUsersMvcController {
@@ -30,7 +32,8 @@ public class MaconUsersMvcController {
 
     @GetMapping
     public String getAllMaconUsers(Model model) {
-        model.addAttribute("maconUsers", maconUsersService.findAll().stream().map(this::convertToMaconUserDTO));
+        model.addAttribute("maconUsers",
+                maconUsersService.findAll().stream().map(this::convertToMaconUserDTO).collect(Collectors.toList()));
         return "mvc/users/manage";
     }
 
@@ -42,23 +45,24 @@ public class MaconUsersMvcController {
     }
 
     @GetMapping("/new")
-    public String newPerson(@ModelAttribute("maconUser") MaconUserDTO maconUserDTO) {
+    public String newPerson(@ModelAttribute("maconUser") MaconUser maconUser) {
         return "mvc/users/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("maconUser") @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult) {
-        maconUserValidator.validate(maconUserDTO, bindingResult);
+    public String create(@ModelAttribute("maconUser") MaconUser maconUser, BindingResult bindingResult) {
+        maconUserValidator.validate(convertToMaconUserDTO(maconUser), bindingResult);
         if (bindingResult.hasErrors()) {
             return "mvc/users/new";
         }
-        maconUsersService.save(convertToMaconUser(maconUserDTO));
+        maconUsersService.save(maconUser);
         return "redirect:/users";
     }
 
     @GetMapping("/{login}/edit")
     public String edit(Model model, @PathVariable("login") String login) {
-        model.addAttribute("maconUser", maconUsersService.findByLogin(login));
+        model.addAttribute("maconUser", maconUsersService.findByLogin(login)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден")));
         return "mvc/users/edit";
     }
 
