@@ -26,21 +26,23 @@ public class Project extends AbstractBasedEntity {
     private String client;
 
     @Column(name = "countries")
-    @NotNull
+    @NotBlank
     private String countries;
 
     @Column(name = "regions")
+    @NotBlank
     private String regions;
 
     @Column(name = "towns")
+    @NotBlank
     private String towns;
 
     @Column(name = "segments")
-    @NotNull
+    @NotBlank
     private String segments;
 
     @Column(name = "type")
-    @NotNull
+    @NotBlank
     private String type;
 
     public Project() {

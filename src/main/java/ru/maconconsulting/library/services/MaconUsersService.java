@@ -33,6 +33,10 @@ public class MaconUsersService {
         return maconUsersRepository.findByEmail(email);
     }
 
+    public Optional<MaconUser> findByLogin(String login) {
+        return maconUsersRepository.findByLogin(login);
+    }
+
     @Transactional
     public void save(MaconUser maconUser) {
         enrichMaconUser(maconUser);
@@ -52,7 +56,6 @@ public class MaconUsersService {
     }
 
     private void enrichMaconUser(MaconUser maconUser) {
-        maconUser.setPassword("test");
         maconUser.setCreatedAt(LocalDateTime.now());
     }
 }

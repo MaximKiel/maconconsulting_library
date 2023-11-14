@@ -1,12 +1,16 @@
 package ru.maconconsulting.library.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class MaconUserDTO {
 
     @NotNull
     private String name;
+
+    @NotBlank
+    private String login;
 
     @NotNull
     @Email
@@ -38,5 +42,13 @@ public class MaconUserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }
