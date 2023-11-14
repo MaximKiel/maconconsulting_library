@@ -34,10 +34,10 @@ public class MaconUsersMvcController {
         return "mvc/users/manage";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("maconUser", convertToMaconUserDTO(maconUsersService.findById(id)
-                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с id " + id + " не найден"))));
+    @GetMapping("/{login}")
+    public String show(@PathVariable("login") String login, Model model) {
+        model.addAttribute("maconUser", convertToMaconUserDTO(maconUsersService.findByLogin(login)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден"))));
         return "mvc/users/show";
     }
 
@@ -56,26 +56,26 @@ public class MaconUsersMvcController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("maconUser", maconUsersService.findById(id));
+    @GetMapping("/{login}/edit")
+    public String edit(Model model, @PathVariable("login") String login) {
+        model.addAttribute("maconUser", maconUsersService.findByLogin(login));
         return "mvc/users/edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{login}")
     public String update(@ModelAttribute("maconUser") @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult,
-                         @PathVariable("id") int id) {
+                         @PathVariable("login") String login) {
         if (bindingResult.hasErrors()) {
             return "mvc/users/edit";
         }
 
-        maconUsersService.update(id, convertToMaconUser(maconUserDTO));
+        maconUsersService.update(login, convertToMaconUser(maconUserDTO));
         return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        maconUsersService.delete(id);
+    @DeleteMapping("/{login}")
+    public String delete(@PathVariable("login") String login) {
+        maconUsersService.delete(login);
         return "redirect:/users";
     }
 

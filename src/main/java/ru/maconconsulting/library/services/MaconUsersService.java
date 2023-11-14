@@ -25,10 +25,6 @@ public class MaconUsersService {
         return maconUsersRepository.findAll();
     }
 
-    public Optional<MaconUser> findById(int id) {
-        return maconUsersRepository.findById(id);
-    }
-
     public Optional<MaconUser> findByEmail(String email) {
         return maconUsersRepository.findByEmail(email);
     }
@@ -44,15 +40,16 @@ public class MaconUsersService {
     }
 
     @Transactional
-    public void update(int id, MaconUser updatedMaconUser) {
-        updatedMaconUser.setId(id);
-        updatedMaconUser.setPassword(findById(id).get().getPassword());
+    public void update(String login, MaconUser updatedMaconUser) {
+        updatedMaconUser.setId(findByLogin(login).get().getId());
+        updatedMaconUser.setCreatedAt(findByLogin(login).get().getCreatedAt());
+        updatedMaconUser.setPassword(findByLogin(login).get().getPassword());
         maconUsersRepository.save(updatedMaconUser);
     }
 
     @Transactional
-    public void delete(int id) {
-        maconUsersRepository.deleteById(id);
+    public void delete(String login) {
+        maconUsersRepository.deleteByLogin(login);
     }
 
     private void enrichMaconUser(MaconUser maconUser) {

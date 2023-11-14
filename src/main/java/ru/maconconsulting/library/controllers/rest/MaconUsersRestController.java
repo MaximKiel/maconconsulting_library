@@ -42,10 +42,10 @@ public class MaconUsersRestController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
-    public MaconUserDTO getMaconUser(@PathVariable("id") int id) {
-        return convertToMaconUserDTO(maconUsersService.findById(id)
-                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с id " + id + " не найден")));
+    @GetMapping("/{login}")
+    public MaconUserDTO getMaconUser(@PathVariable("login") String login) {
+        return convertToMaconUserDTO(maconUsersService.findByLogin(login)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден")));
     }
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -65,16 +65,16 @@ public class MaconUsersRestController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{login}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") int id) {
-        maconUsersService.delete(id);
+    public void delete(@PathVariable("login") String login) {
+        maconUsersService.delete(login);
     }
 
-    @PatchMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/edit/{login}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("id") int id, @RequestBody @Valid MaconUserDTO maconUserDTO) {
-        maconUsersService.update(id, convertToMaconUser(maconUserDTO));
+    public void update(@PathVariable("login") String login, @RequestBody @Valid MaconUserDTO maconUserDTO) {
+        maconUsersService.update(login, convertToMaconUser(maconUserDTO));
     }
 
     @ExceptionHandler
