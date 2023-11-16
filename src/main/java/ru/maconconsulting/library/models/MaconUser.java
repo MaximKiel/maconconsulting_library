@@ -3,6 +3,13 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "macon_user")
@@ -30,20 +37,20 @@ public class MaconUser extends AbstractBasedEntity {
     @NotBlank
     private String password;
 
-//    Use Enum Role.java
-    @Column(name = "role")
-    @NotBlank
-    private String role;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public MaconUser() {
     }
 
-    public MaconUser(String name, String login, String email, String password, String role) {
+    public MaconUser(String name, String login, String email, String password, Collection<Role> roles) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
-        this.role = role;
+        setRoles(roles);
     }
 
     public String getName() {
@@ -70,12 +77,12 @@ public class MaconUser extends AbstractBasedEntity {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
     public Integer getId() {
@@ -97,12 +104,10 @@ public class MaconUser extends AbstractBasedEntity {
     @Override
     public String toString() {
         return "MaconUser{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 }
