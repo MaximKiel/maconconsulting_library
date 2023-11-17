@@ -20,9 +20,14 @@
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
     <br/>
     <label for="role">Выберете роль: </label>
-    <input type="text" th:field="*{role}" id="role">
-    <div style="color: red" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">role error</div>
-    <br/>
+    <select th:field="*{roles}" id="role">
+        <option th:value="ROLE_USER">User</option>
+        <option th:value="ROLE_MANAGER">Manager</option>
+        <option th:value="ROLE_ADMIN">Admin</option>
+    </select>
+<!--    <input type="text" th:field="*{roles}" id="roles">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">roles error</div>-->
+<!--    <br/>-->
     <input type="submit" value="Добавить"/>
 </form>
 </body>
