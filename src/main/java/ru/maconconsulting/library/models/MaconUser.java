@@ -3,13 +3,7 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "macon_user")
@@ -33,27 +27,24 @@ public class MaconUser extends AbstractBasedEntity {
     @Email
     private String email;
 
+    @Column(name = "role")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Column(name = "password")
     @NotBlank
     private String password;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    @JoinColumn
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Role> roles;
-
     public MaconUser() {
     }
 
-    public MaconUser(String name, String login, String email, String password, Collection<Role> roles) {
+    public MaconUser(String name, String login, String email, String password, Role role) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
-        setRoles(roles);
+        this.role = role;
     }
 
     public String getName() {
@@ -80,12 +71,12 @@ public class MaconUser extends AbstractBasedEntity {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Integer getId() {
@@ -110,7 +101,7 @@ public class MaconUser extends AbstractBasedEntity {
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
-                ", roles='" + roles + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

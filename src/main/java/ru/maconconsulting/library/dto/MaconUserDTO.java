@@ -3,6 +3,7 @@ package ru.maconconsulting.library.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import ru.maconconsulting.library.models.Role;
 
 public class MaconUserDTO {
 
@@ -16,9 +17,8 @@ public class MaconUserDTO {
     @Email
     private String email;
 
-    //    Only "ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"
     @NotNull
-    private String role;
+    private Role role;
 
     public String getName() {
         return name;
@@ -36,19 +36,19 @@ public class MaconUserDTO {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getLogin() {
         return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
