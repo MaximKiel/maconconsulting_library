@@ -11,6 +11,7 @@ import ru.maconconsulting.library.dto.ProjectDTO;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;
+import ru.maconconsulting.library.utils.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
 @Controller
@@ -29,8 +30,7 @@ public class ProjectsMvcController {
     }
 
     @GetMapping
-    public String getAllProjects(Model model) {
-//        model.addAttribute("projects", projectsService.findAll().stream().map(this::convertToProjectDTO));
+    public String getAllProjects() {
         return "mvc/projects/manage";
     }
 
@@ -78,6 +78,21 @@ public class ProjectsMvcController {
     public String delete(@PathVariable("number") int number) {
         projectsService.delete(number);
         return "redirect:/projects";
+    }
+
+    @GetMapping("/search")
+    public String search(@ModelAttribute("searchProject") SearchProject searchProject) {
+        return "mvc/projects/search";
+    }
+
+    @PostMapping("/search-result")
+    public String showSearchResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "mvc/projects/search";
+        }
+        model.addAttribute("result", projectsService.search(searchProject));
+        return "mvc/projects/result";
     }
 
     private Project convertToProject(ProjectDTO projectDTO) {

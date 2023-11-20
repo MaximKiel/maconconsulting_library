@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат поиска</title>
+</head>
+<body>
+<p>Результаты поиска:</p>
+<div th:each="project : ${result}">
+  <a th:href="@{/projects/{number}(number=${project.getNumber()})}"
+     th:text="${project.getTitle()}">project</a>
+</div>
+</body>
+</html>

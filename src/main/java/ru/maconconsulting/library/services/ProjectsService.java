@@ -5,14 +5,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
+import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class ProjectsService {
+
+    public static final String SPLIT_FOR_SEARCH = ", ";
 
     private final ProjectsRepository projectsRepository;
 
@@ -50,7 +55,50 @@ public class ProjectsService {
         projectsRepository.deleteById(number);
     }
 
+    public List<Project> search(SearchProject searchProject) {
+        List<Project> result = findAll();
+        if (searchProject.getNumber() != 0) {
+            result = searchElement(result, p -> p.getNumber().equals(searchProject.getNumber()));
+        }
+        if (searchProject.getYear() != 0) {
+            result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
+        }
+        if (!searchProject.getTitle().equals("")) {
+            result = searchElement(result, p -> p.getTitle().equals(searchProject.getTitle()));
+        }
+        if (!searchProject.getCountry().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getCountries(), searchProject.getCountry()));
+        }
+        if (!searchProject.getRegion().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getRegions(), searchProject.getRegion()));
+        }
+        if (!searchProject.getTown().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getTowns(), searchProject.getTown()));
+        }
+        if (!searchProject.getSegment().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getSegments(), searchProject.getSegment()));
+        }
+        if (!searchProject.getType().equals("")) {
+            result = searchElement(result, p -> p.getType().equals(searchProject.getType()));
+        }
+        return result;
+    }
+
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
+    }
+
+    private List<Project> searchElement(List<Project> source, Predicate<Project> predicate) {
+        return source.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    private Boolean searchPluralString(String pluralString, String searchString) {
+        String[] countries = pluralString.split(SPLIT_FOR_SEARCH);
+        for (String country : countries) {
+            if (country.equals(searchString)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

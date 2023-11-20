@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск проекта</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/projects/search-result}" th:object="${searchProject}">
+    <label for="number">Введите номер проекта: </label>
+    <input type="text" th:field="*{number}" id="number">
+    <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
+    <br/>
+    <label for="year">Введите год проекта: </label>
+    <input type="number" th:field="*{year}" id="year">
+    <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
+    <br/>
+    <label for="title">Введите название: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+    <br/>
+    <label for="country">Введите страну: </label>
+    <input type="text" th:field="*{country}" id="country">
+    <div style="color: red" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">country error</div>
+    <br/>
+    <label for="region">Введите регион: </label>
+    <input type="text" th:field="*{region}" id="region">
+    <div style="color: red" th:if="${#fields.hasErrors('region')}" th:errors="*{region}">region error</div>
+    <br/>
+    <label for="town">Введите город: </label>
+    <input type="text" th:field="*{town}" id="town">
+    <div style="color: red" th:if="${#fields.hasErrors('town')}" th:errors="*{town}">town error</div>
+    <br/>
+    <label for="segment">Введите сегмент рынка: </label>
+    <input type="text" th:field="*{segment}" id="segment">
+    <div style="color: red" th:if="${#fields.hasErrors('segment')}" th:errors="*{segment}">segment error</div>
+    <br/>
+    <label for="type">Введите тип проекта: </label>
+    <input type="text" th:field="*{type}" id="type">
+    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
+    <br/>
+    <input type="submit" value="Найти"/>
+</form>
+</body>
+</html>
