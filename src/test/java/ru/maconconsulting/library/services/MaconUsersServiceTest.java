@@ -19,11 +19,11 @@ import static ru.maconconsulting.library.util.users.MaconUsersTestData.*;
 @ExtendWith(MockitoExtension.class)
 class MaconUsersServiceTest {
 
-    @Mock
-    private MaconUsersRepository maconUsersRepository;
-
     @InjectMocks
     private MaconUsersService maconUsersService;
+
+    @Mock
+    private MaconUsersRepository maconUsersRepository;
 
     @Test
     void findAll() {
