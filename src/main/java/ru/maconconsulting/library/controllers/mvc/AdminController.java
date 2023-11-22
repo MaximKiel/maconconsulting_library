@@ -13,18 +13,16 @@ import ru.maconconsulting.library.services.MaconUsersService;
 import ru.maconconsulting.library.utils.MaconUserValidator;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
-import java.util.stream.Collectors;
-
 @Controller
 @RequestMapping("/users")
-public class MaconUsersMvcController {
+public class AdminController {
 
     private final MaconUsersService maconUsersService;
     private final ModelMapper modelMapper;
     private final MaconUserValidator maconUserValidator;
 
     @Autowired
-    public MaconUsersMvcController(MaconUsersService maconUsersService, ModelMapper modelMapper, MaconUserValidator maconUserValidator) {
+    public AdminController(MaconUsersService maconUsersService, ModelMapper modelMapper, MaconUserValidator maconUserValidator) {
         this.maconUsersService = maconUsersService;
         this.modelMapper = modelMapper;
         this.maconUserValidator = maconUserValidator;
@@ -32,15 +30,14 @@ public class MaconUsersMvcController {
 
     @GetMapping
     public String getAllMaconUsers(Model model) {
-        model.addAttribute("maconUsers",
-                maconUsersService.findAll().stream().map(this::convertToMaconUserDTO).collect(Collectors.toList()));
+        model.addAttribute("maconUsers", maconUsersService.findAll());
         return "mvc/users/manage";
     }
 
     @GetMapping("/{login}")
     public String show(@PathVariable("login") String login, Model model) {
-        model.addAttribute("maconUser", convertToMaconUserDTO(maconUsersService.findByLogin(login)
-                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден"))));
+        model.addAttribute("maconUser", maconUsersService.findByLogin(login)
+                .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден")));
         return "mvc/users/show";
     }
 
@@ -67,13 +64,13 @@ public class MaconUsersMvcController {
     }
 
     @PatchMapping("/{login}")
-    public String update(@ModelAttribute("maconUser") @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult,
+    public String update(@ModelAttribute("maconUser") @Valid MaconUser maconUser, BindingResult bindingResult,
                          @PathVariable("login") String login) {
         if (bindingResult.hasErrors()) {
             return "mvc/users/edit";
         }
 
-        maconUsersService.update(login, convertToMaconUser(maconUserDTO));
+        maconUsersService.update(login, maconUser);
         return "redirect:/users";
     }
 
@@ -81,10 +78,6 @@ public class MaconUsersMvcController {
     public String delete(@PathVariable("login") String login) {
         maconUsersService.delete(login);
         return "redirect:/users";
-    }
-
-    private MaconUser convertToMaconUser(MaconUserDTO maconUserDTO) {
-        return modelMapper.map(maconUserDTO, MaconUser.class);
     }
 
     private MaconUserDTO convertToMaconUserDTO(MaconUser maconUser) {

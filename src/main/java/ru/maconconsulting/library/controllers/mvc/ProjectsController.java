@@ -16,14 +16,14 @@ import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
 @Controller
 @RequestMapping("/projects")
-public class ProjectsMvcController {
+public class ProjectsController {
 
     private final ProjectsService projectsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsMvcController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
