@@ -3,7 +3,6 @@ package ru.maconconsulting.library.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,12 +23,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeHttpRequest ->
+
+        http.userDetailsService(service)
+                .authorizeHttpRequests(authorizeHttpRequest ->
                         authorizeHttpRequest
-                                .requestMatchers("/auth/**").anonymous()
-                                .requestMatchers("/users/**").hasRole("ADMIN")
-                                .requestMatchers("/projects/**").hasAnyRole("USER", "MANAGER", "ADMIN")
-                                .anyRequest().permitAll()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/users", "/users/new", "/users/create").hasRole("ADMIN")
+                                .anyRequest().hasAnyRole("USER", "MANAGER", "ADMIN")
                 )
                 .formLogin((formLogin) -> formLogin
                         .usernameParameter("login")
@@ -44,10 +44,6 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/auth/login")
                 );
         return http.build();
-    }
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(service).passwordEncoder(getPasswordEncoder());
     }
 
     @Bean

@@ -18,17 +18,17 @@ public class MaconUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(maconUser.getRole().name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(this.maconUser.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return maconUser.getPassword();
+        return this.maconUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return maconUser.getLogin();
+        return this.maconUser.getLogin();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.maconconsulting.library.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.MaconUser;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class MaconUsersService {
 
     private final MaconUsersRepository maconUsersRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MaconUsersService(MaconUsersRepository maconUsersRepository) {
+    public MaconUsersService(MaconUsersRepository maconUsersRepository, PasswordEncoder passwordEncoder) {
         this.maconUsersRepository = maconUsersRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<MaconUser> findAll() {
@@ -35,6 +38,7 @@ public class MaconUsersService {
 
     @Transactional
     public void save(MaconUser maconUser) {
+        maconUser.setPassword(passwordEncoder.encode(maconUser.getPassword()));
         enrichMaconUser(maconUser);
         maconUsersRepository.save(maconUser);
     }
@@ -43,7 +47,7 @@ public class MaconUsersService {
     public void update(String login, MaconUser updatedMaconUser) {
         updatedMaconUser.setId(findByLogin(login).get().getId());
         updatedMaconUser.setCreatedAt(findByLogin(login).get().getCreatedAt());
-        updatedMaconUser.setPassword(findByLogin(login).get().getPassword());
+        updatedMaconUser.setPassword(passwordEncoder.encode(findByLogin(login).get().getPassword()));
         maconUsersRepository.save(updatedMaconUser);
     }
 
