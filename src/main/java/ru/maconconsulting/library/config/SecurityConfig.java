@@ -8,13 +8,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-
-
+//    https://www.youtube.com/watch?v=n1mDymDltt4
     @Bean
     SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
-                        .requestMatchers("/login").permitAll())
+                        .requestMatchers("/auth/**").anonymous())
                 .build();
     }
 }
