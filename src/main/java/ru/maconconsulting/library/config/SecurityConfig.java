@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .usernameParameter("login")
                         .passwordParameter("password")
                         .loginPage("/auth/login")
-                        .defaultSuccessUrl("/projects")
+                        .defaultSuccessUrl("/main")
                         .failureUrl("/auth/login?error")
                         .loginProcessingUrl("/process_login")
                 )
