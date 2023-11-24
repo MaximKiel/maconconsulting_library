@@ -3,57 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Изменение проекта</title>
-    <style>
-        #navbar ul{
-            display: none;
-            background-color: #f90;
-            position: absolute;
-            top: 100%;
-        }
-
-        #navbar, #navbar ul{
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-        }
-
-        #navbar {
-            height: 50px;
-            background-color: #666;
-            /*padding-left: 25px;*/
-            /*min-width: 470px;*/
-        }
-
-        #navbar li {
-            float: left;
-            position: relative;
-            height: 100%;
-        }
-
-        #navbar li a {
-            display: block;
-            padding: 6px;
-            width: 200px;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        #manage a {
-            font-family: "Arial Narrow", Arial, sans-serif;
-            color: black;
-            text-align: start;
-        }
-    </style>
-    <header>
-        <ul id="navbar">
-            <li><a href="/projects/search">Найти проект</a></li>
-            <li><a href="/projects/new">Добавить проект</a></li>
-            <li><a href="/users">Управление пользователями (только администратор)</a>
-        </ul>
-    </header>
 </head>
-<body id="manage">
+<body>
 
 <form th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
     <label for="number">Введите номер проекта: </label>

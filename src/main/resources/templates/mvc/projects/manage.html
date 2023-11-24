@@ -1,63 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Управление проектами</title>
-    <style>
-        #navbar ul{
-            display: none;
-            background-color: #f90;
-            position: absolute;
-            top: 100%;
-        }
-
-        #navbar, #navbar ul{
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-        }
-
-        #navbar {
-            height: 50px;
-            background-color: #666;
-            /*padding-left: 25px;*/
-            /*min-width: 470px;*/
-        }
-
-        #navbar li {
-            float: left;
-            position: relative;
-            height: 100%;
-        }
-
-        #navbar li a {
-            display: block;
-            padding: 6px;
-            width: 200px;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        #manage a {
-            font-family: "Arial Narrow", Arial, sans-serif;
-            color: black;
-            text-align: start;
-        }
-    </style>
-    <header>
-        <ul id="navbar">
-            <li><a href="/projects/search">Найти проект</a></li>
-            <li><a href="/projects/new">Добавить проект</a></li>
-            <li><a href="/users">Управление пользователями (только администратор)</a>
-        </ul>
-    </header>
+<!--    https://headers-css.vercel.app/header-8.html-->
+<!--    https://headers-css.vercel.app/-->
+    <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
 </head>
-<body id="manage">
-<a href="/projects/new">Добавить проект</a><br/>
-<!--<a href="/projects/search">Найти проект</a><br/>-->
-<form th:action="@{/logout}" th:method="POST">
-    <input type="submit" value="Logout"/>
-</form>
+<body>
+<header class="site-header">
+    <div class="wrapper site-header__wrapper">
+        <div class="site-header__start">
+            <a href="/main" class="brand">MACON LIBRARY</a>
+        </div>
+        <div class="site-header__middle">
+            <nav class="nav">
+                <button class="nav__toggle" aria-expanded="false" type="button">
+                    Меню
+                </button>
+                <ul class="nav__wrapper">
+                    <li class="nav__item"><a href="/projects/search">Найти проект</a></li>
+                    <li class="nav__item"><a href="/projects/new">Добавить проект</a></li>
+                    <li class="nav__item"><a href="/users">Управление пользователями (admin)</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="site-header__end">
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выйти"/>
+            </form>
+        </div>
+    </div>
+</header>
+<script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
 </html>
