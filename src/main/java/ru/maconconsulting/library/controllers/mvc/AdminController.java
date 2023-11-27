@@ -1,6 +1,5 @@
 package ru.maconconsulting.library.controllers.mvc;
 
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,7 +63,7 @@ public class AdminController {
     }
 
     @PatchMapping("/{login}")
-    public String update(@ModelAttribute("maconUser") @Valid MaconUser maconUser, BindingResult bindingResult,
+    public String update(@ModelAttribute("maconUser") MaconUser maconUser, BindingResult bindingResult,
                          @PathVariable("login") String login) {
         if (bindingResult.hasErrors()) {
             return "mvc/users/edit";

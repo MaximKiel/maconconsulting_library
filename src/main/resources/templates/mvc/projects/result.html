@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/table.css"  th:href="@{/css/table.css}"/>
 </head>
 <body>
 <header class="site-header">
@@ -33,10 +34,29 @@
     </div>
 </header>
 <p>Результаты поиска:</p>
-<div th:each="project : ${result}">
-  <a th:href="@{/projects/{number}(number=${project.getNumber()})}"
-     th:text="${project.getTitle()}">project</a>
-</div>
+<br/>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Название проекта</th>
+        <th>Заказчик</th>
+        <th>Сегменты рынка</th>
+        <th>Тип отчета</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${result}">
+        <td>
+            <a th:href="@{/projects/{number}(number=${project.getNumber()})}" th:target="_blank">
+            <p th:text="${project.getTitle()}">title</p>
+            </a>
+        </td>
+        <td th:text="${project.getClient()}">client</td>
+        <td th:text="${project.getSegments()}">segments</td>
+        <td th:text="${project.getType()}">type</td>
+    </tr>
+    </tbody>
+</table>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
 </html>
