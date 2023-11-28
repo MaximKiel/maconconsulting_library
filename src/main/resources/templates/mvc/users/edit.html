@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/form.css"  th:href="@{/css/form.css}"/>
 </head>
 <body>
 <header class="site-header">
@@ -32,7 +33,7 @@
         </div>
     </div>
 </header>
-<form th:method="PATCH" th:action="@{/users/{login}(login=${maconUser.getLogin()})}" th:object="${maconUser}">
+<form class="custom_form" th:method="PATCH" th:action="@{/users/{login}(login=${maconUser.getLogin()})}" th:object="${maconUser}">
     <label for="name">Введите имя: </label>
     <input type="text" th:field="*{name}" id="name">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>

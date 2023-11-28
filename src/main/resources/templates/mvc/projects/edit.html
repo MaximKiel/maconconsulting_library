@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/form.css"  th:href="@{/css/form.css}"/>
 </head>
 <body>
 <header class="site-header">
@@ -32,7 +33,7 @@
         </div>
     </div>
 </header>
-<form th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
+<form class="custom_form" th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
     <label for="number">Введите номер проекта: </label>
     <input type="text" th:field="*{number}" id="number">
     <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
