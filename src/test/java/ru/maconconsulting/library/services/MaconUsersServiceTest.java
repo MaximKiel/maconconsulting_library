@@ -11,6 +11,7 @@ import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.repositories.MaconUsersRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ru.maconconsulting.library.util.users.MaconUsersTestData.*;
 
@@ -38,14 +39,36 @@ class MaconUsersServiceTest {
 
     @Test
     void findByEmail() {
+        String userEmail = USER.getEmail();
+        Mockito.when(maconUsersRepository.findByEmail(userEmail)).thenReturn(Optional.of(USER));
+
+        Optional<MaconUser> actualUser = maconUsersService.findByEmail(userEmail);
+
+        Assertions.assertNotNull(actualUser.get());
+        Assertions.assertEquals(USER, actualUser.get());
     }
 
     @Test
     void findByLogin() {
+        String userLogin = USER.getLogin();
+        Mockito.when(maconUsersRepository.findByLogin(userLogin)).thenReturn(Optional.of(USER));
+
+        MaconUser actualUser = maconUsersService.findByLogin(userLogin).get();
+
+        Assertions.assertNotNull(actualUser);
+        Assertions.assertEquals(USER, actualUser);
     }
 
     @Test
     void save() {
+//        MaconUser newUser = new MaconUser("New user", "new", "new@mail.com", "new", Role.ROLE_USER);
+//        Mockito.when(maconUsersRepository.save(newUser)).thenReturn(newUser);
+//        maconUsersService.save(newUser);
+//
+//        MaconUser actualUser = maconUsersService.findByLogin("new").get();
+//
+//        Assertions.assertNotNull(actualUser);
+//        Assertions.assertEquals(newUser, actualUser);
     }
 
     @Test
