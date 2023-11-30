@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/table.css"  th:href="@{/css/table.css}"/>
 </head>
 <body>
 <header class="site-header">
@@ -32,15 +33,49 @@
         </div>
     </div>
 </header>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Показатель</th>
+        <th>Значение</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Номер проекта:</b></td>
+        <td><p th:text="${project.getNumber()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Год:</b></td>
+        <td><p th:text="${project.getYear()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Название:</b></td>
+        <td><p th:text="${project.getTitle()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Заказчик:</b></td>
+        <td><p th:text="${project.getClient()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Тип проекта:</b></td>
+        <td><p th:text="${project.getType()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Локация:</b></td>
+        <td><p th:text="${project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Сегменты рынка:</b></td>
+        <td><p th:text="${project.getSegments()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Тэги:</b></td>
+        <td><p th:text="${project.getTags()}">Value</p></td>
+    </tr>
+    </tbody>
+</table>
 <hr/>
-<p th:text="${'Номер проекта: ' + project.getNumber()}">Value</p>
-<p th:text="${'Год: ' + project.getYear()}">Value</p>
-<p th:text="${'Название: ' + project.getTitle()}">Value</p>
-<p th:text="${'Заказчик: ' + project.getClient()}">Value</p>
-<p th:text="${'Тип проекта: ' + project.getType()}">Value</p>
-<p th:text="${'Локация: ' + project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p>
-<p th:text="${'Сегменты рынка: ' + project.getSegments()}">Value</p>
-<p th:text="${'Тэги: ' + project.getTags()}">Value</p>
 
 <a th:href="@{/projects/{number}/edit(number=${project.getNumber()})}">Редактировать</a>
 
