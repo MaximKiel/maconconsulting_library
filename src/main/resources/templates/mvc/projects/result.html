@@ -40,6 +40,7 @@
         <th>Заказчик</th>
         <th>Сегменты рынка</th>
         <th>Тип отчета</th>
+        <th>Тэги</th>
     </tr>
     </thead>
     <tbody>
@@ -52,6 +53,7 @@
         <td th:text="${project.getClient()}">client</td>
         <td th:text="${project.getSegments()}">segments</td>
         <td th:text="${project.getType()}">type</td>
+        <td th:text="${project.getTags()}">tags</td>
     </tr>
     </tbody>
 </table>

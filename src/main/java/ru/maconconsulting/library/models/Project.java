@@ -30,11 +30,9 @@ public class Project extends AbstractBasedEntity {
     private String countries;
 
     @Column(name = "regions")
-    @NotBlank
     private String regions;
 
     @Column(name = "towns")
-    @NotBlank
     private String towns;
 
     @Column(name = "segments")
@@ -45,10 +43,13 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String type;
 
+    @Column(name = "tags")
+    private String tags;
+
     public Project() {
     }
 
-    public Project(Integer number, String title, String client, String countries, String regions, String towns, String segments, String type, Integer year) {
+    public Project(Integer number, String title, String client, String countries, String regions, String towns, String segments, String type, Integer year, String tags) {
         this.number = number;
         this.title = title;
         this.client = client;
@@ -58,6 +59,7 @@ public class Project extends AbstractBasedEntity {
         this.segments = segments;
         this.type = type;
         this.year = year;
+        this.tags = tags;
     }
 
     public Integer getNumber() {
@@ -132,6 +134,14 @@ public class Project extends AbstractBasedEntity {
         this.client = client;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -144,6 +154,7 @@ public class Project extends AbstractBasedEntity {
                 ", towns='" + towns + '\'' +
                 ", segments='" + segments + '\'' +
                 ", type='" + type + '\'' +
+                ", tags='" + tags + '\'' +
                 '}';
     }
 }

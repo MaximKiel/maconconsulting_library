@@ -46,8 +46,10 @@ public class ProjectsService {
 
     @Transactional
     public void update(int number, Project updatedProject) {
-        updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-        projectsRepository.save(updatedProject);
+        if (findByNumber(number).isPresent()) {
+            updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
+            projectsRepository.save(updatedProject);
+        }
     }
 
     @Transactional
@@ -81,6 +83,9 @@ public class ProjectsService {
         if (!searchProject.getType().equals("")) {
             result = searchElement(result, p -> p.getType().equals(searchProject.getType()));
         }
+        if (!searchProject.getTag().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getTags(), searchProject.getTag()));
+        }
         return result;
     }
 
@@ -93,9 +98,9 @@ public class ProjectsService {
     }
 
     private Boolean searchPluralString(String pluralString, String searchString) {
-        String[] countries = pluralString.split(SPLIT_FOR_SEARCH);
-        for (String country : countries) {
-            if (country.equals(searchString)) {
+        String[] strings = pluralString.split(SPLIT_FOR_SEARCH);
+        for (String s : strings) {
+            if (s.equals(searchString)) {
                 return true;
             }
         }

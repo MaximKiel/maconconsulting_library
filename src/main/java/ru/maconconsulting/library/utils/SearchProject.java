@@ -18,10 +18,12 @@ public class SearchProject {
 
     private String type;
 
+    private String tag;
+
     public SearchProject() {
     }
 
-    public SearchProject(int number, int year, String title, String country, String region, String town, String segment, String type) {
+    public SearchProject(int number, int year, String title, String country, String region, String town, String segment, String type, String tag) {
         this.number = number;
         this.year = year;
         this.title = title;
@@ -30,6 +32,7 @@ public class SearchProject {
         this.town = town;
         this.segment = segment;
         this.type = type;
+        this.tag = tag;
     }
 
     public int getNumber() {
@@ -94,5 +97,13 @@ public class SearchProject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

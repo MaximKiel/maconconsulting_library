@@ -40,6 +40,7 @@
 <p th:text="${'Тип проекта: ' + project.getType()}">Value</p>
 <p th:text="${'Локация: ' + project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p>
 <p th:text="${'Сегменты рынка: ' + project.getSegments()}">Value</p>
+<p th:text="${'Тэги: ' + project.getTags()}">Value</p>
 
 <a th:href="@{/projects/{number}/edit(number=${project.getNumber()})}">Редактировать</a>
 

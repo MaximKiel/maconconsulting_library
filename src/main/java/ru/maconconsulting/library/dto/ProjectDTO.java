@@ -1,7 +1,5 @@
 package ru.maconconsulting.library.dto;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.FetchType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,26 +18,24 @@ public class ProjectDTO {
     private String client;
 
     @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
     private String countries;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     private String regions;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     private String towns;
 
     @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
     private String segments;
 
     @NotNull
     private String type;
 
+    private String tags;
+
     public ProjectDTO() {
     }
 
-    public ProjectDTO(Integer number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type) {
+    public ProjectDTO(Integer number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String tags) {
         this.number = number;
         this.year = year;
         this.title = title;
@@ -49,6 +45,7 @@ public class ProjectDTO {
         this.towns = towns;
         this.segments = segments;
         this.type = type;
+        this.tags = tags;
     }
 
     public Integer getNumber() {
@@ -121,5 +118,13 @@ public class ProjectDTO {
 
     public void setClient(String client) {
         this.client = client;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }
