@@ -66,7 +66,7 @@ public class ProjectsService {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
         if (!searchProject.getTitle().equals("")) {
-            result = searchElement(result, p -> p.getTitle().equals(searchProject.getTitle()));
+            result = searchElement(result, p -> p.getTitle().equalsIgnoreCase(searchProject.getTitle()));
         }
         if (!searchProject.getCountry().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getCountries(), searchProject.getCountry()));
@@ -81,7 +81,7 @@ public class ProjectsService {
             result = searchElement(result, p -> searchPluralString(p.getSegments(), searchProject.getSegment()));
         }
         if (!searchProject.getType().equals("")) {
-            result = searchElement(result, p -> p.getType().equals(searchProject.getType()));
+            result = searchElement(result, p -> p.getType().equalsIgnoreCase(searchProject.getType()));
         }
         if (!searchProject.getTag().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getTags(), searchProject.getTag()));
@@ -100,7 +100,7 @@ public class ProjectsService {
     private Boolean searchPluralString(String pluralString, String searchString) {
         String[] strings = pluralString.split(SPLIT_FOR_SEARCH);
         for (String s : strings) {
-            if (s.equals(searchString)) {
+            if (s.equalsIgnoreCase(searchString)) {
                 return true;
             }
         }

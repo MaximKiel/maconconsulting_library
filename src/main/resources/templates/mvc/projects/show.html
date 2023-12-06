@@ -63,7 +63,11 @@
     </tr>
     <tr>
         <td><b>Локация:</b></td>
-        <td><p th:text="${project.getCountries() + ', ' + project.getRegions() + ', ' + project.getTowns()}">Value</p></td>
+        <td>
+            <p th:text="${project.getCountries()}">Value</p>
+            <p th:text="${project.getRegions()}">Value</p>
+            <p th:text="${project.getTowns()}">Value</p>
+        </td>
     </tr>
     <tr>
         <td><b>Сегменты рынка:</b></td>
