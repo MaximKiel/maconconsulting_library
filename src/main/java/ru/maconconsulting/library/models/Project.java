@@ -11,7 +11,7 @@ public class Project extends AbstractBasedEntity {
     @Id
     @Column(name = "number")
     @NotNull
-    private Integer number;
+    private String number;
 
     @Column(name = "year")
     @NotNull
@@ -49,7 +49,7 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(Integer number, String title, String client, String countries, String regions, String towns, String segments, String type, Integer year, String tags) {
+    public Project(String number, String title, String client, String countries, String regions, String towns, String segments, String type, Integer year, String tags) {
         this.number = number;
         this.title = title;
         this.client = client;
@@ -62,11 +62,11 @@ public class Project extends AbstractBasedEntity {
         this.tags = tags;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

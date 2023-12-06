@@ -30,7 +30,7 @@ public class ProjectsService {
         return projectsRepository.findAll();
     }
 
-    public Optional<Project> findByNumber(int number) {
+    public Optional<Project> findByNumber(String number) {
         return projectsRepository.findByNumber(number);
     }
 
@@ -45,7 +45,7 @@ public class ProjectsService {
     }
 
     @Transactional
-    public void update(int number, Project updatedProject) {
+    public void update(String number, Project updatedProject) {
         if (findByNumber(number).isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
             projectsRepository.save(updatedProject);
@@ -53,14 +53,14 @@ public class ProjectsService {
     }
 
     @Transactional
-    public void delete(int number) {
-        projectsRepository.deleteById(number);
+    public void delete(String number) {
+        projectsRepository.deleteByNumber(number);
     }
 
     public List<Project> search(SearchProject searchProject) {
         List<Project> result = findAll();
-        if (searchProject.getNumber() != 0) {
-            result = searchElement(result, p -> p.getNumber().equals(searchProject.getNumber()));
+        if (!searchProject.getNumber().equals("")) {
+            result = searchElement(result, p -> p.getNumber().equalsIgnoreCase(searchProject.getNumber()));
         }
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));

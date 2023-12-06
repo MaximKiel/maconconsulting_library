@@ -43,7 +43,7 @@ public class ProjectsRestController {
     }
 
     @GetMapping("/{number}")
-    public ProjectDTO getProject(@PathVariable("number") int number) {
+    public ProjectDTO getProject(@PathVariable("number") String number) {
         return convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден")));
     }
@@ -67,13 +67,13 @@ public class ProjectsRestController {
 
     @DeleteMapping("/{number}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("number") int number) {
+    public void delete(@PathVariable("number") String number) {
         projectsService.delete(number);
     }
 
     @PatchMapping(value = "/edit/{number}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("number") int number, @RequestBody @Valid ProjectDTO projectDTO) {
+    public void update(@PathVariable("number") String number, @RequestBody @Valid ProjectDTO projectDTO) {
         projectsService.update(number, convertToProject(projectDTO));
     }
 

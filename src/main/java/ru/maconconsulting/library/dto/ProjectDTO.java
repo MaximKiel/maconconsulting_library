@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public class ProjectDTO {
 
     @NotNull
-    private Integer number;
+    private String number;
 
     @NotNull
     private Integer year;
@@ -35,7 +35,7 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(Integer number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String tags) {
+    public ProjectDTO(String number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String tags) {
         this.number = number;
         this.year = year;
         this.title = title;
@@ -48,11 +48,11 @@ public class ProjectDTO {
         this.tags = tags;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

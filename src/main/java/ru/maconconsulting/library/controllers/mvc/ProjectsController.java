@@ -35,7 +35,7 @@ public class ProjectsController {
     }
 
     @GetMapping("/{number}")
-    public String show(@PathVariable("number") int number, Model model) {
+    public String show(@PathVariable("number") String number, Model model) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден"))));
         return "mvc/projects/show";
@@ -57,7 +57,7 @@ public class ProjectsController {
     }
 
     @GetMapping("/{number}/edit")
-    public String edit(Model model, @PathVariable("number") int number) {
+    public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", projectsService.findByNumber(number)
                 .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден")));
         return "mvc/projects/edit";
@@ -65,7 +65,7 @@ public class ProjectsController {
 
     @PatchMapping("/{number}")
     public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
-                         @PathVariable("number") int number) {
+                         @PathVariable("number") String number) {
         if (bindingResult.hasErrors()) {
             return "mvc/projects/edit";
         }
@@ -75,7 +75,7 @@ public class ProjectsController {
     }
 
     @DeleteMapping("/{number}")
-    public String delete(@PathVariable("number") int number) {
+    public String delete(@PathVariable("number") String number) {
         projectsService.delete(number);
         return "redirect:/projects";
     }
