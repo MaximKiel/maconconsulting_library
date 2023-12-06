@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.util.users;
+package ru.maconconsulting.library.util;
 
 import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.models.Role;
