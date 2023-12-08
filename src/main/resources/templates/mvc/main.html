@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
-    <!--    https://headers-css.vercel.app/header-8.html-->
-    <!--    https://headers-css.vercel.app/-->
     <link rel="stylesheet" type="text/css" href="/static/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"  th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/static/css/header.css"  th:href="@{/css/header.css}"/>
@@ -34,11 +32,7 @@
         </div>
     </div>
 </header>
-<div>
-    <a href="/projects/search">Найти проект</a><br/>
-    <a href="/projects/new">Добавить проект</a><br/>
-    <a href="/users">Управление пользователями (только администратор)</a><br/>
-</div>
+<p>Выберите действие в меню сверху</p>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
 </html>
