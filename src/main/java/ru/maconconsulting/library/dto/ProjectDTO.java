@@ -30,12 +30,15 @@ public class ProjectDTO {
     @NotNull
     private String type;
 
+    @NotBlank
+    private String formats;
+
     private String tags;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String tags) {
+    public ProjectDTO(String number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String formats, String tags) {
         this.number = number;
         this.year = year;
         this.title = title;
@@ -45,6 +48,7 @@ public class ProjectDTO {
         this.towns = towns;
         this.segments = segments;
         this.type = type;
+        this.formats=formats;
         this.tags = tags;
     }
 
@@ -126,5 +130,13 @@ public class ProjectDTO {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public String getFormats() {
+        return formats;
+    }
+
+    public void setFormats(String formats) {
+        this.formats = formats;
     }
 }

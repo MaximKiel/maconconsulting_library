@@ -66,7 +66,11 @@
     <input type="text" th:field="*{type}" id="type">
     <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
     <br/>
-    <label for="type">Введите тэг для поиска: </label>
+    <label for="format">Введите формат проекта: </label>
+    <input type="text" th:field="*{format}" id="format">
+    <div style="color: red" th:if="${#fields.hasErrors('format')}" th:errors="*{format}">format error</div>
+    <br/>
+    <label for="tag">Введите тэг для поиска: </label>
     <input type="text" th:field="*{tag}" id="tag">
     <div style="color: red" th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}">tag error</div>
     <br/>

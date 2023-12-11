@@ -80,6 +80,13 @@
     <br/>
     <p style="color: gray; font-style: italic">Названия для распространенных типов: Маркетинг, Доходная часть, Концепция, Аудит концепции, Бизнес план, Квартальный отчет</p>
     <br/>
+    <label for="formats">Введите форматы отчета проекта: </label>
+    <input type="text" th:field="*{formats}" id="formats"
+           placeholder="Если форматов несколько, вводите их через запятую с пробелом: 'Word, Excel'">
+    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
+    <br/>
+    <p style="color: gray; font-style: italic">Названия для распространенных форматов: Word, Publisher, PowerPoint, Excel</p>
+    <br/>
     <label for="tags">Введите тэги (ключевые слова): </label>
     <input type="text" th:field="*{tags}" id="tags"
            placeholder="Если тэгов несколько, вводите их через запятую с пробелом: 'Доверительное управление, Потребительские предпочтения'">
