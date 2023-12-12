@@ -72,7 +72,7 @@
            placeholder="Если сегментов несколько, вводите их через запятую с пробелом: 'МЖС, Гостиницы, Офисы'">
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады</p>
+    <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады, ЗУ</p>
     <br/>
     <label for="type">Введите тип проекта: </label>
     <input type="text" th:field="*{type}" id="type">
