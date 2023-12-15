@@ -62,13 +62,19 @@
     <input type="text" th:field="*{segment}" id="segment">
     <div style="color: red" th:if="${#fields.hasErrors('segment')}" th:errors="*{segment}">segment error</div>
     <br/>
+    <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады, ЗУ</p>
+    <br/>
     <label for="type">Введите тип проекта: </label>
     <input type="text" th:field="*{type}" id="type">
     <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
     <br/>
+    <p style="color: gray; font-style: italic">Названия для распространенных типов: Маркетинг, Доходная часть, Концепция, Аудит концепции, Бизнес план, Квартальный отчет</p>
+    <br/>
     <label for="format">Введите формат проекта: </label>
     <input type="text" th:field="*{format}" id="format">
     <div style="color: red" th:if="${#fields.hasErrors('format')}" th:errors="*{format}">format error</div>
+    <br/>
+    <p style="color: gray; font-style: italic">Названия для распространенных форматов: Word, Publisher, PowerPoint, Excel</p>
     <br/>
     <label for="tag">Введите тэг для поиска: </label>
     <input type="text" th:field="*{tag}" id="tag">
