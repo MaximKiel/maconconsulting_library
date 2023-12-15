@@ -101,6 +101,9 @@ public class ProjectsService {
     }
 
     private Boolean searchPluralString(String pluralString, String searchString) {
+        if (pluralString == null) {
+            return false;
+        }
         String[] strings = pluralString.split(SPLIT_FOR_SEARCH);
         for (String s : strings) {
             if (s.equalsIgnoreCase(searchString)) {
