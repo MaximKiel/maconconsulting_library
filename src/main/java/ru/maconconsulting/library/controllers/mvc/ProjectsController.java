@@ -2,6 +2,8 @@ package ru.maconconsulting.library.controllers.mvc;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 @RequestMapping("/projects")
 public class ProjectsController {
 
+    public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
     private final ProjectsService projectsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
@@ -31,11 +34,13 @@ public class ProjectsController {
 
     @GetMapping
     public String getAllProjects() {
+        log.info("Go to mvc/projects/manage");
         return "mvc/projects/manage";
     }
 
     @GetMapping("/{number}")
     public String show(@PathVariable("number") String number, Model model) {
+        log.info("Go to mvc/projects/show");
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден"))));
         return "mvc/projects/show";
@@ -43,6 +48,7 @@ public class ProjectsController {
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO) {
+        log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
 
@@ -50,9 +56,11 @@ public class ProjectsController {
     public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+            log.info("Go to mvc/projects/new");
             return "mvc/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
+        log.info("Go to redirect:/projects");
         return "redirect:/projects";
     }
 
@@ -60,6 +68,7 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", projectsService.findByNumber(number)
                 .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден")));
+        log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
 
@@ -67,21 +76,25 @@ public class ProjectsController {
     public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
                          @PathVariable("number") String number) {
         if (bindingResult.hasErrors()) {
+            log.info("Go to mvc/projects/edit");
             return "mvc/projects/edit";
         }
 
         projectsService.update(number, convertToProject(projectDTO));
+        log.info("Go to redirect:/projects");
         return "redirect:/projects";
     }
 
     @DeleteMapping("/{number}")
     public String delete(@PathVariable("number") String number) {
         projectsService.delete(number);
+        log.info("Go to redirect:/projects");
         return "redirect:/projects";
     }
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchProject") SearchProject searchProject) {
+        log.info("Go to mvc/projects/search");
         return "mvc/projects/search";
     }
 
@@ -89,9 +102,11 @@ public class ProjectsController {
     public String showSearchResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            log.info("Go to mvc/projects/search");
             return "mvc/projects/search";
         }
         model.addAttribute("result", projectsService.search(searchProject));
+        log.info("Go to mvc/projects/result");
         return "mvc/projects/result";
     }
 
