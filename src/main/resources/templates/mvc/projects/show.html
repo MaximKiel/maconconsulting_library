@@ -87,7 +87,8 @@
 
 <a th:href="@{/projects/{number}/edit(number=${project.getNumber()})}">Редактировать</a>
 
-<form th:method="DELETE" th:action="@{/projects/{number}(number=${project.getNumber()})}">
+<form th:method="DELETE" th:action="@{/projects/{number}(number=${project.getNumber()})}"
+      onclick="return confirm('Вы подтверждаете удаление?')">
     <input type="submit" value="Удалить">
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>

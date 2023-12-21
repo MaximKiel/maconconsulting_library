@@ -54,7 +54,8 @@
             <a th:href="@{/users/{login}/edit(login=${maconUser.getLogin()})}">Редактировать</a>
         </td>
         <td>
-            <form th:method="DELETE" th:action="@{/users/{login}(login=${maconUser.getLogin()})}">
+            <form th:method="DELETE" th:action="@{/users/{login}(login=${maconUser.getLogin()})}"
+                  onclick="return confirm('Вы подтверждаете удаление?')">
                 <input type="submit" value="Удалить">
             </form>
         </td>
