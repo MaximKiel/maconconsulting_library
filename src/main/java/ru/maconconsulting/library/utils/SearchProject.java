@@ -2,8 +2,6 @@ package ru.maconconsulting.library.utils;
 
 public class SearchProject {
 
-    private String number;
-
     private int year;
 
     private String title;
@@ -24,8 +22,7 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(String number, int year, String title, String country, String region, String town, String segment, String type, String format, String tag) {
-        this.number = number;
+    public SearchProject(int year, String title, String country, String region, String town, String segment, String type, String format, String tag) {
         this.year = year;
         this.title = title;
         this.country = country;
@@ -35,14 +32,6 @@ public class SearchProject {
         this.type = type;
         this.format=format;
         this.tag = tag;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public int getYear() {

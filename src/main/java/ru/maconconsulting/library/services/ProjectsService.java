@@ -59,9 +59,6 @@ public class ProjectsService {
 
     public List<Project> search(SearchProject searchProject) {
         List<Project> result = findAll();
-        if (!searchProject.getNumber().equals("")) {
-            result = searchElement(result, p -> p.getNumber().equalsIgnoreCase(searchProject.getNumber()));
-        }
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
