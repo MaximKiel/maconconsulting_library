@@ -42,6 +42,10 @@
     <input type="text" th:field="*{title}" id="title">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
+    <label for="client">Введите наименование заказчика: </label>
+    <input type="text" th:field="*{client}" id="client">
+    <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
+    <br/>
     <label for="country">Введите название страны: </label>
     <input type="text" th:field="*{country}" id="country">
     <div style="color: red" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">country error</div>

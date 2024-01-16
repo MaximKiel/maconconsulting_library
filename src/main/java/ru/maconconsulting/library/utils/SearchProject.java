@@ -6,6 +6,8 @@ public class SearchProject {
 
     private String title;
 
+    private String client;
+
     private String country;
 
     private String region;
@@ -22,9 +24,10 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String title, String country, String region, String town, String segment, String type, String format, String tag) {
+    public SearchProject(int year, String title, String client, String country, String region, String town, String segment, String type, String format, String tag) {
         this.year = year;
         this.title = title;
+        this.client = client;
         this.country = country;
         this.region = region;
         this.town = town;
@@ -48,6 +51,14 @@ public class SearchProject {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 
     public String getCountry() {
