@@ -52,17 +52,17 @@
     <input type="text" th:field="*{client}" id="client">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
-    <label for="countries">Введите страны: </label>
+    <label for="countries">Введите название стран: </label>
     <input type="text" th:field="*{countries}" id="countries"
            placeholder="Если стран несколько, вводите их через запятую с пробелом: 'Россия, Армения, Казахстан'">
     <div style="color: red" th:if="${#fields.hasErrors('countries')}" th:errors="*{countries}">countries error</div>
     <br/>
-    <label for="regions">Введите регионы: </label>
+    <label for="regions">Введите название субъектов (регионов): </label>
     <input type="text" th:field="*{regions}" id="regions"
            placeholder="Если регионов несколько, вводите их через запятую с пробелом: 'Краснодарский край, Ростовская область'">
     <div style="color: red" th:if="${#fields.hasErrors('regions')}" th:errors="*{regions}">regions error</div>
     <br/>
-    <label for="towns">Введите города: </label>
+    <label for="towns">Введите название городов (муниципальных образований): </label>
     <input type="text" th:field="*{towns}" id="towns"
            placeholder="Если городов несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Геленджик'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
