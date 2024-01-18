@@ -4,6 +4,8 @@ public class SearchProject {
 
     private int year;
 
+    private String relevance;
+
     private String title;
 
     private String client;
@@ -24,8 +26,9 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String title, String client, String country, String region, String town, String segment, String type, String format, String tag) {
+    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, String segment, String type, String format, String tag) {
         this.year = year;
+        this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.country = country;
@@ -33,7 +36,7 @@ public class SearchProject {
         this.town = town;
         this.segment = segment;
         this.type = type;
-        this.format=format;
+        this.format = format;
         this.tag = tag;
     }
 
@@ -43,6 +46,14 @@ public class SearchProject {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getRelevance() {
+        return relevance;
+    }
+
+    public void setRelevance(String relevance) {
+        this.relevance = relevance;
     }
 
     public String getTitle() {

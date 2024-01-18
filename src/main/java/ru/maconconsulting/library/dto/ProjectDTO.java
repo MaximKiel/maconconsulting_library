@@ -11,6 +11,8 @@ public class ProjectDTO {
     @NotNull
     private Integer year;
 
+    private String relevance;
+
     @NotBlank
     private String title;
 
@@ -38,9 +40,10 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String title, String client, String countries, String regions, String towns, String segments, String type, String formats, String tags) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, String type, String formats, String tags) {
         this.number = number;
         this.year = year;
+        this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.countries = countries;
@@ -48,7 +51,7 @@ public class ProjectDTO {
         this.towns = towns;
         this.segments = segments;
         this.type = type;
-        this.formats=formats;
+        this.formats = formats;
         this.tags = tags;
     }
 
@@ -66,6 +69,14 @@ public class ProjectDTO {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getRelevance() {
+        return relevance;
+    }
+
+    public void setRelevance(String relevance) {
+        this.relevance = relevance;
     }
 
     public String getTitle() {

@@ -63,8 +63,8 @@ class ProjectsServiceTest {
 
     @Test
     void save() {
-        Project newProject = new Project("23200", "23200_New", "Client new", "Россия",
-                "Край", "Город", "МЖС", "Маркетинг", 2023, "Word", "");
+        Project newProject = new Project("23200", 2023, "12.2023", "23200_New", "Client new", "Россия",
+                "Край", "Город", "МЖС", "Маркетинг", "Word", "");
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
 
         projectsService.save(newProject);
@@ -97,8 +97,7 @@ class ProjectsServiceTest {
 
     @Test
     void search() {
-        SearchProject searchProject = new SearchProject(2023,
-                "", "", "", "", "", "МЖС", "", "", "");
+        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", "МЖС", "", "", "");
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.search(searchProject);
