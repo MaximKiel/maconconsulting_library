@@ -70,12 +70,18 @@
     <br/>
     <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады, ЗУ</p>
     <br/>
-    <label for="type">Введите тип проекта: </label>
-    <input type="text" th:field="*{type}" id="type">
-    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
-    <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных типов: Маркетинг, Доходная часть, Концепция, Аудит концепции, Бизнес план, Квартальный отчет</p>
-    <br/>
+    <label for="type">Выберите тип проекта: </label>
+    <select th:field="*{type}" id="type">
+        <option th:value="''"></option>
+        <option th:value="'Аудит концепции'">Аудит концепции</option>
+        <option th:value="'Бизнес план'">Бизнес план</option>
+        <option th:value="'Маркетинг'">Маркетинг</option>
+        <option th:value="'Конкурентный анализ'">Конкурентный анализ</option>
+        <option th:value="'Прогноз доходной части'">Прогноз доходной части</option>
+        <option th:value="'Разработка концепции'">Разработка концепции</option>
+        <option th:value="'Определение рыночной стоимости'">Определение рыночной стоимости</option>
+        <option th:value="'Оценка доходности'">Оценка доходности</option>
+    </select>
     <label for="format">Введите формат отчета проекта: </label>
     <input type="text" th:field="*{format}" id="format">
     <div style="color: red" th:if="${#fields.hasErrors('format')}" th:errors="*{format}">format error</div>
