@@ -62,6 +62,9 @@ public class ProjectsService {
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
+        if (!searchProject.getRelevance().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getRelevance(), searchProject.getRelevance()));
+        }
         if (!searchProject.getTitle().equals("")) {
             result = searchElement(result, p -> p.getTitle().equalsIgnoreCase(searchProject.getTitle()));
         }
