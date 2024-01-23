@@ -42,9 +42,12 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String segments;
 
-    @Column(name = "type")
-    @NotBlank
-    private String type;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private ProjectType type;
+//    @Column(name = "type")
+//    @NotBlank
+//    private String type;
 
     @Column(name = "formats")
     @NotBlank
@@ -56,7 +59,7 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, String type, String formats, String tags) {
+    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, String formats, String tags) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -66,7 +69,6 @@ public class Project extends AbstractBasedEntity {
         this.regions = regions;
         this.towns = towns;
         this.segments = segments;
-        this.type = type;
         this.formats = formats;
         this.tags = tags;
     }
@@ -127,14 +129,6 @@ public class Project extends AbstractBasedEntity {
         this.segments = segments;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Integer getYear() {
         return year;
     }
@@ -167,19 +161,27 @@ public class Project extends AbstractBasedEntity {
         this.formats = formats;
     }
 
+    public ProjectType getType() {
+        return type;
+    }
+
+    public void setType(ProjectType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
                 "number='" + number + '\'' +
-                ", year=" + year + '\'' +
-                ", relevance=" + relevance + '\'' +
+                ", year=" + year +
+                ", relevance='" + relevance + '\'' +
                 ", title='" + title + '\'' +
                 ", client='" + client + '\'' +
                 ", countries='" + countries + '\'' +
                 ", regions='" + regions + '\'' +
                 ", towns='" + towns + '\'' +
                 ", segments='" + segments + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", formats='" + formats + '\'' +
                 ", tags='" + tags + '\'' +
                 '}';
