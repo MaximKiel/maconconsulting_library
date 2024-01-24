@@ -13,7 +13,6 @@ import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.ProjectType;
 import ru.maconconsulting.library.services.ProjectTypesService;
 import ru.maconconsulting.library.utils.ProjectTypeValidator;
-import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
 @Controller
 @RequestMapping("/types")
@@ -36,14 +35,6 @@ public class ProjectTypesController {
         model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/types/manage");
         return "mvc/types/manage";
-    }
-
-    @GetMapping("/{name}")
-    public String getType(@PathVariable("name") String name, Model model) {
-        log.info("Go to mvc/types/show");
-        model.addAttribute("type", convertToProjectTypeDTO(projectTypesService.findByName(name)
-                .orElseThrow(() -> new MaconUserNotFoundException("Тип " + name + " не найден"))));
-        return "mvc/types/show";
     }
 
     @GetMapping("/new")
@@ -73,9 +64,5 @@ public class ProjectTypesController {
 
     private ProjectType convertToProjectType(ProjectTypeDTO typeDTO) {
         return modelMapper.map(typeDTO, ProjectType.class);
-    }
-
-    private ProjectTypeDTO convertToProjectTypeDTO(ProjectType type) {
-        return modelMapper.map(type, ProjectTypeDTO.class);
     }
 }
