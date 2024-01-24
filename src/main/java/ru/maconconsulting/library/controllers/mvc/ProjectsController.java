@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
+import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;
@@ -47,13 +48,15 @@ public class ProjectsController {
     }
 
     @GetMapping("/new")
-    public String newProject(@ModelAttribute("project") ProjectDTO projectDTO) {
+    public String newProject(@ModelAttribute("project") ProjectDTO projectDTO,
+                             @ModelAttribute("typeDTO") ProjectTypeDTO typeDTO) {
         log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
+    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO,
+                         @ModelAttribute("typeDTO") ProjectTypeDTO typeDTO, BindingResult bindingResult) {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/projects/new");

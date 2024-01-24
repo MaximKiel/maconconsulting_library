@@ -40,7 +40,7 @@ public class ProjectsService {
 
     @Transactional
     public void save(Project project) {
-        enrichProject(project);
+        project.setCreatedAt(LocalDateTime.now());
         projectsRepository.save(project);
     }
 
@@ -48,6 +48,7 @@ public class ProjectsService {
     public void update(String number, Project updatedProject) {
         if (findByNumber(number).isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
+            updatedProject.setType(findByNumber(number).get().getType());
             projectsRepository.save(updatedProject);
         }
     }
@@ -93,10 +94,6 @@ public class ProjectsService {
             result = searchElement(result, p -> searchPluralString(p.getTags(), searchProject.getTag()));
         }
         return result;
-    }
-
-    private void enrichProject(Project project) {
-        project.setCreatedAt(LocalDateTime.now());
     }
 
     private List<Project> searchElement(List<Project> source, Predicate<Project> predicate) {
