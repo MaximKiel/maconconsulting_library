@@ -1,5 +1,7 @@
 package ru.maconconsulting.library.utils;
 
+import ru.maconconsulting.library.dto.ProjectTypeDTO;
+
 public class SearchProject {
 
     private int year;
@@ -18,7 +20,7 @@ public class SearchProject {
 
     private String segment;
 
-    private String type;
+    private ProjectTypeDTO type;
 
     private String format;
     private String tag;
@@ -26,7 +28,7 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, String segment, String type, String format, String tag) {
+    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, String segment, ProjectTypeDTO type, String format, String tag) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -104,11 +106,11 @@ public class SearchProject {
         this.segment = segment;
     }
 
-    public String getType() {
+    public ProjectTypeDTO getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ProjectTypeDTO type) {
         this.type = type;
     }
 

@@ -84,9 +84,9 @@ public class ProjectsService {
         if (!searchProject.getSegment().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getSegments(), searchProject.getSegment()));
         }
-//        if (!searchProject.getType().equals("")) {
-//            result = searchElement(result, p -> p.getType().equalsIgnoreCase(searchProject.getType()));
-//        }
+        if (searchProject.getType() != null) {
+            result = searchElement(result, p -> p.getType().getName().equals(searchProject.getType().getName()));
+        }
         if (!searchProject.getFormat().equals("")) {
             result = searchElement(result, p -> p.getFormats().equalsIgnoreCase(searchProject.getFormat()));
         }
