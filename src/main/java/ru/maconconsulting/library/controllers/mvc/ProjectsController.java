@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
-import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.services.ProjectTypesService;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;
 import ru.maconconsulting.library.utils.SearchProject;
@@ -23,12 +23,14 @@ public class ProjectsController {
 
     public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
     private final ProjectsService projectsService;
+    private final ProjectTypesService projectTypesService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, ProjectTypesService projectTypesService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
+        this.projectTypesService = projectTypesService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
     }
@@ -48,15 +50,14 @@ public class ProjectsController {
     }
 
     @GetMapping("/new")
-    public String newProject(@ModelAttribute("project") ProjectDTO projectDTO,
-                             @ModelAttribute("typeDTO") ProjectTypeDTO typeDTO) {
+    public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
+        model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO,
-                         @ModelAttribute("typeDTO") ProjectTypeDTO typeDTO, BindingResult bindingResult) {
+    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/projects/new");
@@ -71,6 +72,7 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", projectsService.findByNumber(number)
                 .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден")));
+        model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
@@ -96,7 +98,8 @@ public class ProjectsController {
     }
 
     @GetMapping("/search")
-    public String search(@ModelAttribute("searchProject") SearchProject searchProject) {
+    public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
+        model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/projects/search");
         return "mvc/projects/search";
     }
