@@ -18,11 +18,4 @@ public class ProjectTypeDTO {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "ProjectTypeDTO{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 }

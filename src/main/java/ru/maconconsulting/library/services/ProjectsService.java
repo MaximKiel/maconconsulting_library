@@ -84,6 +84,7 @@ public class ProjectsService {
         if (!searchProject.getSegment().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getSegments(), searchProject.getSegment()));
         }
+//        TODO: fix the search bug
         if (searchProject.getType() != null) {
             result = searchElement(result, p -> p.getType().getName().equals(searchProject.getType().getName()));
         }

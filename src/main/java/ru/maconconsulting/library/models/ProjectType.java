@@ -56,9 +56,7 @@ public class ProjectType extends AbstractBasedEntity {
     @Override
     public String toString() {
         return "ProjectType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", projects=" + projects +
+                ", name='" + name +
                 '}';
     }
 }
