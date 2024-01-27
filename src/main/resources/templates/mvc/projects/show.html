@@ -63,13 +63,15 @@
     </tr>
     <tr>
         <td><b>Тип проекта:</b></td>
-        <td><p th:text="${project.getType()}">Value</p></td>
+        <td><p th:text="${project.getType().getName()}">Value</p></td>
     </tr>
     <tr>
         <td><b>Локация:</b></td>
         <td>
             <p th:text="${project.getCountries()}">Value</p>
+            <br/>
             <p th:text="${project.getRegions()}">Value</p>
+            <br/>
             <p th:text="${project.getTowns()}">Value</p>
         </td>
     </tr>

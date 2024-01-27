@@ -52,7 +52,7 @@
         </td>
         <td th:text="${project.getClient()}">client</td>
         <td th:text="${project.getSegments()}">segments</td>
-        <td th:text="${project.getType()}">type</td>
+        <td th:text="${project.getType().getName()}">type</td>
         <td th:text="${project.getTags()}">tags</td>
     </tr>
     </tbody>

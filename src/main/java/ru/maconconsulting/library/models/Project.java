@@ -45,9 +45,6 @@ public class Project extends AbstractBasedEntity {
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ProjectType type;
-//    @Column(name = "type")
-//    @NotBlank
-//    private String type;
 
     @Column(name = "formats")
     @NotBlank

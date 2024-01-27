@@ -72,7 +72,8 @@
     <br/>
     <label for="type">Выберите тип проекта: </label>
     <select th:field="*{type}" id="type">
-        <option th:each="type : ${types}" th:value="${type}" th:text="${type.getName()}"></option>
+        <option value=""></option>
+        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
     <label for="format">Введите формат отчета проекта: </label>
     <input type="text" th:field="*{format}" id="format">

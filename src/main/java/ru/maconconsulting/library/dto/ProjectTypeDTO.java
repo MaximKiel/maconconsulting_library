@@ -7,6 +7,9 @@ public class ProjectTypeDTO {
     @NotBlank
     private String name;
 
+    public ProjectTypeDTO() {
+    }
+
     public ProjectTypeDTO(String name) {
         this.name = name;
     }
