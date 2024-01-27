@@ -19,7 +19,8 @@ public class ProjectType extends AbstractBasedEntity {
     private String name;
 
 //    TODO: fix org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing
-    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "type")
     private List<Project> projects;
 
     public ProjectType() {
@@ -57,7 +58,7 @@ public class ProjectType extends AbstractBasedEntity {
     @Override
     public String toString() {
         return "ProjectType{" +
-                ", name='" + name +
+                "name='" + name +
                 '}';
     }
 }

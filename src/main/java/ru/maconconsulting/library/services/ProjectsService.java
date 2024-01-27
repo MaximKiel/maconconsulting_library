@@ -40,7 +40,7 @@ public class ProjectsService {
 
     @Transactional
     public void save(Project project) {
-        project.setCreatedAt(LocalDateTime.now());
+        enrichProject(project);
         projectsRepository.save(project);
     }
 
@@ -111,5 +111,10 @@ public class ProjectsService {
             }
         }
         return false;
+    }
+
+    private void enrichProject(Project project) {
+        project.setCreatedAt(LocalDateTime.now());
+        project.getType().setCreatedAt(LocalDateTime.now());
     }
 }

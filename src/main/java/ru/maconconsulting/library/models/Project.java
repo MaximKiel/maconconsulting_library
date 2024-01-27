@@ -3,6 +3,7 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "project")
@@ -42,7 +43,9 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String segments;
 
+    //    TODO: change type_id into initDB.sql to ON DELETE CASCADE
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ProjectType type;
 

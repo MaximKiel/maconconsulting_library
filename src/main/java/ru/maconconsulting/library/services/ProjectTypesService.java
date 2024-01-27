@@ -37,7 +37,7 @@ public class ProjectTypesService {
 
     @Transactional
     public void delete(String name) {
-        projectTypesRepository.findByName(name);
+        projectTypesRepository.deleteByName(name);
     }
 
     private void enrichProjectType(ProjectType type) {
