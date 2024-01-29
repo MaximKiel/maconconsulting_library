@@ -3,7 +3,6 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "project")
@@ -44,7 +43,7 @@ public class Project extends AbstractBasedEntity {
     private String segments;
 
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @NotNull
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ProjectType type;
 

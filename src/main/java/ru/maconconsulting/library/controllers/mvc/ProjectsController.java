@@ -16,6 +16,7 @@ import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;
 import ru.maconconsulting.library.utils.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
+import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;
 
 @Controller
 @RequestMapping("/projects")
@@ -71,7 +72,7 @@ public class ProjectsController {
     @GetMapping("/{number}/edit")
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", projectsService.findByNumber(number)
-                .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден")));
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден")));
         model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
