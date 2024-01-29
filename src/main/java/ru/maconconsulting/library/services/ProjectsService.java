@@ -20,10 +20,12 @@ public class ProjectsService {
     public static final String SPLIT_FOR_SEARCH = ", ";
 
     private final ProjectsRepository projectsRepository;
+    private final ProjectTypesService projectTypesService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository) {
+    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService) {
         this.projectsRepository = projectsRepository;
+        this.projectTypesService = projectTypesService;
     }
 
     public List<Project> findAll() {
@@ -115,6 +117,6 @@ public class ProjectsService {
 
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
-        project.getType().setCreatedAt(LocalDateTime.now());
+        project.setType(projectTypesService.findByName(project.getType().getName()).orElseThrow());
     }
 }

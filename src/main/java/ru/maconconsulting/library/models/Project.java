@@ -43,7 +43,6 @@ public class Project extends AbstractBasedEntity {
     @NotBlank
     private String segments;
 
-    //    TODO: change type_id into initDB.sql to ON DELETE CASCADE
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
