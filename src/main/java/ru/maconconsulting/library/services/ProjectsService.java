@@ -50,7 +50,7 @@ public class ProjectsService {
     public void update(String number, Project updatedProject) {
         if (findByNumber(number).isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-            updatedProject.setType(findByNumber(number).get().getType());
+//            updatedProject.setType(findByNumber(number).get().getType());
             projectsRepository.save(updatedProject);
         }
     }

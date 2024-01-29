@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
+import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.ProjectType;
 import ru.maconconsulting.library.services.ProjectTypesService;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;
@@ -71,9 +73,9 @@ public class ProjectsController {
 
     @GetMapping("/{number}/edit")
     public String edit(Model model, @PathVariable("number") String number) {
-        model.addAttribute("project", projectsService.findByNumber(number)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден")));
-        model.addAttribute("types", projectTypesService.findAll());
+        model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
+        model.addAttribute("types", projectTypesService.findAll().stream().map(this::convertToProjectTypeDTO));
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
@@ -123,5 +125,9 @@ public class ProjectsController {
 
     private ProjectDTO convertToProjectDTO(Project project) {
         return modelMapper.map(project, ProjectDTO.class);
+    }
+
+    private ProjectTypeDTO convertToProjectTypeDTO(ProjectType type) {
+        return modelMapper.map(type, ProjectTypeDTO.class);
     }
 }
