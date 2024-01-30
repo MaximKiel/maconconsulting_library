@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.ProjectType;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
 import ru.maconconsulting.library.utils.SearchProject;
 
@@ -48,9 +49,10 @@ public class ProjectsService {
 
     @Transactional
     public void update(String number, Project updatedProject) {
-        if (findByNumber(number).isPresent()) {
+        Optional<ProjectType> type = projectTypesService.findByName(updatedProject.getType().getName());
+        if (findByNumber(number).isPresent() && type.isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-//            updatedProject.setType(findByNumber(number).get().getType());
+            updatedProject.setType(type.get());
             projectsRepository.save(updatedProject);
         }
     }
