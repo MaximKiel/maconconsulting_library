@@ -13,6 +13,7 @@ import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.ProjectType;
 import ru.maconconsulting.library.services.ProjectTypesService;
 import ru.maconconsulting.library.utils.ProjectTypeValidator;
+import ru.maconconsulting.library.utils.exceptions.ProjectTypeNotFoundException;
 
 @Controller
 @RequestMapping("/types")
@@ -55,6 +56,27 @@ public class ProjectTypesController {
         return "redirect:/types";
     }
 
+    @GetMapping("/{name}/edit")
+    public String edit(Model model, @PathVariable("name") String name) {
+        model.addAttribute("type", convertToProjectTypeDTO(projectTypesService.findByName(name)
+                .orElseThrow(() -> new ProjectTypeNotFoundException("Тип проекта " + name + " не найден"))));
+        log.info("Go to mvc/types/edit");
+        return "mvc/types/edit";
+    }
+
+    @PatchMapping("/{name}")
+    public String update(@ModelAttribute("type") @Valid ProjectTypeDTO typeDTO, BindingResult bindingResult,
+                         @PathVariable("name") String name) {
+        if (bindingResult.hasErrors()) {
+            log.info("Go to mvc/types/edit");
+            return "mvc/types/edit";
+        }
+
+        projectTypesService.update(name, convertToProjectType(typeDTO));
+        log.info("Go to redirect:/types");
+        return "redirect:/types";
+    }
+
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name) {
         projectTypesService.delete(name);
@@ -64,5 +86,9 @@ public class ProjectTypesController {
 
     private ProjectType convertToProjectType(ProjectTypeDTO typeDTO) {
         return modelMapper.map(typeDTO, ProjectType.class);
+    }
+
+    private ProjectTypeDTO convertToProjectTypeDTO(ProjectType type) {
+        return modelMapper.map(type, ProjectTypeDTO.class);
     }
 }

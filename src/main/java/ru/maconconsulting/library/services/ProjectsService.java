@@ -49,10 +49,10 @@ public class ProjectsService {
 
     @Transactional
     public void update(String number, Project updatedProject) {
-        Optional<ProjectType> type = projectTypesService.findByName(updatedProject.getType().getName());
-        if (findByNumber(number).isPresent() && type.isPresent()) {
+        Optional<ProjectType> currentType = projectTypesService.findByName(updatedProject.getType().getName());
+        if (findByNumber(number).isPresent() && currentType.isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-            updatedProject.setType(type.get());
+            updatedProject.setType(currentType.get());
             projectsRepository.save(updatedProject);
         }
     }

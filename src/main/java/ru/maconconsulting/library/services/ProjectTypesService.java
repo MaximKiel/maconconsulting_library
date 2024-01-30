@@ -36,6 +36,17 @@ public class ProjectTypesService {
     }
 
     @Transactional
+    public void update(String name, ProjectType updatedProjectType) {
+        Optional<ProjectType> currentType = findByName(name);
+        if (currentType.isPresent()) {
+            updatedProjectType.setId(currentType.get().getId());
+            updatedProjectType.setCreatedAt(currentType.get().getCreatedAt());
+            updatedProjectType.setProjects(currentType.get().getProjects());
+        }
+        projectTypesRepository.save(updatedProjectType);
+    }
+
+    @Transactional
     public void delete(String name) {
         projectTypesRepository.deleteByName(name);
     }
