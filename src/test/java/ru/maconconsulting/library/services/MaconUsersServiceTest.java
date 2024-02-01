@@ -28,6 +28,7 @@ class MaconUsersServiceTest {
     @Mock
     private MaconUsersRepository maconUsersRepository;
 
+//    Necessary for save and update tests
     @Mock
     private  PasswordEncoder passwordEncoder;
 

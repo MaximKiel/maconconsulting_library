@@ -57,7 +57,7 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, String formats, String tags) {
+    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, ProjectType type, String formats, String tags) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -67,6 +67,7 @@ public class Project extends AbstractBasedEntity {
         this.regions = regions;
         this.towns = towns;
         this.segments = segments;
+        this.type = type;
         this.formats = formats;
         this.tags = tags;
     }

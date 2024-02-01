@@ -25,6 +25,9 @@ class ProjectsServiceTest {
     private ProjectsService projectsService;
 
     @Mock
+    private ProjectTypesService projectTypesService;
+
+    @Mock
     private ProjectsRepository projectsRepository;
 
     @Test
@@ -64,7 +67,8 @@ class ProjectsServiceTest {
     @Test
     void save() {
         Project newProject = new Project("23200", 2023, "12.2023", "23200_New", "Client new", "Россия",
-                "Край", "Город", "МЖС", "Маркетинг", "Word", "");
+                "Край", "Город", "МЖС", PROJECT_TYPE, "Word", "");
+        Mockito.when(projectTypesService.findByName(newProject.getType().getName())).thenReturn(Optional.of(newProject.getType()));
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
 
         projectsService.save(newProject);
@@ -77,6 +81,7 @@ class ProjectsServiceTest {
         String number = updatedProject.getNumber();
         PROJECT_1.setCreatedAt(LocalDateTime.now());
         PROJECT_1.setTitle("Update PROJECT_1");
+        Mockito.when(projectTypesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
         Mockito.when(projectsRepository.findByNumber(number)).thenReturn(Optional.of(PROJECT_1));
         Mockito.when(projectsRepository.findByTitle("Update PROJECT_1")).thenReturn(Optional.of(updatedProject));
         projectsService.update(number, updatedProject);
@@ -97,7 +102,7 @@ class ProjectsServiceTest {
 
     @Test
     void search() {
-        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", "МЖС", "", "", "");
+        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", "МЖС", PROJECT_TYPE_DTO, "", "");
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.search(searchProject);
