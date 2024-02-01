@@ -24,8 +24,7 @@ public class ProjectType extends AbstractBasedEntity {
     public ProjectType() {
     }
 
-    public ProjectType(Integer id, String name) {
-        this.id = id;
+    public ProjectType(String name) {
         this.name = name;
     }
 
