@@ -1,22 +1,12 @@
 package ru.maconconsulting.library.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
 @Entity
 @Table(name = "project_type")
-public class ProjectType extends AbstractBasedEntity {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "name")
-    @NotBlank
-    private String name;
+public class ProjectType extends AbstractProjectFieldEntity {
 
     @OneToMany(mappedBy = "type")
     private List<Project> projects;
@@ -25,23 +15,7 @@ public class ProjectType extends AbstractBasedEntity {
     }
 
     public ProjectType(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        super(name);
     }
 
     public List<Project> getProjects() {
@@ -54,8 +28,6 @@ public class ProjectType extends AbstractBasedEntity {
 
     @Override
     public String toString() {
-        return "ProjectType{" +
-                "name='" + name +
-                '}';
+        return super.toString();
     }
 }

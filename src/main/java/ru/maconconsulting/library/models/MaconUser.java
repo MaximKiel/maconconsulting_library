@@ -7,12 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "macon_user")
-public class MaconUser extends AbstractBasedEntity {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class MaconUser extends AbstractBasedEntityWithId {
 
     @Column(name = "name")
     @NotBlank
@@ -77,14 +72,6 @@ public class MaconUser extends AbstractBasedEntity {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getLogin() {
