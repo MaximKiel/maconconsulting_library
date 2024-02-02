@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.ProjectType;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
 import ru.maconconsulting.library.utils.SearchProject;
 

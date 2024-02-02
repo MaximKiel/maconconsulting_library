@@ -2,7 +2,7 @@ package ru.maconconsulting.library.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.maconconsulting.library.models.ProjectType;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 
 import java.util.Optional;
 

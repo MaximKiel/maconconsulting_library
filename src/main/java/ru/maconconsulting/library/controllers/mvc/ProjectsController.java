@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
 import ru.maconconsulting.library.dto.ProjectTypeDTO;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.ProjectType;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 import ru.maconconsulting.library.services.ProjectTypesService;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.ProjectValidator;

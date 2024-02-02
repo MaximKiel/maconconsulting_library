@@ -3,6 +3,7 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 
 @Entity
 @Table(name = "project")

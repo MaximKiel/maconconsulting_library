@@ -1,7 +1,7 @@
 package ru.maconconsulting.library.util;
 
 import ru.maconconsulting.library.dto.ProjectTypeDTO;
-import ru.maconconsulting.library.models.ProjectType;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 
 public class ProjectTypesTestData {
 
