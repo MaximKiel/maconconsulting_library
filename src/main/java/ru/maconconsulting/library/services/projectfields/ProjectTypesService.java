@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.services;
+package ru.maconconsulting.library.services.projectfields;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

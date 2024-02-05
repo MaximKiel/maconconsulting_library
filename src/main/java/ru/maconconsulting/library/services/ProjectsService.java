@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
+import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;

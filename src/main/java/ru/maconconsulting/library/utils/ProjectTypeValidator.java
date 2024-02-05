@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.maconconsulting.library.dto.ProjectTypeDTO;
-import ru.maconconsulting.library.services.ProjectTypesService;
+import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 
 @Component
 public class ProjectTypeValidator implements Validator {

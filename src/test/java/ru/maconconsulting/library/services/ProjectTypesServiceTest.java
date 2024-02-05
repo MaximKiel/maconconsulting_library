@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
 import ru.maconconsulting.library.repositories.projectfieldetities.ProjectTypesRepository;
+import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 
 import java.util.List;
 import java.util.Optional;
