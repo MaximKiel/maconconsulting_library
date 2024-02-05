@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc;
+package ru.maconconsulting.library.controllers.mvc.projectfields;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
