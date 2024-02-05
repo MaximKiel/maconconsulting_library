@@ -3,9 +3,9 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.models.projectfieldetities.ProjectFormat;
-import ru.maconconsulting.library.models.projectfieldetities.ProjectSegment;
-import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
+import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectSegment;
+import ru.maconconsulting.library.models.projectfields.ProjectType;
 
 import java.util.List;
 

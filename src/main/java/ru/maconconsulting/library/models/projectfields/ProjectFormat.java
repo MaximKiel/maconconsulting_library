@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.models.projectfieldetities;
+package ru.maconconsulting.library.models.projectfields;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -8,16 +8,16 @@ import ru.maconconsulting.library.models.Project;
 import java.util.List;
 
 @Entity
-@Table(name = "segment")
-public class ProjectSegment extends AbstractProjectFieldEntity {
+@Table(name = "format")
+public class ProjectFormat extends AbstractProjectFieldEntity {
 
-    @ManyToMany(mappedBy = "segments")
+    @ManyToMany(mappedBy = "formats")
     private List<Project> projects;
 
-    public ProjectSegment() {
+    public ProjectFormat() {
     }
 
-    public ProjectSegment(String name) {
+    public ProjectFormat(String name) {
         super(name);
     }
 

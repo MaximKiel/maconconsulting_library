@@ -1,7 +1,7 @@
 package ru.maconconsulting.library.repositories.projectfields;
 
 import org.springframework.stereotype.Repository;
-import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
+import ru.maconconsulting.library.models.projectfields.ProjectType;
 
 import java.util.Optional;
 

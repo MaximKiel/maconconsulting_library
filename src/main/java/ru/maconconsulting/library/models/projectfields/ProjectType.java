@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.models.projectfieldetities;
+package ru.maconconsulting.library.models.projectfields;
 
 import jakarta.persistence.*;
 import ru.maconconsulting.library.models.Project;
