@@ -7,7 +7,7 @@ import ru.maconconsulting.library.models.Project;
 import java.util.List;
 
 @Entity
-@Table(name = "project_type")
+@Table(name = "type")
 public class ProjectType extends AbstractProjectFieldEntity {
 
     @OneToMany(mappedBy = "type")

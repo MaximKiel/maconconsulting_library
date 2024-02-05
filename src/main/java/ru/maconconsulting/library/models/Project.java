@@ -3,7 +3,11 @@ package ru.maconconsulting.library.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectFormat;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectSegment;
 import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
+
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -39,18 +43,25 @@ public class Project extends AbstractBasedEntity {
     @Column(name = "towns")
     private String towns;
 
-    @Column(name = "segments")
-    @NotBlank
-    private String segments;
+    @ManyToMany
+    @JoinTable(
+            name = "project_segment",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "segment_id"))
+    private List<ProjectSegment> segments;
 
     @ManyToOne
     @NotNull
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ProjectType type;
 
-    @Column(name = "formats")
-    @NotBlank
-    private String formats;
+    @ManyToMany
+    @JoinTable(
+            name = "project_format",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "format_id")
+    )
+    private List<ProjectFormat> formats;
 
     @Column(name = "tags")
     private String tags;
@@ -58,7 +69,7 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, ProjectType type, String formats, String tags) {
+    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegment> segments, ProjectType type, List<ProjectFormat> formats, String tags) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -121,14 +132,6 @@ public class Project extends AbstractBasedEntity {
         this.towns = towns;
     }
 
-    public String getSegments() {
-        return segments;
-    }
-
-    public void setSegments(String segments) {
-        this.segments = segments;
-    }
-
     public Integer getYear() {
         return year;
     }
@@ -153,16 +156,24 @@ public class Project extends AbstractBasedEntity {
         this.tags = tags;
     }
 
-    public String getFormats() {
-        return formats;
+    public List<ProjectSegment> getSegments() {
+        return segments;
     }
 
-    public void setFormats(String formats) {
-        this.formats = formats;
+    public void setSegments(List<ProjectSegment> segments) {
+        this.segments = segments;
     }
 
     public ProjectType getType() {
         return type;
+    }
+
+    public List<ProjectFormat> getFormats() {
+        return formats;
+    }
+
+    public void setFormats(List<ProjectFormat> formats) {
+        this.formats = formats;
     }
 
     public void setType(ProjectType type) {
