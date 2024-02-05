@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface ProjectsRepository extends JpaRepository<Project, Integer> {
 
     Optional<Project> findByNumber(String number);
+
     Optional<Project> findByTitle(String title);
+
     void deleteByNumber(String number);
 }

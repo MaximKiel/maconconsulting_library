@@ -2,14 +2,14 @@ package ru.maconconsulting.library.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
+import ru.maconconsulting.library.models.projectfieldetities.ProjectSegment;
 
 import java.util.Optional;
 
 @Repository
-public interface ProjectTypesRepository extends JpaRepository<ProjectType, Integer> {
+public interface ProjectSegmentsRepository extends JpaRepository<ProjectSegment, Integer> {
 
-    Optional<ProjectType> findByName(String name);
+    Optional<ProjectSegment> findByName(String name);
 
     void deleteByName(String name);
 }
