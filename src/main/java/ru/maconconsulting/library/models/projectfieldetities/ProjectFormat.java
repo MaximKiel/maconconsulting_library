@@ -3,7 +3,6 @@ package ru.maconconsulting.library.models.projectfieldetities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import ru.maconconsulting.library.models.AbstractProjectFieldEntity;
 import ru.maconconsulting.library.models.Project;
 
 import java.util.List;

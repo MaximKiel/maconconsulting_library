@@ -1,7 +1,6 @@
 package ru.maconconsulting.library.models.projectfieldetities;
 
 import jakarta.persistence.*;
-import ru.maconconsulting.library.models.AbstractProjectFieldEntity;
 import ru.maconconsulting.library.models.Project;
 
 import java.util.List;

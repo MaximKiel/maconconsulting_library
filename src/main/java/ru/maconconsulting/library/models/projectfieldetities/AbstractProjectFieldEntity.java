@@ -1,7 +1,8 @@
-package ru.maconconsulting.library.models;
+package ru.maconconsulting.library.models.projectfieldetities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import ru.maconconsulting.library.models.AbstractBasedEntityWithId;
 
 @MappedSuperclass
 public abstract class AbstractProjectFieldEntity extends AbstractBasedEntityWithId {
