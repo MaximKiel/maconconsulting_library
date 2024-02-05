@@ -35,13 +35,13 @@ public class ProjectTypesController {
     public String getAllTypes(Model model) {
         model.addAttribute("types", projectTypesService.findAll());
         log.info("Go to mvc/types/manage");
-        return "mvc/types/manage";
+        return "mvc/projectfields/types/manage";
     }
 
     @GetMapping("/new")
     public String newType(@ModelAttribute ProjectTypeDTO typeDTO) {
         log.info("Go to mvc/types/new");
-        return "mvc/types/new";
+        return "mvc/projectfields/types/new";
     }
 
     @PostMapping("/create")
@@ -49,7 +49,7 @@ public class ProjectTypesController {
         projectTypeValidator.validate(typeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/types/new");
-            return "mvc/types/new";
+            return "mvc/projectfields/types/new";
         }
         projectTypesService.save(convertToProjectType(typeDTO));
         log.info("Go to redirect:/types");
@@ -61,7 +61,7 @@ public class ProjectTypesController {
         model.addAttribute("type", convertToProjectTypeDTO(projectTypesService.findByName(name)
                 .orElseThrow(() -> new ProjectTypeNotFoundException("Тип проекта " + name + " не найден"))));
         log.info("Go to mvc/types/edit");
-        return "mvc/types/edit";
+        return "mvc/projectfields/types/edit";
     }
 
     @PatchMapping("/{name}")
@@ -69,7 +69,7 @@ public class ProjectTypesController {
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/types/edit");
-            return "mvc/types/edit";
+            return "mvc/projectfields/types/edit";
         }
 
         projectTypesService.update(name, convertToProjectType(typeDTO));
