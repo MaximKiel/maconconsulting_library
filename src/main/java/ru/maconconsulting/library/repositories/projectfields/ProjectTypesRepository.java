@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.repositories.projectfieldetities;
+package ru.maconconsulting.library.repositories.projectfields;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

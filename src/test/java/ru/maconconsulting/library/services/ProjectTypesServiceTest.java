@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.projectfieldetities.ProjectType;
-import ru.maconconsulting.library.repositories.projectfieldetities.ProjectTypesRepository;
+import ru.maconconsulting.library.repositories.projectfields.ProjectTypesRepository;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 
 import java.util.List;
