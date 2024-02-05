@@ -1,13 +1,12 @@
 package ru.maconconsulting.library.repositories.projectfields;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.maconconsulting.library.models.projectfieldetities.ProjectSegment;
 
 import java.util.Optional;
 
 @Repository
-public interface ProjectSegmentsRepository extends JpaRepository<ProjectSegment, Integer> {
+public interface ProjectSegmentsRepository extends AbstractProjectFieldsRepository<ProjectSegment> {
 
     Optional<ProjectSegment> findByName(String name);
 
