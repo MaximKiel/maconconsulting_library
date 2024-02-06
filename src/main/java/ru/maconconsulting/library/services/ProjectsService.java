@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.projectfields.AbstractProjectFieldEntity;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
+import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
@@ -23,11 +25,13 @@ public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
     private final ProjectTypesService projectTypesService;
+    private final ProjectSegmentsService projectSegmentsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService) {
+    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService) {
         this.projectsRepository = projectsRepository;
         this.projectTypesService = projectTypesService;
+        this.projectSegmentsService = projectSegmentsService;
     }
 
     public List<Project> findAll() {
@@ -86,14 +90,20 @@ public class ProjectsService {
         if (!searchProject.getTown().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getTowns(), searchProject.getTown()));
         }
-        if (!searchProject.getSegment().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getSegments(), searchProject.getSegment()));
+        if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> segmentNames = p.getSegments().stream().map(AbstractProjectFieldEntity::getName).toList();
+                return segmentNames.stream().anyMatch(n -> n.equals(searchProject.getSegment().getName()));
+            });
         }
         if (searchProject.getType() != null && !searchProject.getType().getName().equals("")) {
             result = searchElement(result, p -> p.getType().getName().equals(searchProject.getType().getName()));
         }
-        if (!searchProject.getFormat().equals("")) {
-            result = searchElement(result, p -> p.getFormats().equalsIgnoreCase(searchProject.getFormat()));
+        if (searchProject.getFormat() != null && !searchProject.getFormat().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> formatNames = p.getFormats().stream().map(AbstractProjectFieldEntity::getName).toList();
+                return formatNames.stream().anyMatch(n -> n.equals(searchProject.getFormat().getName()));
+            });
         }
         if (!searchProject.getTag().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getTags(), searchProject.getTag()));
@@ -118,6 +128,7 @@ public class ProjectsService {
         return false;
     }
 
+//    TODO: setSegments and setFormats
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
         project.setType(projectTypesService.findByName(project.getType().getName()).orElseThrow());

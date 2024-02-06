@@ -4,8 +4,6 @@ import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
-import java.util.List;
-
 public class SearchProject {
 
     private int year;
