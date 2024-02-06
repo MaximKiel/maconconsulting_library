@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.maconconsulting.library.dto.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 
 @Component

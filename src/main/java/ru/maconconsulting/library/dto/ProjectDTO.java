@@ -2,6 +2,7 @@ package ru.maconconsulting.library.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
 public class ProjectDTO {
 

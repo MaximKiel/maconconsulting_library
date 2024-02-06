@@ -1,16 +1,16 @@
-package ru.maconconsulting.library.dto;
+package ru.maconconsulting.library.dto.projectfields;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class ProjectTypeDTO {
+public class ProjectSegmentDTO {
 
     @NotBlank
     private String name;
 
-    public ProjectTypeDTO() {
+    public ProjectSegmentDTO() {
     }
 
-    public ProjectTypeDTO(String name) {
+    public ProjectSegmentDTO(String name) {
         this.name = name;
     }
 
@@ -22,3 +22,4 @@ public class ProjectTypeDTO {
         this.name = name;
     }
 }
+

@@ -1,6 +1,6 @@
 package ru.maconconsulting.library.utils;
 
-import ru.maconconsulting.library.dto.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
 public class SearchProject {
 
