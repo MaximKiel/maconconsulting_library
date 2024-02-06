@@ -1,6 +1,10 @@
 package ru.maconconsulting.library.utils;
 
+import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
+
+import java.util.List;
 
 public class SearchProject {
 
@@ -18,17 +22,17 @@ public class SearchProject {
 
     private String town;
 
-    private String segment;
+    private ProjectSegmentDTO segment;
 
     private ProjectTypeDTO type;
 
-    private String format;
+    private ProjectFormatDTO format;
     private String tag;
 
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, String segment, ProjectTypeDTO type, String format, String tag) {
+    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, String tag) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -98,11 +102,11 @@ public class SearchProject {
         this.town = town;
     }
 
-    public String getSegment() {
+    public ProjectSegmentDTO getSegment() {
         return segment;
     }
 
-    public void setSegment(String segment) {
+    public void setSegment(ProjectSegmentDTO segment) {
         this.segment = segment;
     }
 
@@ -122,11 +126,11 @@ public class SearchProject {
         this.tag = tag;
     }
 
-    public String getFormat() {
+    public ProjectFormatDTO getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(ProjectFormatDTO format) {
         this.format = format;
     }
 }
