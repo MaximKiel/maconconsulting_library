@@ -5,13 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.projectfields.AbstractProjectFieldEntity;
+import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
+import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
 import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -26,12 +30,14 @@ public class ProjectsService {
     private final ProjectsRepository projectsRepository;
     private final ProjectTypesService projectTypesService;
     private final ProjectSegmentsService projectSegmentsService;
+    private final ProjectFormatsService projectFormatsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService) {
+    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService, ProjectFormatsService projectFormatsService) {
         this.projectsRepository = projectsRepository;
         this.projectTypesService = projectTypesService;
         this.projectSegmentsService = projectSegmentsService;
+        this.projectFormatsService = projectFormatsService;
     }
 
     public List<Project> findAll() {
@@ -128,9 +134,26 @@ public class ProjectsService {
         return false;
     }
 
-//    TODO: setSegments and setFormats
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
         project.setType(projectTypesService.findByName(project.getType().getName()).orElseThrow());
+        project.setSegments(enrichListField(projectSegmentsService, project));
+        project.setFormats(enrichListField(projectFormatsService, project));
+    }
+
+    private List<ProjectSegment> enrichListField(ProjectSegmentsService service, Project project) {
+        List<ProjectSegment> entities = new ArrayList<>();
+        for (ProjectSegment f : project.getSegments()) {
+            entities.add(service.findByName(f.getName()).orElseThrow());
+        }
+        return entities;
+    }
+
+    private List<ProjectFormat> enrichListField(ProjectFormatsService service, Project project) {
+        List<ProjectFormat> entities = new ArrayList<>();
+        for (ProjectFormat f : project.getFormats()) {
+            entities.add(service.findByName(f.getName()).orElseThrow());
+        }
+        return entities;
     }
 }

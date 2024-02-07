@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 
 @Repository
-public interface ProjectTypesRepository extends AbstractProjectFieldsRepository<ProjectType> {
+public interface ProjectTypesRepository extends CommonProjectFieldsRepository<ProjectType> {
 }

@@ -7,7 +7,7 @@ import ru.maconconsulting.library.models.projectfields.AbstractProjectFieldEntit
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface AbstractProjectFieldsRepository<E extends AbstractProjectFieldEntity> extends JpaRepository<E, Integer> {
+public interface CommonProjectFieldsRepository<E extends AbstractProjectFieldEntity> extends JpaRepository<E, Integer> {
 
     Optional<E> findByName(String name);
 

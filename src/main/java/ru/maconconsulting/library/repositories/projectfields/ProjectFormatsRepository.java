@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 
 @Repository
-public interface ProjectFormatsRepository extends AbstractProjectFieldsRepository<ProjectFormat> {
+public interface ProjectFormatsRepository extends CommonProjectFieldsRepository<ProjectFormat> {
 }

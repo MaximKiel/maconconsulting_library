@@ -1,18 +1,56 @@
 package ru.maconconsulting.library.services.projectfields;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 import ru.maconconsulting.library.repositories.projectfields.ProjectFormatsRepository;
 
-@Service
-public class ProjectFormatsService extends AbstractProjectFieldsService<ProjectFormat, ProjectFormatsRepository> {
+import java.util.List;
+import java.util.Optional;
 
-    public ProjectFormatsService(ProjectFormatsRepository repository) {
-        super(repository);
+@Service
+public class ProjectFormatsService implements CommonProjectFieldsService<ProjectFormat> {
+
+    private final ProjectFormatsRepository projectFormatsRepository;
+
+    @Autowired
+    public ProjectFormatsService(ProjectFormatsRepository projectFormatsRepository) {
+        this.projectFormatsRepository = projectFormatsRepository;
     }
 
     @Override
-    protected void setProjectsToUpdatedEntity(ProjectFormat updatedEntity, ProjectFormat currentEntity) {
-        updatedEntity.setProjects(currentEntity.getProjects());
+    public List<ProjectFormat> findAll() {
+        return projectFormatsRepository.findAll();
+    }
+
+    @Override
+    public Optional<ProjectFormat> findByName(String name) {
+        return projectFormatsRepository.findByName(name);
+    }
+
+    @Override
+    @Transactional
+    public void save(ProjectFormat entity) {
+        enrichProjectFieldEntity(entity);
+        projectFormatsRepository.save(entity);
+    }
+
+    @Override
+    @Transactional
+    public void update(String name, ProjectFormat updatedEntity) {
+        Optional<ProjectFormat> currentFormat = findByName(name);
+        if (currentFormat.isPresent()) {
+            updatedEntity.setId(currentFormat.get().getId());
+            updatedEntity.setCreatedAt(currentFormat.get().getCreatedAt());
+            updatedEntity.setProjects(currentFormat.get().getProjects());
+        }
+        projectFormatsRepository.save(updatedEntity);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String name) {
+        projectFormatsRepository.deleteByName(name);
     }
 }
