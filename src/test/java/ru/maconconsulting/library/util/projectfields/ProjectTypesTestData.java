@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.util;
+package ru.maconconsulting.library.util.projectfields;
 
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 import ru.maconconsulting.library.models.projectfields.ProjectType;

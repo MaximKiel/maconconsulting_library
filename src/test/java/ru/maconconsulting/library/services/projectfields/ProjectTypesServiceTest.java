@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.services;
+package ru.maconconsulting.library.services.projectfields;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,12 +9,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.repositories.projectfields.ProjectTypesRepository;
-import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 
 import java.util.List;
 import java.util.Optional;
 
-import static ru.maconconsulting.library.util.ProjectTypesTestData.*;
+import static ru.maconconsulting.library.util.projectfields.ProjectTypesTestData.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
