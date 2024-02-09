@@ -13,7 +13,7 @@ import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.validators.projectfields.ProjectTypeValidator;
-import ru.maconconsulting.library.utils.exceptions.ProjectTypeNotFoundException;
+import ru.maconconsulting.library.utils.exceptions.projectfields.ProjectTypeNotFoundException;
 
 @Controller
 @RequestMapping("/types")
@@ -34,13 +34,13 @@ public class ProjectTypesController {
     @GetMapping
     public String getAllTypes(Model model) {
         model.addAttribute("types", projectTypesService.findAll());
-        log.info("Go to mvc/types/manage");
+        log.info("Go to mvc/projectfields/types/manage");
         return "mvc/projectfields/types/manage";
     }
 
     @GetMapping("/new")
     public String newType(@ModelAttribute ProjectTypeDTO typeDTO) {
-        log.info("Go to mvc/types/new");
+        log.info("Go to mvc/projectfields/types/new");
         return "mvc/projectfields/types/new";
     }
 
@@ -48,7 +48,7 @@ public class ProjectTypesController {
     public String create(@ModelAttribute("type") @Valid ProjectTypeDTO typeDTO, BindingResult bindingResult) {
         projectTypeValidator.validate(typeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/types/new");
+            log.info("Go to mvc/projectfields/types/new");
             return "mvc/projectfields/types/new";
         }
         projectTypesService.save(convertToProjectType(typeDTO));
@@ -60,7 +60,7 @@ public class ProjectTypesController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("type", convertToProjectTypeDTO(projectTypesService.findByName(name)
                 .orElseThrow(() -> new ProjectTypeNotFoundException("Тип проекта " + name + " не найден"))));
-        log.info("Go to mvc/types/edit");
+        log.info("Go to mvc/projectfields/types/edit");
         return "mvc/projectfields/types/edit";
     }
 
@@ -68,7 +68,7 @@ public class ProjectTypesController {
     public String update(@ModelAttribute("type") @Valid ProjectTypeDTO typeDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/types/edit");
+            log.info("Go to mvc/projectfields/types/edit");
             return "mvc/projectfields/types/edit";
         }
 
