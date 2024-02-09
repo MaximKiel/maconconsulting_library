@@ -15,7 +15,7 @@ import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.services.ProjectsService;
-import ru.maconconsulting.library.utils.ProjectValidator;
+import ru.maconconsulting.library.utils.validators.ProjectValidator;
 import ru.maconconsulting.library.utils.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;

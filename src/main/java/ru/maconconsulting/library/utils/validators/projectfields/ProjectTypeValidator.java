@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.utils;
+package ru.maconconsulting.library.utils.validators.projectfields;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

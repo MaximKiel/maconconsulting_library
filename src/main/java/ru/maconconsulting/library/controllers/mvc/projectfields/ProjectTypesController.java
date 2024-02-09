@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
-import ru.maconconsulting.library.utils.ProjectTypeValidator;
+import ru.maconconsulting.library.utils.validators.projectfields.ProjectTypeValidator;
 import ru.maconconsulting.library.utils.exceptions.ProjectTypeNotFoundException;
 
 @Controller

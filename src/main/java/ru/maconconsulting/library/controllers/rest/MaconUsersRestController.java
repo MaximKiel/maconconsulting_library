@@ -13,7 +13,7 @@ import ru.maconconsulting.library.dto.MaconUserDTO;
 import ru.maconconsulting.library.dto.MaconUsersResponse;
 import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.services.MaconUsersService;
-import ru.maconconsulting.library.utils.MaconUserValidator;
+import ru.maconconsulting.library.utils.validators.MaconUserValidator;
 import ru.maconconsulting.library.utils.errors.MaconUserErrorResponse;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotCreateException;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
