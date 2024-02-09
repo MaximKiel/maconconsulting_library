@@ -14,7 +14,7 @@ import ru.maconconsulting.library.dto.ProjectsResponse;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotCreateException;
 import ru.maconconsulting.library.services.ProjectsService;
-import ru.maconconsulting.library.utils.ProjectValidator;
+import ru.maconconsulting.library.utils.validators.ProjectValidator;
 import ru.maconconsulting.library.utils.errors.ProjectErrorResponse;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;
 
