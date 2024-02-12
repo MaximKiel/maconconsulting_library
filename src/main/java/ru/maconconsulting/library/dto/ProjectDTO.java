@@ -2,7 +2,11 @@ package ru.maconconsulting.library.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
+
+import java.util.List;
 
 public class ProjectDTO {
 
@@ -28,20 +32,20 @@ public class ProjectDTO {
     private String towns;
 
     @NotNull
-    private String segments;
+    private List<ProjectSegmentDTO> segments;
 
     @NotNull
     private ProjectTypeDTO type;
 
     @NotBlank
-    private String formats;
+    private List<ProjectFormatDTO> formats;
 
     private String tags;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, String segments, ProjectTypeDTO type, String formats, String tags) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegmentDTO> segments, ProjectTypeDTO type, List<ProjectFormatDTO> formats, String tags) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -112,11 +116,11 @@ public class ProjectDTO {
         this.towns = towns;
     }
 
-    public String getSegments() {
+    public List<ProjectSegmentDTO> getSegments() {
         return segments;
     }
 
-    public void setSegments(String segments) {
+    public void setSegments(List<ProjectSegmentDTO> segments) {
         this.segments = segments;
     }
 
@@ -144,11 +148,11 @@ public class ProjectDTO {
         this.tags = tags;
     }
 
-    public String getFormats() {
+    public List<ProjectFormatDTO> getFormats() {
         return formats;
     }
 
-    public void setFormats(String formats) {
+    public void setFormats(List<ProjectFormatDTO> formats) {
         this.formats = formats;
     }
 }
