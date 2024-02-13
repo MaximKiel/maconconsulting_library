@@ -39,7 +39,7 @@ public class ProjectSegmentsController {
     }
 
     @GetMapping("/new")
-    public String newSegment(@ModelAttribute ProjectSegmentDTO segmentDTO) {
+    public String newSegment(@ModelAttribute("segment") ProjectSegmentDTO segmentDTO) {
         log.info("Go to mvc/projectfields/segments/new");
         return "mvc/projectfields/segments/new";
     }

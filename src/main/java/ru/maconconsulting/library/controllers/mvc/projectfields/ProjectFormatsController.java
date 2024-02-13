@@ -39,7 +39,7 @@ public class ProjectFormatsController {
     }
 
     @GetMapping("/new")
-    public String newFormat(@ModelAttribute ProjectFormatDTO formatDTO) {
+    public String newFormat(@ModelAttribute("format") ProjectFormatDTO formatDTO) {
         log.info("Go to mvc/projectfields/formats/new");
         return "mvc/projectfields/formats/new";
     }

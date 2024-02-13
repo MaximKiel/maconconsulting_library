@@ -39,7 +39,7 @@ public class ProjectTypesController {
     }
 
     @GetMapping("/new")
-    public String newType(@ModelAttribute ProjectTypeDTO typeDTO) {
+    public String newType(@ModelAttribute("type") ProjectTypeDTO typeDTO) {
         log.info("Go to mvc/projectfields/types/new");
         return "mvc/projectfields/types/new";
     }
