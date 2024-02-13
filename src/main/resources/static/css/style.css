@@ -76,3 +76,19 @@ body {
     min-width: initial;
     padding: 0.5rem;
 }
+
+.add
+{
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    border: 1px dashed grey;
+    margin: 10px 0;
+}
+
+.add:hover
+{
+    cursor: pointer;
+    background-color: #360581;
+}
