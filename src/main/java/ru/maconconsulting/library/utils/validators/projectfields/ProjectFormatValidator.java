@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
 import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
 
 @Component
@@ -24,9 +24,9 @@ public class ProjectFormatValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        ProjectSegmentDTO segmentDTO = (ProjectSegmentDTO) target;
-        if (projectFormatsService.findByName(segmentDTO.getName()).isPresent()) {
-            errors.rejectValue("type", "Такой формат отчета уже существует!");
+        ProjectFormatDTO formatDTO = (ProjectFormatDTO) target;
+        if (projectFormatsService.findByName(formatDTO.getName()).isPresent()) {
+            errors.rejectValue("format", "Такой формат отчета уже существует!");
         }
     }
 }
