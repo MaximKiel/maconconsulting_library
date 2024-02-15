@@ -72,31 +72,20 @@
            placeholder="Если городов несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Геленджик'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
-
-<!--TODO: plural select for segments-->
-
-    <label for="segments0">Введите сегменты рынка: </label>
-    <select th:field="*{segments}" id="segments0">
+    <label for="segments">Введите сегменты рынка: </label>
+    <select th:field="*{segments}" id="segments" multiple="multiple">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
-    <div class="add" onclick="addField()">+</div>
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
-
-
-
-
     <label for="type">Выберите тип проекта: </label>
     <select th:field="*{type}" id="type">
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
     <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
     <br/>
-
-<!--TODO: plural select for formats-->
-
     <label for="formats">Введите форматы отчета: </label>
-    <select th:field="*{formats}" id="formats">
+    <select th:field="*{formats}" id="formats" multiple="multiple">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
@@ -109,18 +98,5 @@
     <input type="submit" value="Добавить"/>
 </form>
 <script src="/static/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
-<script>
-    var x = 0;
-    function addField() {
-        var segments = document.createElement("segments");
-        segments.innerHTML = "    <label for=\"segments" + (x + 1) + "\">Введите сегменты рынка: </label>\n" +
-            "    <select th:field=\"*{segments}\" id=\"segments" + (x + 1) + "\">\n" +
-            "        <option th:each=\"segment : ${segments}\" th:value=\"${segment.getName()}\" th:text=\"${segment.getName()}\"></option>\n" +
-            "    </select>";
-        document.getElementById("segments").appendChild(segments);
-        x++;
-        return false;
-    }
-</script>
 </body>
 </html>

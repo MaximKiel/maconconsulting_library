@@ -73,22 +73,22 @@
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
     <label for="segments">Введите сегменты рынка: </label>
-    <input type="text" th:field="*{segments}" id="segments"
-           placeholder="Если сегментов несколько, вводите их через запятую с пробелом: 'МЖС, Гостиницы, Офисы'">
-    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
-    <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады, ЗУ</p>
+    <select th:field="*{segments}" id="segments" multiple="multiple">
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
+    </select>
+    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
     <label for="type">Выберите тип проекта: </label>
     <select th:field="*{type}" id="type">
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
-    <a style="color: gray; font-style: italic" href="/types">Редактировать список проектов</a><br/>
+    <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
     <br/>
     <label for="formats">Введите форматы отчета проекта: </label>
-    <input type="text" th:field="*{formats}" id="formats"
-           placeholder="Если форматов несколько, вводите их через запятую с пробелом: 'Word, Excel'">
-    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
+    <select th:field="*{formats}" id="formats" multiple="multiple">
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
+    </select>
+    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
     <br/>
     <p style="color: gray; font-style: italic">Названия для распространенных форматов: Word, Publisher, PowerPoint, Excel</p>
     <br/>
