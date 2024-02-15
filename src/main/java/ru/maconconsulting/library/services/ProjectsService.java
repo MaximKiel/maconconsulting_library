@@ -61,9 +61,19 @@ public class ProjectsService {
     @Transactional
     public void update(String number, Project updatedProject) {
         Optional<ProjectType> currentType = projectTypesService.findByName(updatedProject.getType().getName());
+        List<ProjectSegment> currentSegments = new ArrayList<>();
+        for (ProjectSegment s : updatedProject.getSegments()) {
+            currentSegments.add(projectSegmentsService.findByName(s.getName()).get());
+        }
+        List<ProjectFormat> currentFormats = new ArrayList<>();
+        for (ProjectFormat f : updatedProject.getFormats()) {
+            currentFormats.add(projectFormatsService.findByName(f.getName()).get());
+        }
         if (findByNumber(number).isPresent() && currentType.isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
             updatedProject.setType(currentType.get());
+            updatedProject.setSegments(currentSegments);
+            updatedProject.setFormats(currentFormats);
             projectsRepository.save(updatedProject);
         }
     }
