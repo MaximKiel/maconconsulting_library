@@ -77,11 +77,19 @@
     </tr>
     <tr>
         <td><b>Сегменты рынка:</b></td>
-        <td><p th:text="${project.getSegments()}">Value</p></td>
+        <td>
+            <ul>
+                <li th:each="segment : ${project.getSegments()}" th:text="${segment.getName()}">Value</li>
+            </ul>
+        </td>
     </tr>
     <tr>
         <td><b>Форматы отчета:</b></td>
-        <td><p th:text="${project.getFormats()}">Value</p></td>
+        <td>
+            <ul>
+                <li th:each="format : ${project.getFormats()}" th:text="${format.getName()}">Value</li>
+            </ul>
+        </td>
     </tr>
     <tr>
         <td><b>Тэги:</b></td>
