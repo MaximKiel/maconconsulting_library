@@ -37,7 +37,7 @@ public class ProjectDTO {
     @NotNull
     private ProjectTypeDTO type;
 
-    @NotBlank
+    @NotNull
     private List<ProjectFormatDTO> formats;
 
     private String tags;
