@@ -26,6 +26,8 @@ import ru.maconconsulting.library.utils.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/projects")
 public class ProjectsController {
@@ -87,9 +89,9 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
-        model.addAttribute("types", projectTypesService.findAll().stream().map(this::convertToProjectTypeDTO));
-        model.addAttribute("segments", projectSegmentsService.findAll().stream().map(this::convertToProjectSegmentDTO));
-        model.addAttribute("formats", projectFormatsService.findAll().stream().map(this::convertToProjectFormatDTO));
+        model.addAttribute("types", projectTypesService.findAll().stream().map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
+        model.addAttribute("segments", projectSegmentsService.findAll().stream().map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
+        model.addAttribute("formats", projectFormatsService.findAll().stream().map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
