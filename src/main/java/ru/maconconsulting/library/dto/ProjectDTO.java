@@ -1,6 +1,7 @@
 package ru.maconconsulting.library.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
@@ -24,20 +25,20 @@ public class ProjectDTO {
     @NotBlank
     private String client;
 
-    @NotNull
+    @NotBlank
     private String countries;
 
     private String regions;
 
     private String towns;
 
-    @NotNull
+    @NotEmpty
     private List<ProjectSegmentDTO> segments;
 
     @NotNull
     private ProjectTypeDTO type;
 
-    @NotNull
+    @NotEmpty
     private List<ProjectFormatDTO> formats;
 
     private String tags;
