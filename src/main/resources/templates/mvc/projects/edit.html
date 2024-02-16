@@ -72,26 +72,53 @@
            placeholder="Если городов несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Геленджик'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
-    <label for="segments">Введите сегменты рынка: </label>
+
+
+
+    <label for="segments">Введите сегменты рынка:</label>
+    <p style="color: gray; font-style: italic">Ранее были выбраны сегменты:</p>
+    <div style="color: gray; font-style: italic">
+        <ul th:each="s : ${project.segments}">
+            <li th:text="${s.getName()}"></li>
+        </ul>
+    </div>
     <select th:field="*{segments}" id="segments" multiple="multiple">
-        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
+                th:selected="${project.segments.contains(segment)}"></option>
     </select>
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
+    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <br/>
-    <label for="type">Выберите тип проекта: </label>
+
+    <label for="type">Выберите тип проекта:</label>
+    <p style="color: gray; font-style: italic">Ранее был выбран тип: </p>
+    <p style="color: gray; font-style: italic" th:text="${project.type.getName()}">type</p>
     <select th:field="*{type}" id="type">
-        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
+        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
+                th:selected="${project.type.getName().equals(type.getName())}"></option>
     </select>
     <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
+    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
     <br/>
-    <label for="formats">Введите форматы отчета проекта: </label>
+
+    <label for="formats">Выберете форматы отчета проекта:</label>
+    <p style="color: gray; font-style: italic">Ранее были выбраны форматы:</p>
+    <div style="color: gray; font-style: italic">
+        <ul th:each="f : ${project.formats}">
+            <li th:text="${f.getName()}"></li>
+        </ul>
+    </div>
     <select th:field="*{formats}" id="formats" multiple="multiple">
-        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
+                th:selected="${project.formats.contains(format)}"></option>
     </select>
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
+    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">type error</div>
     <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных форматов: Word, Publisher, PowerPoint, Excel</p>
-    <br/>
+
+
+
+
     <label for="tags">Введите тэги (ключевые слова): </label>
     <input type="text" th:field="*{tags}" id="tags"
            placeholder="Если тэгов несколько, вводите их через запятую с пробелом: 'Доверительное управление, Потребительские предпочтения'">
