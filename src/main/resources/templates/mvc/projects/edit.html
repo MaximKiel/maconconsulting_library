@@ -75,14 +75,15 @@
 
 
 
+<!--    TODO: fix Exception processing template "mvc/projects/edit": Exception evaluating SpringEL expression: "#fields.hasErrors('segments')"-->
     <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Ctrl):</label>
-    <p style="color: gray; font-style: italic">Ранее были выбраны сегменты:</p>
-    <div style="color: gray; font-style: italic">
-        <ul th:each="s : ${project.segments}">
-            <li th:text="${s.getName()}"></li>
-        </ul>
-    </div>
-    <select th:field="*{segments}" id="segments" multiple="multiple">
+<!--    <p style="color: gray; font-style: italic">Ранее были выбраны сегменты:</p>-->
+<!--    <div style="color: gray; font-style: italic">-->
+<!--        <ul th:each="s : ${project.segments}">-->
+<!--            <li th:text="${s.getName()}"></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+    <select id="segments" name="segments" multiple="multiple">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
                 th:selected="${project.segments.contains(segment)}"></option>
     </select>
@@ -91,9 +92,9 @@
     <br/>
 
     <label for="type">Выберите тип проекта:</label>
-    <p style="color: gray; font-style: italic">Ранее был выбран тип: </p>
-    <p style="color: gray; font-style: italic" th:text="${project.type.getName()}">type</p>
-    <select th:field="*{type}" id="type">
+<!--    <p style="color: gray; font-style: italic">Ранее был выбран тип: </p>-->
+<!--    <p style="color: gray; font-style: italic" th:text="${project.type.getName()}">type</p>-->
+    <select id="type" name="type">
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
                 th:selected="${project.type.getName().equals(type.getName())}"></option>
     </select>
@@ -102,13 +103,13 @@
     <br/>
 
     <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько, зажмите клавишу Ctrl):</label>
-    <p style="color: gray; font-style: italic">Ранее были выбраны форматы:</p>
-    <div style="color: gray; font-style: italic">
-        <ul th:each="f : ${project.formats}">
-            <li th:text="${f.getName()}"></li>
-        </ul>
-    </div>
-    <select th:field="*{formats}" id="formats" multiple="multiple">
+<!--    <p style="color: gray; font-style: italic">Ранее были выбраны форматы:</p>-->
+<!--    <div style="color: gray; font-style: italic">-->
+<!--        <ul th:each="f : ${project.formats}">-->
+<!--            <li th:text="${f.getName()}"></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+    <select id="formats" name="formats" multiple="multiple">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
                 th:selected="${project.formats.contains(format)}"></option>
     </select>
