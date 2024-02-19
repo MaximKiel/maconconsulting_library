@@ -64,23 +64,21 @@
     <input type="text" th:field="*{town}" id="town">
     <div style="color: red" th:if="${#fields.hasErrors('town')}" th:errors="*{town}">town error</div>
     <br/>
-    <label for="segment">Введите сегмент рынка: </label>
-    <input type="text" th:field="*{segment}" id="segment">
-    <div style="color: red" th:if="${#fields.hasErrors('segment')}" th:errors="*{segment}">segment error</div>
-    <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных сегментов: МЖС, Коттеджные поселки, Гостиницы, Офисы, Торговля, Склады, ЗУ</p>
-    <br/>
+    <label for="segment">Выберете сегмент рынка: </label>
+    <select th:field="*{segment}" id="segment">
+        <option value=""></option>
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
+    </select>
     <label for="type">Выберите тип проекта: </label>
     <select th:field="*{type}" id="type">
         <option value=""></option>
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
-    <label for="format">Введите формат отчета проекта: </label>
-    <input type="text" th:field="*{format}" id="format">
-    <div style="color: red" th:if="${#fields.hasErrors('format')}" th:errors="*{format}">format error</div>
-    <br/>
-    <p style="color: gray; font-style: italic">Названия для распространенных форматов: Word, Publisher, PowerPoint, Excel</p>
-    <br/>
+    <label for="format">Выберите формат отчета проекта: </label>
+    <select th:field="*{format}" id="format">
+        <option value=""></option>
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
+    </select>
     <label for="tag">Введите тэг для поиска: </label>
     <input type="text" th:field="*{tag}" id="tag">
     <div style="color: red" th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}">tag error</div>

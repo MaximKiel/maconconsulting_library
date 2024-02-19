@@ -75,7 +75,7 @@
 
 
 
-    <label for="segments">Введите сегменты рынка:</label>
+    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Ctrl):</label>
     <p style="color: gray; font-style: italic">Ранее были выбраны сегменты:</p>
     <div style="color: gray; font-style: italic">
         <ul th:each="s : ${project.segments}">
@@ -101,7 +101,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
     <br/>
 
-    <label for="formats">Выберете форматы отчета проекта:</label>
+    <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько, зажмите клавишу Ctrl):</label>
     <p style="color: gray; font-style: italic">Ранее были выбраны форматы:</p>
     <div style="color: gray; font-style: italic">
         <ul th:each="f : ${project.formats}">
