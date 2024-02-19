@@ -7,6 +7,7 @@ import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ProjectDTO {
@@ -118,6 +119,7 @@ public class ProjectDTO {
     }
 
     public List<ProjectSegmentDTO> getSegments() {
+        segments.sort(Comparator.comparing(ProjectSegmentDTO::getName));
         return segments;
     }
 
@@ -150,6 +152,7 @@ public class ProjectDTO {
     }
 
     public List<ProjectFormatDTO> getFormats() {
+        formats.sort(Comparator.comparing(ProjectFormatDTO::getName));
         return formats;
     }
 

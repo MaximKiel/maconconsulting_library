@@ -7,6 +7,7 @@ import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -157,6 +158,7 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectSegment> getSegments() {
+        segments.sort(Comparator.comparing(ProjectSegment::getName));
         return segments;
     }
 
@@ -169,6 +171,7 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectFormat> getFormats() {
+        formats.sort(Comparator.comparing(ProjectFormat::getName));
         return formats;
     }
 
