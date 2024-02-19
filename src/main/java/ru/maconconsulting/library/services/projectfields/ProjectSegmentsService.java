@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.repositories.projectfields.ProjectSegmentsRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,9 @@ public class ProjectSegmentsService implements CommonProjectFieldsService<Projec
 
     @Override
     public List<ProjectSegment> findAll() {
-        return projectSegmentsRepository.findAll();
+        List<ProjectSegment> segments = projectSegmentsRepository.findAll();
+        segments.sort(Comparator.comparing(ProjectSegment::getName));
+        return segments;
     }
 
     @Override

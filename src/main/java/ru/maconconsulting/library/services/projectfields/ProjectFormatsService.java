@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 import ru.maconconsulting.library.repositories.projectfields.ProjectFormatsRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,9 @@ public class ProjectFormatsService implements CommonProjectFieldsService<Project
 
     @Override
     public List<ProjectFormat> findAll() {
-        return projectFormatsRepository.findAll();
+        List<ProjectFormat> formats = projectFormatsRepository.findAll();
+        formats.sort(Comparator.comparing(ProjectFormat::getName));
+        return formats;
     }
 
     @Override

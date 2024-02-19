@@ -15,9 +15,7 @@ import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -41,7 +39,9 @@ public class ProjectsService {
     }
 
     public List<Project> findAll() {
-        return projectsRepository.findAll();
+        List<Project> projects = projectsRepository.findAll();
+        projects.sort(Comparator.comparing(Project::getNumber));
+        return projects;
     }
 
     public Optional<Project> findByNumber(String number) {

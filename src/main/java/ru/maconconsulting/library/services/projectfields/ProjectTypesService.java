@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.repositories.projectfields.ProjectTypesRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,9 @@ public class ProjectTypesService implements CommonProjectFieldsService<ProjectTy
 
     @Override
     public List<ProjectType> findAll() {
-        return projectTypesRepository.findAll();
+        List<ProjectType> types = projectTypesRepository.findAll();
+        types.sort(Comparator.comparing(ProjectType::getName));
+        return types;
     }
 
     @Override

@@ -8,6 +8,7 @@ import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.repositories.MaconUsersRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,9 @@ public class MaconUsersService {
     }
 
     public List<MaconUser> findAll() {
-        return maconUsersRepository.findAll();
+        List<MaconUser> users = maconUsersRepository.findAll();
+        users.sort(Comparator.comparing(MaconUser::getName));
+        return users;
     }
 
     public Optional<MaconUser> findByEmail(String email) {
