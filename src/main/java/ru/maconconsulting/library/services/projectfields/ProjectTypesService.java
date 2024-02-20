@@ -22,7 +22,7 @@ public class ProjectTypesService implements CommonProjectFieldsService<ProjectTy
     }
 
     @Override
-    public List<ProjectType> findAll() {
+    public List<ProjectType> findAllSorted() {
         List<ProjectType> types = projectTypesRepository.findAll();
         types.sort(Comparator.comparing(ProjectType::getName));
         return types;

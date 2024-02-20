@@ -25,7 +25,7 @@ public class MaconUsersService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<MaconUser> findAll() {
+    public List<MaconUser> findAllSorted() {
         List<MaconUser> users = maconUsersRepository.findAll();
         users.sort(Comparator.comparing(MaconUser::getName));
         return users;

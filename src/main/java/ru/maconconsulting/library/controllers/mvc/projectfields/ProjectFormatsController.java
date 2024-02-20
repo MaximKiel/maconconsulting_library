@@ -33,7 +33,7 @@ public class ProjectFormatsController {
 
     @GetMapping
     public String getAllFormats(Model model) {
-        model.addAttribute("formats", projectFormatsService.findAll());
+        model.addAttribute("formats", projectFormatsService.findAllSorted());
         log.info("Go to mvc/projectfields/formats/manage");
         return "mvc/projectfields/formats/manage";
     }

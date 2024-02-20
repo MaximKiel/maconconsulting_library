@@ -38,7 +38,7 @@ public class ProjectsRestController {
 
     @GetMapping
     public ProjectsResponse getAllProjects() {
-        return new ProjectsResponse(projectsService.findAll().stream().map(this::convertToProjectDTO)
+        return new ProjectsResponse(projectsService.findAllSorted().stream().map(this::convertToProjectDTO)
                 .collect(Collectors.toList()));
     }
 

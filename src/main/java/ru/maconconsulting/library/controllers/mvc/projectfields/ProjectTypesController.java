@@ -33,7 +33,7 @@ public class ProjectTypesController {
 
     @GetMapping
     public String getAllTypes(Model model) {
-        model.addAttribute("types", projectTypesService.findAll());
+        model.addAttribute("types", projectTypesService.findAllSorted());
         log.info("Go to mvc/projectfields/types/manage");
         return "mvc/projectfields/types/manage";
     }

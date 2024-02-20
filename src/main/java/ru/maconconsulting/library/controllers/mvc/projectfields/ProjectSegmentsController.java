@@ -33,7 +33,7 @@ public class ProjectSegmentsController {
 
     @GetMapping
     public String getAllSegments(Model model) {
-        model.addAttribute("segments", projectSegmentsService.findAll());
+        model.addAttribute("segments", projectSegmentsService.findAllSorted());
         log.info("Go to mvc/projectfields/segments/manage");
         return "mvc/projectfields/segments/manage";
     }

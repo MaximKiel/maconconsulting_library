@@ -32,7 +32,7 @@ public class AdminController {
 
     @GetMapping
     public String getAllMaconUsers(Model model) {
-        model.addAttribute("maconUsers", maconUsersService.findAll());
+        model.addAttribute("maconUsers", maconUsersService.findAllSorted());
         log.info("Go to mvc/users/manage");
         return "mvc/users/manage";
     }

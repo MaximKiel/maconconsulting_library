@@ -38,7 +38,7 @@ public class MaconUsersRestController {
 
     @GetMapping
     public MaconUsersResponse getAllMaconUsers() {
-        return new MaconUsersResponse(maconUsersService.findAll().stream().map(this::convertToMaconUserDTO)
+        return new MaconUsersResponse(maconUsersService.findAllSorted().stream().map(this::convertToMaconUserDTO)
                 .collect(Collectors.toList()));
     }
 
