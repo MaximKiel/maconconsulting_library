@@ -10,8 +10,6 @@ public class SearchProject {
 
     private String relevance;
 
-    private String title;
-
     private String client;
 
     private String country;
@@ -30,10 +28,9 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, String tag) {
+    public SearchProject(int year, String relevance, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, String tag) {
         this.year = year;
         this.relevance = relevance;
-        this.title = title;
         this.client = client;
         this.country = country;
         this.region = region;
@@ -58,14 +55,6 @@ public class SearchProject {
 
     public void setRelevance(String relevance) {
         this.relevance = relevance;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getClient() {

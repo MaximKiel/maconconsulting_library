@@ -91,9 +91,6 @@ public class ProjectsService {
         if (!searchProject.getRelevance().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getRelevance(), searchProject.getRelevance()));
         }
-        if (!searchProject.getTitle().equals("")) {
-            result = searchElement(result, p -> p.getTitle().equalsIgnoreCase(searchProject.getTitle()));
-        }
         if (!searchProject.getClient().equals("")) {
             result = searchElement(result, p -> searchPluralString(p.getClient(), searchProject.getClient()));
         }
