@@ -119,7 +119,9 @@ public class ProjectDTO {
     }
 
     public List<ProjectSegmentDTO> getSegments() {
-        segments.sort(Comparator.comparing(ProjectSegmentDTO::getName));
+        if (segments != null) {
+            segments.sort(Comparator.comparing(ProjectSegmentDTO::getName));
+        }
         return segments;
     }
 
@@ -152,7 +154,9 @@ public class ProjectDTO {
     }
 
     public List<ProjectFormatDTO> getFormats() {
-        formats.sort(Comparator.comparing(ProjectFormatDTO::getName));
+        if (formats != null) {
+            formats.sort(Comparator.comparing(ProjectFormatDTO::getName));
+        }
         return formats;
     }
 

@@ -158,7 +158,9 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectSegment> getSegments() {
-        segments.sort(Comparator.comparing(ProjectSegment::getName));
+        if (segments != null) {
+            segments.sort(Comparator.comparing(ProjectSegment::getName));
+        }
         return segments;
     }
 
@@ -171,7 +173,9 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectFormat> getFormats() {
-        formats.sort(Comparator.comparing(ProjectFormat::getName));
+        if (formats != null) {
+            formats.sort(Comparator.comparing(ProjectFormat::getName));
+        }
         return formats;
     }
 
