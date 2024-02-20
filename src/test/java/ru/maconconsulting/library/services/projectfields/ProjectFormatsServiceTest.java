@@ -27,7 +27,7 @@ public class ProjectFormatsServiceTest {
     private ProjectFormatsRepository projectFormatsRepository;
 
     @Test
-    void findAll() {
+    void findAllSorted() {
         List<ProjectFormat> expectedProjectFormats = List.of(PROJECT_FORMAT_1, PROJECT_FORMAT_2, PROJECT_FORMAT_3);
         Mockito.when(projectFormatsRepository.findAll()).thenReturn(expectedProjectFormats);
         List<ProjectFormat> actualProjectFormats = projectFormatsService.findAllSorted();

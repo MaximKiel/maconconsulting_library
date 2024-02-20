@@ -26,7 +26,7 @@ class ProjectTypesServiceTest {
     private ProjectTypesRepository projectTypesRepository;
 
     @Test
-    void findAll() {
+    void findAllSorted() {
         List<ProjectType> expectedProjectTypes = List.of(PROJECT_TYPE_1, PROJECT_TYPE_2, PROJECT_TYPE_3);
         Mockito.when(projectTypesRepository.findAll()).thenReturn(expectedProjectTypes);
         List<ProjectType> actualProjectTypes = projectTypesService.findAllSorted();

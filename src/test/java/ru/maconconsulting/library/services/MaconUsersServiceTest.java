@@ -33,7 +33,7 @@ class MaconUsersServiceTest {
     private  PasswordEncoder passwordEncoder;
 
     @Test
-    void findAll() {
+    void findAllSorted() {
         List<MaconUser> expectedUsers = List.of(USER, MANAGER, ADMIN);
         Mockito.when(maconUsersRepository.findAll()).thenReturn(expectedUsers);
         List<MaconUser> actualUsers = maconUsersService.findAllSorted();

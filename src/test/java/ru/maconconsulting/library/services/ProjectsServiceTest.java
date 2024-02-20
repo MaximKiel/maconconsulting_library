@@ -43,7 +43,7 @@ class ProjectsServiceTest {
     private ProjectsRepository projectsRepository;
 
     @Test
-    void findAll() {
+    void findAllSorted() {
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2, PROJECT_3);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.findAllSorted();
