@@ -81,8 +81,8 @@ public class ProjectsController {
             return "mvc/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
-        log.info("Go to redirect:/projects");
-        return "redirect:/projects";
+        log.info("Go to redirect:/projects/" + projectDTO.getNumber());
+        return "redirect:/projects/" + projectDTO.getNumber();
     }
 
     @GetMapping("/{number}/edit")
@@ -105,8 +105,8 @@ public class ProjectsController {
         }
 
         projectsService.update(number, convertToProject(projectDTO));
-        log.info("Go to redirect:/projects");
-        return "redirect:/projects";
+        log.info("Go to redirect:/projects/" + number);
+        return "redirect:/projects/" + number;
     }
 
     @DeleteMapping("/{number}")
