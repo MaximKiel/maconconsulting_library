@@ -120,7 +120,10 @@ public class ProjectDTO {
     }
 
     public List<ProjectSegmentDTO> getSegments() {
-        return segments.stream().sorted(Comparator.comparing(ProjectSegmentDTO::getName)).collect(Collectors.toList());
+        if (segments != null) {
+            return segments.stream().sorted(Comparator.comparing(ProjectSegmentDTO::getName)).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public void setSegments(List<ProjectSegmentDTO> segments) {
@@ -152,7 +155,10 @@ public class ProjectDTO {
     }
 
     public List<ProjectFormatDTO> getFormats() {
-        return formats.stream().sorted(Comparator.comparing(ProjectFormatDTO::getName)).collect(Collectors.toList());
+        if (formats != null) {
+            return formats.stream().sorted(Comparator.comparing(ProjectFormatDTO::getName)).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public void setFormats(List<ProjectFormatDTO> formats) {

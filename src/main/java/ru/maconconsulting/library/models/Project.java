@@ -159,7 +159,10 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectSegment> getSegments() {
-        return segments.stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList());
+        if (segments != null) {
+            return segments.stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public void setSegments(List<ProjectSegment> segments) {
@@ -171,7 +174,10 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectFormat> getFormats() {
-        return formats.stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList());
+        if (formats != null) {
+            return formats.stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public void setFormats(List<ProjectFormat> formats) {
