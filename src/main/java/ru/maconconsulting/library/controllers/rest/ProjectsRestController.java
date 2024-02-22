@@ -18,6 +18,7 @@ import ru.maconconsulting.library.utils.validators.ProjectValidator;
 import ru.maconconsulting.library.utils.errors.ProjectErrorResponse;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class ProjectsRestController {
 
     @GetMapping
     public ProjectsResponse getAllProjects() {
-        return new ProjectsResponse(projectsService.findAll().stream().sorted().map(this::convertToProjectDTO)
+        return new ProjectsResponse(projectsService.findAll().stream().sorted(Comparator.comparing(Project::getNumber)).map(this::convertToProjectDTO)
                 .collect(Collectors.toList()));
     }
 

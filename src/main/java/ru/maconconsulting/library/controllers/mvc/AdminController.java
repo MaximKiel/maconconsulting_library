@@ -14,6 +14,7 @@ import ru.maconconsulting.library.services.MaconUsersService;
 import ru.maconconsulting.library.utils.validators.MaconUserValidator;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,7 +35,7 @@ public class AdminController {
 
     @GetMapping
     public String getAllMaconUsers(Model model) {
-        model.addAttribute("maconUsers", maconUsersService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("maconUsers", maconUsersService.findAll().stream().sorted(Comparator.comparing(MaconUser::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/users/manage");
         return "mvc/users/manage";
     }

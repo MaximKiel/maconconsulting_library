@@ -18,6 +18,7 @@ import ru.maconconsulting.library.utils.errors.MaconUserErrorResponse;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotCreateException;
 import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class MaconUsersRestController {
 
     @GetMapping
     public MaconUsersResponse getAllMaconUsers() {
-        return new MaconUsersResponse(maconUsersService.findAll().stream().sorted().map(this::convertToMaconUserDTO)
+        return new MaconUsersResponse(maconUsersService.findAll().stream().sorted(Comparator.comparing(MaconUser::getName)).map(this::convertToMaconUserDTO)
                 .collect(Collectors.toList()));
     }
 

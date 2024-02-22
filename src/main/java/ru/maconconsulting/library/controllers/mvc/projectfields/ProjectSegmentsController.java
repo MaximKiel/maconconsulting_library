@@ -15,6 +15,7 @@ import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
 import ru.maconconsulting.library.utils.exceptions.projectfields.ProjectSegmentNotFoundException;
 import ru.maconconsulting.library.utils.validators.projectfields.ProjectSegmentValidator;
 
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,7 +36,7 @@ public class ProjectSegmentsController {
 
     @GetMapping
     public String getAllSegments(Model model) {
-        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/projectfields/segments/manage");
         return "mvc/projectfields/segments/manage";
     }
