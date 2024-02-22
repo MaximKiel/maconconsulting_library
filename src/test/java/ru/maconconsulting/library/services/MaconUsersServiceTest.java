@@ -36,7 +36,7 @@ class MaconUsersServiceTest {
     void findAllSorted() {
         List<MaconUser> expectedUsers = List.of(USER, MANAGER, ADMIN);
         Mockito.when(maconUsersRepository.findAll()).thenReturn(expectedUsers);
-        List<MaconUser> actualUsers = maconUsersService.findAllSorted();
+        List<MaconUser> actualUsers = maconUsersService.findAll();
 
         Mockito.verify(maconUsersRepository, Mockito.times(1)).findAll();
         Assertions.assertNotNull(actualUsers);

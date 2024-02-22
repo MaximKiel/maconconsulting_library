@@ -8,7 +8,6 @@ import ru.maconconsulting.library.models.MaconUser;
 import ru.maconconsulting.library.repositories.MaconUsersRepository;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +24,8 @@ public class MaconUsersService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<MaconUser> findAllSorted() {
-        List<MaconUser> users = maconUsersRepository.findAll();
-        users.sort(Comparator.comparing(MaconUser::getName));
-        return users;
+    public List<MaconUser> findAll() {
+        return maconUsersRepository.findAll();
     }
 
     public Optional<MaconUser> findByEmail(String email) {
