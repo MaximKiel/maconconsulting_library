@@ -21,10 +21,8 @@ public class ProjectFormatsService implements CommonProjectFieldsService<Project
     }
 
     @Override
-    public List<ProjectFormat> findAllSorted() {
-        List<ProjectFormat> formats = projectFormatsRepository.findAll();
-        formats.sort(Comparator.comparing(ProjectFormat::getName));
-        return formats;
+    public List<ProjectFormat> findAll() {
+        return projectFormatsRepository.findAll();
     }
 
     @Override

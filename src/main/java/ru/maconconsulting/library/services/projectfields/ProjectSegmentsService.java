@@ -22,10 +22,8 @@ public class ProjectSegmentsService implements CommonProjectFieldsService<Projec
     }
 
     @Override
-    public List<ProjectSegment> findAllSorted() {
-        List<ProjectSegment> segments = projectSegmentsRepository.findAll();
-        segments.sort(Comparator.comparing(ProjectSegment::getName));
-        return segments;
+    public List<ProjectSegment> findAll() {
+        return projectSegmentsRepository.findAll();
     }
 
     @Override

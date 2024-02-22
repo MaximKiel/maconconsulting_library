@@ -30,7 +30,7 @@ public class ProjectFormatsServiceTest {
     void findAllSorted() {
         List<ProjectFormat> expectedProjectFormats = List.of(PROJECT_FORMAT_1, PROJECT_FORMAT_2, PROJECT_FORMAT_3);
         Mockito.when(projectFormatsRepository.findAll()).thenReturn(expectedProjectFormats);
-        List<ProjectFormat> actualProjectFormats = projectFormatsService.findAllSorted();
+        List<ProjectFormat> actualProjectFormats = projectFormatsService.findAll();
 
         Mockito.verify(projectFormatsRepository, Mockito.times(1)).findAll();
         Assertions.assertNotNull(actualProjectFormats);

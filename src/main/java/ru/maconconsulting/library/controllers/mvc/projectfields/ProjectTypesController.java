@@ -15,6 +15,8 @@ import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.validators.projectfields.ProjectTypeValidator;
 import ru.maconconsulting.library.utils.exceptions.projectfields.ProjectTypeNotFoundException;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/types")
 public class ProjectTypesController {
@@ -33,7 +35,7 @@ public class ProjectTypesController {
 
     @GetMapping
     public String getAllTypes(Model model) {
-        model.addAttribute("types", projectTypesService.findAllSorted());
+        model.addAttribute("types", projectTypesService.findAll().stream().sorted().collect(Collectors.toList()));
         log.info("Go to mvc/projectfields/types/manage");
         return "mvc/projectfields/types/manage";
     }

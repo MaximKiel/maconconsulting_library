@@ -29,7 +29,7 @@ class ProjectTypesServiceTest {
     void findAllSorted() {
         List<ProjectType> expectedProjectTypes = List.of(PROJECT_TYPE_1, PROJECT_TYPE_2, PROJECT_TYPE_3);
         Mockito.when(projectTypesRepository.findAll()).thenReturn(expectedProjectTypes);
-        List<ProjectType> actualProjectTypes = projectTypesService.findAllSorted();
+        List<ProjectType> actualProjectTypes = projectTypesService.findAll();
 
         Mockito.verify(projectTypesRepository, Mockito.times(1)).findAll();
         Assertions.assertNotNull(actualProjectTypes);

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CommonProjectFieldsService <E extends AbstractProjectFieldEntity> {
 
-    List<E> findAllSorted();
+    List<E> findAll();
 
     Optional<E> findByName(String name);
 

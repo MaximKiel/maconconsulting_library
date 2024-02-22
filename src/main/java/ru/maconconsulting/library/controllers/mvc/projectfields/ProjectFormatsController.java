@@ -15,6 +15,8 @@ import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
 import ru.maconconsulting.library.utils.exceptions.projectfields.ProjectFormatNotFoundException;
 import ru.maconconsulting.library.utils.validators.projectfields.ProjectFormatValidator;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/formats")
 public class ProjectFormatsController {
@@ -33,7 +35,7 @@ public class ProjectFormatsController {
 
     @GetMapping
     public String getAllFormats(Model model) {
-        model.addAttribute("formats", projectFormatsService.findAllSorted());
+        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted().collect(Collectors.toList()));
         log.info("Go to mvc/projectfields/formats/manage");
         return "mvc/projectfields/formats/manage";
     }

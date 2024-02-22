@@ -66,9 +66,9 @@ public class ProjectsController {
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
-        model.addAttribute("types", projectTypesService.findAllSorted());
-        model.addAttribute("segments", projectSegmentsService.findAllSorted());
-        model.addAttribute("formats", projectFormatsService.findAllSorted());
+        model.addAttribute("types", projectTypesService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted().collect(Collectors.toList()));
         log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
@@ -89,9 +89,9 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
-        model.addAttribute("types", projectTypesService.findAllSorted().stream().map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
-        model.addAttribute("segments", projectSegmentsService.findAllSorted().stream().map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
-        model.addAttribute("formats", projectFormatsService.findAllSorted().stream().map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
+        model.addAttribute("types", projectTypesService.findAll().stream().sorted().map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
+        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted().map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
+        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted().map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
@@ -118,9 +118,9 @@ public class ProjectsController {
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
-        model.addAttribute("types", projectTypesService.findAllSorted());
-        model.addAttribute("segments", projectSegmentsService.findAllSorted());
-        model.addAttribute("formats", projectFormatsService.findAllSorted());
+        model.addAttribute("types", projectTypesService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted().collect(Collectors.toList()));
+        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted().collect(Collectors.toList()));
         log.info("Go to mvc/projects/search");
         return "mvc/projects/search";
     }
