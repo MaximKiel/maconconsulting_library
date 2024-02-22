@@ -82,8 +82,7 @@ public class ProjectsService {
     }
 
     public List<Project> search(SearchProject searchProject) {
-        List<Project> result = findAll();
-        result.sort(Comparator.comparing(Project::getNumber));
+        List<Project> result = findAll().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList());
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
