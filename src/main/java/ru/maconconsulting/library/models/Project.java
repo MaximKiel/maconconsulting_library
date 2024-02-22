@@ -7,8 +7,8 @@ import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "project")
@@ -158,10 +158,7 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectSegment> getSegments() {
-        if (segments != null) {
-            segments.sort(Comparator.comparing(ProjectSegment::getName));
-        }
-        return segments;
+        return segments.stream().sorted().collect(Collectors.toList());
     }
 
     public void setSegments(List<ProjectSegment> segments) {
@@ -173,10 +170,7 @@ public class Project extends AbstractBasedEntity {
     }
 
     public List<ProjectFormat> getFormats() {
-        if (formats != null) {
-            formats.sort(Comparator.comparing(ProjectFormat::getName));
-        }
-        return formats;
+        return formats.stream().sorted().collect(Collectors.toList());
     }
 
     public void setFormats(List<ProjectFormat> formats) {
