@@ -38,10 +38,8 @@ public class ProjectsService {
         this.projectFormatsService = projectFormatsService;
     }
 
-    public List<Project> findAllSorted() {
-        List<Project> projects = projectsRepository.findAll();
-        projects.sort(Comparator.comparing(Project::getNumber));
-        return projects;
+    public List<Project> findAll() {
+        return projectsRepository.findAll();
     }
 
     public Optional<Project> findByNumber(String number) {
@@ -84,7 +82,8 @@ public class ProjectsService {
     }
 
     public List<Project> search(SearchProject searchProject) {
-        List<Project> result = findAllSorted();
+        List<Project> result = findAll();
+        result.sort(Comparator.comparing(Project::getNumber));
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
