@@ -13,34 +13,34 @@ import java.util.stream.Collectors;
 
 public class ProjectDTO {
 
-    @NotNull
+    @NotBlank(message = "Номер проекта не должен быть пустым!")
     private String number;
 
-    @NotNull
+    @NotNull(message = "Год проекта не должен быть пустым!")
     private Integer year;
 
     private String relevance;
 
-    @NotBlank
+    @NotBlank(message = "Название проекта не должно быть пустым!")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Наименование клиента  не должно быть пустым!")
     private String client;
 
-    @NotBlank
+    @NotBlank(message = "Название страны не должно быть пустым!")
     private String countries;
 
     private String regions;
 
     private String towns;
 
-    @NotEmpty
+    @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<ProjectSegmentDTO> segments;
 
-    @NotNull
+    @NotNull(message = "Тип проекта не должен быть пустым!")
     private ProjectTypeDTO type;
 
-    @NotEmpty
+    @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<ProjectFormatDTO> formats;
 
     private String tags;

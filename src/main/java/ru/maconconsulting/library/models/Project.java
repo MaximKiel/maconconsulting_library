@@ -2,6 +2,7 @@ package ru.maconconsulting.library.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
@@ -17,26 +18,26 @@ public class Project extends AbstractBasedEntity {
 
     @Id
     @Column(name = "number")
-    @NotNull
+    @NotBlank(message = "Номер проекта не должен быть пустым!")
     private String number;
 
     @Column(name = "year")
-    @NotNull
+    @NotNull(message = "Год проекта не должен быть пустым!")
     private Integer year;
 
     @Column(name = "relevance")
     private String relevance;
 
     @Column(name = "title")
-    @NotBlank
+    @NotBlank(message = "Название проекта не должно быть пустым!")
     private String title;
 
     @Column(name = "client")
-    @NotBlank
+    @NotBlank(message = "Наименование клиента  не должно быть пустым!")
     private String client;
 
     @Column(name = "countries")
-    @NotBlank
+    @NotBlank(message = "Название страны не должно быть пустым!")
     private String countries;
 
     @Column(name = "regions")
@@ -50,11 +51,12 @@ public class Project extends AbstractBasedEntity {
             name = "project_segment",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
+    @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<ProjectSegment> segments;
 
     @ManyToOne
-    @NotNull
     @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @NotNull(message = "Тип проекта не должен быть пустым!")
     private ProjectType type;
 
     @ManyToMany
@@ -63,6 +65,7 @@ public class Project extends AbstractBasedEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "format_id")
     )
+    @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<ProjectFormat> formats;
 
     @Column(name = "tags")
