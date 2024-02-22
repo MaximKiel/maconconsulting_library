@@ -26,7 +26,7 @@ class ProjectSegmentsServiceTest {
     private ProjectSegmentsRepository projectSegmentsRepository;
 
     @Test
-    void findAllSorted() {
+    void findAll() {
         List<ProjectSegment> expectedProjectSegments = List.of(PROJECT_SEGMENT_1, PROJECT_SEGMENT_2, PROJECT_SEGMENT_3);
         Mockito.when(projectSegmentsRepository.findAll()).thenReturn(expectedProjectSegments);
         List<ProjectSegment> actualProjectSegments = projectSegmentsService.findAll();

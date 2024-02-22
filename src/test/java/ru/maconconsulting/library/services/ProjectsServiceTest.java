@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
 import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
 import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
@@ -43,7 +45,7 @@ class ProjectsServiceTest {
     private ProjectsRepository projectsRepository;
 
     @Test
-    void findAllSorted() {
+    void findAll() {
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2, PROJECT_3);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.findAll();
@@ -98,6 +100,12 @@ class ProjectsServiceTest {
         Mockito.when(projectTypesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
         Mockito.when(projectsRepository.findByNumber(number)).thenReturn(Optional.of(PROJECT_1));
         Mockito.when(projectsRepository.findByTitle("Update PROJECT_1")).thenReturn(Optional.of(updatedProject));
+        for (ProjectSegment segment : updatedProject.getSegments()) {
+            Mockito.when(projectSegmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
+        }
+        for (ProjectFormat format : updatedProject.getFormats()) {
+            Mockito.when(projectFormatsService.findByName(format.getName())).thenReturn(Optional.of(format));
+        }
         projectsService.update(number, updatedProject);
 
         Mockito.verify(projectsRepository, Mockito.times(1)).save(updatedProject);
