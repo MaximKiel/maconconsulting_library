@@ -31,6 +31,8 @@ public class SecurityConfig {
                                 .requestMatchers("/users", "/users/new", "/users/create").hasRole("ADMIN")
                                 .anyRequest().hasAnyRole("USER", "MANAGER", "ADMIN")
                 )
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedPage("/main"))
                 .formLogin((formLogin) -> formLogin
                         .usernameParameter("login")
                         .passwordParameter("password")
