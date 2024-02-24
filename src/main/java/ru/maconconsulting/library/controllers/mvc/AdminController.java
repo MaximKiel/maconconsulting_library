@@ -1,5 +1,6 @@
 package ru.maconconsulting.library.controllers.mvc;
 
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,13 +56,13 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("maconUser") MaconUser maconUser, BindingResult bindingResult) {
-        maconUserValidator.validate(convertToMaconUserDTO(maconUser), bindingResult);
+    public String create(@ModelAttribute("maconUser") @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult) {
+        maconUserValidator.validate(maconUserDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/users/new");
             return "mvc/users/new";
         }
-        maconUsersService.save(maconUser);
+        maconUsersService.save(convertToMaconUser(maconUserDTO));
         log.info("Go to redirect:/users");
         return "redirect:/users";
     }
@@ -94,7 +95,7 @@ public class AdminController {
         return "redirect:/users";
     }
 
-    private MaconUserDTO convertToMaconUserDTO(MaconUser maconUser) {
-        return modelMapper.map(maconUser, MaconUserDTO.class);
+    private MaconUser convertToMaconUser(MaconUserDTO maconUserDTO) {
+        return modelMapper.map(maconUserDTO, MaconUser.class);
     }
 }

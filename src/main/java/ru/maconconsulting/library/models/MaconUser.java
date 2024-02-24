@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 public class MaconUser extends AbstractBasedEntityWithId {
 
     @Column(name = "name")
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть пустым!")
     private String name;
 
     @Column(name = "login")
@@ -18,8 +18,8 @@ public class MaconUser extends AbstractBasedEntityWithId {
     private String login;
 
     @Column(name = "email")
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email не должен быть пустым!")
+    @Email(message = "Email должен иметь вид ***.mail.ru")
     private String email;
 
     @Column(name = "role")
@@ -28,7 +28,7 @@ public class MaconUser extends AbstractBasedEntityWithId {
     private Role role;
 
     @Column(name = "password")
-    @NotBlank
+    @NotBlank(message = "Пароль не должен быть пустым!")
     private String password;
 
     public MaconUser() {

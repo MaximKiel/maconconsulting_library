@@ -7,18 +7,31 @@ import ru.maconconsulting.library.models.Role;
 
 public class MaconUserDTO {
 
-    @NotNull
+    @NotBlank(message = "Имя не должно быть пустым!")
     private String name;
 
-    @NotBlank
     private String login;
 
-    @NotNull
-    @Email
+    @NotBlank(message = "Email не должен быть пустым!")
+    @Email(message = "Email должен иметь вид ***.mail.ru")
     private String email;
 
     @NotNull
     private Role role;
+
+    @NotBlank(message = "Пароль не должен быть пустым!")
+    private String password;
+
+    public MaconUserDTO() {
+    }
+
+    public MaconUserDTO(String name, String login, String email, Role role, String password) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 
     public String getName() {
         return name;
@@ -50,5 +63,13 @@ public class MaconUserDTO {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
