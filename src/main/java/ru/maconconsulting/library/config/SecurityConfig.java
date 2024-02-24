@@ -29,6 +29,7 @@ public class SecurityConfig {
                         authorizeHttpRequest
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/users", "/users/new", "/users/create").hasRole("ADMIN")
+                                .requestMatchers("/projects/new", "/projects/create", "/projects/{number}/edit").hasAnyRole("MANAGER", "ADMIN")
                                 .anyRequest().hasAnyRole("USER", "MANAGER", "ADMIN")
                 )
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
