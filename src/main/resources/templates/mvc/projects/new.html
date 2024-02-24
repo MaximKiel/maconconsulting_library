@@ -54,7 +54,8 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
     <label for="client">Введите заказчика: </label>
-    <input type="text" th:field="*{client}" id="client">
+    <input type="text" th:field="*{client}" id="client"
+           placeholder="Указывать название без указания организационно-правовой формы и кавычек: 'Интерком, СберРешения'">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
     <label for="countries">Введите название стран: </label>
@@ -64,12 +65,12 @@
     <br/>
     <label for="regions">Введите название субъектов (регионов): </label>
     <input type="text" th:field="*{regions}" id="regions"
-           placeholder="Если регионов несколько, вводите их через запятую с пробелом: 'Краснодарский край, Ростовская область'">
+           placeholder="Если регионов несколько, вводите их через запятую с пробелом: 'Краснодарский край, Республика Татарстан'">
     <div style="color: red" th:if="${#fields.hasErrors('regions')}" th:errors="*{regions}">regions error</div>
     <br/>
     <label for="towns">Введите название городов (муниципальных образований): </label>
     <input type="text" th:field="*{towns}" id="towns"
-           placeholder="Если городов несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Геленджик'">
+           placeholder="Если городов или МО несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Туапсинский район'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
