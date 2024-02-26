@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "kew_word")
 public class ProjectKeyWord extends AbstractProjectFieldEntity {
 
-    @ManyToMany(mappedBy = "kew_words")
+    @ManyToMany(mappedBy = "keyWords")
     private List<Project> projects;
 
     public ProjectKeyWord() {
