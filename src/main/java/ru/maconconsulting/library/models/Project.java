@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectKeyWord;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 
@@ -68,13 +69,18 @@ public class Project extends AbstractBasedEntity {
     @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<ProjectFormat> formats;
 
-    @Column(name = "tags")
-    private String tags;
+    @ManyToMany
+    @JoinTable(
+            name = "project_kew_word",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "kew_word_id")
+    )
+    private List<ProjectKeyWord> keyWords;
 
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegment> segments, ProjectType type, List<ProjectFormat> formats, String tags) {
+    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegment> segments, ProjectType type, List<ProjectFormat> formats, List<ProjectKeyWord> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -86,7 +92,7 @@ public class Project extends AbstractBasedEntity {
         this.segments = segments;
         this.type = type;
         this.formats = formats;
-        this.tags = tags;
+        this.keyWords = keyWords;
     }
 
     public String getNumber() {
@@ -153,14 +159,6 @@ public class Project extends AbstractBasedEntity {
         this.client = client;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
     public List<ProjectSegment> getSegments() {
         if (segments != null) {
             return segments.stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList());
@@ -191,6 +189,14 @@ public class Project extends AbstractBasedEntity {
         this.type = type;
     }
 
+    public List<ProjectKeyWord> getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(List<ProjectKeyWord> keyWords) {
+        this.keyWords = keyWords;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -202,10 +208,10 @@ public class Project extends AbstractBasedEntity {
                 ", countries='" + countries + '\'' +
                 ", regions='" + regions + '\'' +
                 ", towns='" + towns + '\'' +
-                ", segments='" + segments + '\'' +
+                ", segments=" + segments +
                 ", type=" + type +
-                ", formats='" + formats + '\'' +
-                ", tags='" + tags + '\'' +
+                ", formats=" + formats +
+                ", keyWords=" + keyWords +
                 '}';
     }
 }
