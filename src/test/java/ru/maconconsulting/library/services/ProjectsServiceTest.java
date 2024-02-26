@@ -124,7 +124,7 @@ class ProjectsServiceTest {
 
     @Test
     void search() {
-        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", PROJECT_SEGMENT_DTO_1, PROJECT_TYPE_DTO_1, PROJECT_FORMAT_DTO_1, "");
+        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", PROJECT_SEGMENT_DTO_1, PROJECT_TYPE_DTO_1, PROJECT_FORMAT_DTO_1, "");
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.search(searchProject);
