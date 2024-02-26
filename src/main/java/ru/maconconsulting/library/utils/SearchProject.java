@@ -1,6 +1,7 @@
 package ru.maconconsulting.library.utils;
 
 import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectKeyWordDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
@@ -25,12 +26,13 @@ public class SearchProject {
     private ProjectTypeDTO type;
 
     private ProjectFormatDTO format;
-    private String tag;
+
+    private ProjectKeyWordDTO keyWord;
 
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, String tag) {
+    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, ProjectKeyWordDTO keyWord) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -41,7 +43,7 @@ public class SearchProject {
         this.segment = segment;
         this.type = type;
         this.format = format;
-        this.tag = tag;
+        this.keyWord = keyWord;
     }
 
     public int getYear() {
@@ -116,19 +118,19 @@ public class SearchProject {
         this.type = type;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
     public ProjectFormatDTO getFormat() {
         return format;
     }
 
     public void setFormat(ProjectFormatDTO format) {
         this.format = format;
+    }
+
+    public ProjectKeyWordDTO getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(ProjectKeyWordDTO keyWord) {
+        this.keyWord = keyWord;
     }
 }
