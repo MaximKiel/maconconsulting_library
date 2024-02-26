@@ -9,9 +9,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectKeyWord;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
 import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
+import ru.maconconsulting.library.services.projectfields.ProjectKeyWordsService;
 import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
@@ -21,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static ru.maconconsulting.library.util.projectfields.ProjectFormatsTestData.*;
+import static ru.maconconsulting.library.util.projectfields.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
+import static ru.maconconsulting.library.util.projectfields.ProjectKeyWordsTestData.PROJECT_KEY_WORD_DTO_1;
 import static ru.maconconsulting.library.util.projectfields.ProjectSegmentsTestData.*;
 import static ru.maconconsulting.library.util.projectfields.ProjectTypesTestData.*;
 import static ru.maconconsulting.library.util.ProjectsTestData.*;
@@ -40,6 +44,9 @@ class ProjectsServiceTest {
 
     @Mock
     private ProjectFormatsService projectFormatsService;
+
+    @Mock
+    private ProjectKeyWordsService projectKeyWordsService;
 
     @Mock
     private ProjectsRepository projectsRepository;
@@ -81,10 +88,11 @@ class ProjectsServiceTest {
     @Test
     void save() {
         Project newProject = new Project("23200", 2023, "12.2023", "23200_New", "Client new", "Россия",
-                "Край", "Город", List.of(PROJECT_SEGMENT_1), PROJECT_TYPE_1, List.of(PROJECT_FORMAT_1), "");
+                "Край", "Город", List.of(PROJECT_SEGMENT_1), PROJECT_TYPE_1, List.of(PROJECT_FORMAT_1), List.of(PROJECT_KEY_WORD_1));
         Mockito.when(projectTypesService.findByName(newProject.getType().getName())).thenReturn(Optional.of(newProject.getType()));
         Mockito.when(projectSegmentsService.findByName(newProject.getSegments().get(0).getName())).thenReturn(Optional.of(newProject.getSegments().get(0)));
         Mockito.when(projectFormatsService.findByName(newProject.getFormats().get(0).getName())).thenReturn(Optional.of(newProject.getFormats().get(0)));
+        Mockito.when(projectKeyWordsService.findByName(newProject.getKeyWords().get(0).getName())).thenReturn(Optional.of(newProject.getKeyWords().get(0)));
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
 
         projectsService.save(newProject);
@@ -106,6 +114,10 @@ class ProjectsServiceTest {
         for (ProjectFormat format : updatedProject.getFormats()) {
             Mockito.when(projectFormatsService.findByName(format.getName())).thenReturn(Optional.of(format));
         }
+        for (ProjectKeyWord keyWord : updatedProject.getKeyWords()) {
+            Mockito.when(projectKeyWordsService.findByName(keyWord.getName())).thenReturn(Optional.of(keyWord));
+        }
+
         projectsService.update(number, updatedProject);
 
         Mockito.verify(projectsRepository, Mockito.times(1)).save(updatedProject);
@@ -124,7 +136,7 @@ class ProjectsServiceTest {
 
     @Test
     void search() {
-        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", PROJECT_SEGMENT_DTO_1, PROJECT_TYPE_DTO_1, PROJECT_FORMAT_DTO_1, "");
+        SearchProject searchProject = new SearchProject(2023, "", "", "", "", "", "", PROJECT_SEGMENT_DTO_1, PROJECT_TYPE_DTO_1, PROJECT_FORMAT_DTO_1, PROJECT_KEY_WORD_DTO_1);
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.search(searchProject);
