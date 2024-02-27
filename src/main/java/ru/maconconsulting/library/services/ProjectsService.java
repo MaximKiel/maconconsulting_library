@@ -67,16 +67,20 @@ public class ProjectsService {
         for (ProjectFormat f : updatedProject.getFormats()) {
             currentFormats.add(projectFormatsService.findByName(f.getName()).get());
         }
-        List<ProjectKeyWord> currentKeyWord = new ArrayList<>();
-        for (ProjectKeyWord k : updatedProject.getKeyWords()) {
-            currentKeyWord.add(projectKeyWordsService.findByName(k.getName()).get());
+        if (updatedProject.getKeyWords() != null) {
+            List<ProjectKeyWord> currentKeyWord = new ArrayList<>();
+            for (ProjectKeyWord k : updatedProject.getKeyWords()) {
+                currentKeyWord.add(projectKeyWordsService.findByName(k.getName()).get());
+            }
+            updatedProject.setKeyWords(currentKeyWord);
+        } else {
+            updatedProject.setKeyWords(null);
         }
         if (findByNumber(number).isPresent() && currentType.isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
             updatedProject.setType(currentType.get());
             updatedProject.setSegments(currentSegments);
             updatedProject.setFormats(currentFormats);
-            updatedProject.setKeyWords(currentKeyWord);
             projectsRepository.save(updatedProject);
         }
     }
