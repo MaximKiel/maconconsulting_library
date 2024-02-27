@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Новое ключевое слово</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/form.css" th:href="@{/css/form.css}"/>
 </head>
 <body>
-
+<header class="site-header">
+    <div class="wrapper site-header__wrapper">
+        <div class="site-header__start">
+            <a href="/main" class="brand">MACON LIBRARY</a>
+        </div>
+        <div class="site-header__middle">
+            <nav class="nav">
+                <button class="nav__toggle" aria-expanded="false" type="button">
+                    Меню
+                </button>
+                <ul class="nav__wrapper">
+                    <li class="nav__item"><a href="/projects/search">Найти проект</a></li>
+                    <li class="nav__item"><a href="/projects/new">Добавить проект</a></li>
+                    <li class="nav__item"><a href="/users">Управление пользователями (admin)</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="site-header__end">
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выйти"/>
+            </form>
+        </div>
+    </div>
+</header>
+<form class="custom_form" th:method="POST" th:action="@{/key_words/create}" th:object="${key_word}">
+    <label for="name">Введите ключевое слово: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
+    <br/>
+    <input type="submit" value="Добавить"/>
+</form>
+<script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
 </html>
