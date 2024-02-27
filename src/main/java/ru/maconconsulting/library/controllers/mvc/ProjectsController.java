@@ -11,13 +11,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectKeyWordDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.projectfields.ProjectFormat;
+import ru.maconconsulting.library.models.projectfields.ProjectKeyWord;
 import ru.maconconsulting.library.models.projectfields.ProjectSegment;
 import ru.maconconsulting.library.models.projectfields.ProjectType;
 import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
+import ru.maconconsulting.library.services.projectfields.ProjectKeyWordsService;
 import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
 import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
 import ru.maconconsulting.library.services.ProjectsService;
@@ -38,15 +41,17 @@ public class ProjectsController {
     private final ProjectTypesService projectTypesService;
     private final ProjectSegmentsService projectSegmentsService;
     private final ProjectFormatsService projectFormatsService;
+    private final ProjectKeyWordsService projectKeyWordsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService, ProjectFormatsService projectFormatsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService, ProjectFormatsService projectFormatsService, ProjectKeyWordsService projectKeyWordsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
         this.projectTypesService = projectTypesService;
         this.projectSegmentsService = projectSegmentsService;
         this.projectFormatsService = projectFormatsService;
+        this.projectKeyWordsService = projectKeyWordsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
     }
@@ -70,6 +75,7 @@ public class ProjectsController {
         model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).collect(Collectors.toList()));
         model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
@@ -93,6 +99,7 @@ public class ProjectsController {
         model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
         model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
         model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
+        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
@@ -122,6 +129,7 @@ public class ProjectsController {
         model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).collect(Collectors.toList()));
         model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/projects/search");
         return "mvc/projects/search";
     }
@@ -156,5 +164,9 @@ public class ProjectsController {
 
     private ProjectFormatDTO convertToProjectFormatDTO(ProjectFormat format) {
         return modelMapper.map(format, ProjectFormatDTO.class);
+    }
+
+    private ProjectKeyWordDTO convertToProjectKeyWordDTO(ProjectKeyWord keyWord) {
+        return modelMapper.map(keyWord, ProjectKeyWordDTO.class);
     }
 }
