@@ -39,7 +39,6 @@
         <th>Название проекта</th>
         <th>Заказчик</th>
         <th>Тип отчета</th>
-        <th>Тэги</th>
     </tr>
     </thead>
     <tbody>
@@ -51,7 +50,6 @@
         </td>
         <td th:text="${project.getClient()}">client</td>
         <td th:text="${project.getType().getName()}">type</td>
-        <td th:text="${project.getTags()}">tags</td>
     </tr>
     </tbody>
 </table>

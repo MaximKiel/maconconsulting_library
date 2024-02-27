@@ -92,8 +92,12 @@
         </td>
     </tr>
     <tr>
-        <td><b>Тэги:</b></td>
-        <td><p th:text="${project.getTags()}">Value</p></td>
+        <td><b>Ключевые слова:</b></td>
+        <td>
+            <ul>
+                <li th:each="key_word : ${project.getKeyWords()}" th:text="${key_word.getName()}">Value</li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>
