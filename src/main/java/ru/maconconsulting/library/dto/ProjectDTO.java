@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.projectfields.ProjectKeyWordDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
 import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
 
@@ -43,12 +44,12 @@ public class ProjectDTO {
     @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<ProjectFormatDTO> formats;
 
-    private String tags;
+    private List<ProjectKeyWordDTO> keyWords;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegmentDTO> segments, ProjectTypeDTO type, List<ProjectFormatDTO> formats, String tags) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegmentDTO> segments, ProjectTypeDTO type, List<ProjectFormatDTO> formats, List<ProjectKeyWordDTO> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -60,7 +61,7 @@ public class ProjectDTO {
         this.segments = segments;
         this.type = type;
         this.formats = formats;
-        this.tags = tags;
+        this.keyWords = keyWords;
     }
 
     public String getNumber() {
@@ -146,14 +147,6 @@ public class ProjectDTO {
         this.client = client;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
     public List<ProjectFormatDTO> getFormats() {
         if (formats != null) {
             return formats.stream().sorted(Comparator.comparing(ProjectFormatDTO::getName)).collect(Collectors.toList());
@@ -163,5 +156,13 @@ public class ProjectDTO {
 
     public void setFormats(List<ProjectFormatDTO> formats) {
         this.formats = formats;
+    }
+
+    public List<ProjectKeyWordDTO> getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(List<ProjectKeyWordDTO> keyWords) {
+        this.keyWords = keyWords;
     }
 }
