@@ -102,3 +102,13 @@ body {
 .select-checkbox option:checked::before {
     content: "\2611";
 }
+
+.btn {
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #696969; /* Серый цвет фона */
+    color: #fff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+    margin: 10px 10px;
+}
