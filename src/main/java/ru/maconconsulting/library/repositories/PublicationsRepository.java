@@ -9,5 +9,5 @@ public interface PublicationsRepository extends JpaRepository<Publication, Integ
 
     Optional<Publication> findByTitle(String title);
 
-    void deleteAllByTitle(String title);
+    void deleteByTitle(String title);
 }
