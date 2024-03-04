@@ -59,28 +59,16 @@ public class ProjectsService {
     @Transactional
     public void update(String number, Project updatedProject) {
         Optional<Type> currentType = typesService.findByName(updatedProject.getType().getName());
-        List<Segment> currentSegments = new ArrayList<>();
-        for (Segment s : updatedProject.getSegments()) {
-            currentSegments.add(segmentsService.findByName(s.getName()).get());
-        }
-        List<Format> currentFormats = new ArrayList<>();
-        for (Format f : updatedProject.getFormats()) {
-            currentFormats.add(formatsService.findByName(f.getName()).get());
-        }
-        if (updatedProject.getKeyWords() != null) {
-            List<KeyWord> currentKeyWord = new ArrayList<>();
-            for (KeyWord k : updatedProject.getKeyWords()) {
-                currentKeyWord.add(keyWordsService.findByName(k.getName()).get());
-            }
-            updatedProject.setKeyWords(currentKeyWord);
-        } else {
-            updatedProject.setKeyWords(null);
-        }
         if (findByNumber(number).isPresent() && currentType.isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
             updatedProject.setType(currentType.get());
-            updatedProject.setSegments(currentSegments);
-            updatedProject.setFormats(currentFormats);
+            updatedProject.setSegments(enrichListField(segmentsService, updatedProject));
+            updatedProject.setFormats(enrichListField(formatsService, updatedProject));
+            if (updatedProject.getKeyWords() != null) {
+                updatedProject.setKeyWords(enrichListField(keyWordsService, updatedProject));
+            } else {
+                updatedProject.setKeyWords(null);
+            }
             projectsRepository.save(updatedProject);
         }
     }
