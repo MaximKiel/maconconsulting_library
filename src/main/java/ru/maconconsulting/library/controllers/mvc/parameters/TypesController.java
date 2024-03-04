@@ -37,22 +37,22 @@ public class TypesController {
     @GetMapping
     public String getAllTypes(Model model) {
         model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/projectfields/types/manage");
-        return "mvc/projectfields/types/manage";
+        log.info("Go to mvc/parameters/types/manage");
+        return "mvc/parameters/types/manage";
     }
 
     @GetMapping("/new")
     public String newType(@ModelAttribute("type") TypeDTO typeDTO) {
-        log.info("Go to mvc/projectfields/types/new");
-        return "mvc/projectfields/types/new";
+        log.info("Go to mvc/parameters/types/new");
+        return "mvc/parameters/types/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("type") @Valid TypeDTO typeDTO, BindingResult bindingResult) {
         typeValidator.validate(typeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/types/new");
-            return "mvc/projectfields/types/new";
+            log.info("Go to mvc/parameters/types/new");
+            return "mvc/parameters/types/new";
         }
         typesService.save(convertToProjectType(typeDTO));
         log.info("Go to redirect:/types");
@@ -63,16 +63,16 @@ public class TypesController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("type", convertToProjectTypeDTO(typesService.findByName(name)
                 .orElseThrow(() -> new TypeNotFoundException("Тип проекта " + name + " не найден"))));
-        log.info("Go to mvc/projectfields/types/edit");
-        return "mvc/projectfields/types/edit";
+        log.info("Go to mvc/parameters/types/edit");
+        return "mvc/parameters/types/edit";
     }
 
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("type") @Valid TypeDTO typeDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/types/edit");
-            return "mvc/projectfields/types/edit";
+            log.info("Go to mvc/parameters/types/edit");
+            return "mvc/parameters/types/edit";
         }
 
         typesService.update(name, convertToProjectType(typeDTO));

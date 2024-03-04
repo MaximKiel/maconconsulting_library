@@ -37,22 +37,22 @@ public class FormatsController {
     @GetMapping
     public String getAllFormats(Model model) {
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/projectfields/formats/manage");
-        return "mvc/projectfields/formats/manage";
+        log.info("Go to mvc/parameters/formats/manage");
+        return "mvc/parameters/formats/manage";
     }
 
     @GetMapping("/new")
     public String newFormat(@ModelAttribute("format") FormatDTO formatDTO) {
-        log.info("Go to mvc/projectfields/formats/new");
-        return "mvc/projectfields/formats/new";
+        log.info("Go to mvc/parameters/formats/new");
+        return "mvc/parameters/formats/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("format") @Valid FormatDTO formatDTO, BindingResult bindingResult) {
         formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/formats/new");
-            return "mvc/projectfields/formats/new";
+            log.info("Go to mvc/parameters/formats/new");
+            return "mvc/parameters/formats/new";
         }
 
         formatsService.save(convertToProjectFormat(formatDTO));
@@ -64,16 +64,16 @@ public class FormatsController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("format", convertToProjectFormatDTO(formatsService.findByName(name)
                 .orElseThrow(() -> new FormatNotFoundException("Формат отчета " + name + " не найден"))));
-        log.info("Go to mvc/projectfields/formats/edit");
-        return "mvc/projectfields/formats/edit";
+        log.info("Go to mvc/parameters/formats/edit");
+        return "mvc/parameters/formats/edit";
     }
 
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("format") @Valid FormatDTO formatDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/formats/edit");
-            return "mvc/projectfields/formats/edit";
+            log.info("Go to mvc/parameters/formats/edit");
+            return "mvc/parameters/formats/edit";
         }
 
         formatsService.update(name, convertToProjectFormat(formatDTO));

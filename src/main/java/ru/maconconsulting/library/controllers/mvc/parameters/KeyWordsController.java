@@ -37,22 +37,22 @@ public class KeyWordsController {
     @GetMapping
     public String getAllKeyWords(Model model) {
         model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/projectfields/key_words/manage");
-        return "mvc/projectfields/key_words/manage";
+        log.info("Go to mvc/parameters/key_words/manage");
+        return "mvc/parameters/key_words/manage";
     }
 
     @GetMapping("/new")
     public String newKeyWord(@ModelAttribute("key_word") KeyWordDTO keyWordDTO) {
-        log.info("Go to mvc/projectfields/key_words/new");
-        return "mvc/projectfields/key_words/new";
+        log.info("Go to mvc/parameters/key_words/new");
+        return "mvc/parameters/key_words/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("key_word") @Valid KeyWordDTO keyWordDTO, BindingResult bindingResult) {
         keyWordValidator.validate(keyWordDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/key_words/new");
-            return "mvc/projectfields/key_words/new";
+            log.info("Go to mvc/parameters/key_words/new");
+            return "mvc/parameters/key_words/new";
         }
         keyWordsService.save(convertToProjectKeyWord(keyWordDTO));
         log.info("Go to redirect:/key_words");
@@ -63,16 +63,16 @@ public class KeyWordsController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("key_word", convertToProjectKeyWordDTO(keyWordsService.findByName(name)
                 .orElseThrow(() -> new KeyWordNotFoundException("Ключевое слово " + name + "не найдено"))));
-        log.info("Go to mvc/projectfields/key_words/edit");
-        return "mvc/projectfields/key_words/edit";
+        log.info("Go to mvc/parameters/key_words/edit");
+        return "mvc/parameters/key_words/edit";
     }
 
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("key_word") @Valid KeyWordDTO keyWordDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/key_words/edit");
-            return "mvc/projectfields/key_words/edit";
+            log.info("Go to mvc/parameters/key_words/edit");
+            return "mvc/parameters/key_words/edit";
         }
 
         keyWordsService.update(name, convertToProjectKeyWord(keyWordDTO));

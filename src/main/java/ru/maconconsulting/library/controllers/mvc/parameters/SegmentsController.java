@@ -37,22 +37,22 @@ public class SegmentsController {
     @GetMapping
     public String getAllSegments(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/projectfields/segments/manage");
-        return "mvc/projectfields/segments/manage";
+        log.info("Go to mvc/parameters/segments/manage");
+        return "mvc/parameters/segments/manage";
     }
 
     @GetMapping("/new")
     public String newSegment(@ModelAttribute("segment") SegmentDTO segmentDTO) {
-        log.info("Go to mvc/projectfields/segments/new");
-        return "mvc/projectfields/segments/new";
+        log.info("Go to mvc/parameters/segments/new");
+        return "mvc/parameters/segments/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("segment") @Valid SegmentDTO segmentDTO, BindingResult bindingResult) {
         segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/segments/new");
-            return "mvc/projectfields/segments/new";
+            log.info("Go to mvc/parameters/segments/new");
+            return "mvc/parameters/segments/new";
         }
         segmentsService.save(convertToProjectSegment(segmentDTO));
         log.info("Go to redirect:/segments");
@@ -63,16 +63,16 @@ public class SegmentsController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("segment", convertToProjectSegmentDTO(segmentsService.findByName(name)
                 .orElseThrow(() -> new SegmentNotFoundException("Сегмент рынка  " + name + " не найден"))));
-        log.info("Go to mvc/projectfields/segments/edit");
-        return "mvc/projectfields/segments/edit";
+        log.info("Go to mvc/parameters/segments/edit");
+        return "mvc/parameters/segments/edit";
     }
 
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("segment") @Valid SegmentDTO segmentDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/projectfields/segments/edit");
-            return "mvc/projectfields/segments/edit";
+            log.info("Go to mvc/parameters/segments/edit");
+            return "mvc/parameters/segments/edit";
         }
 
         segmentsService.update(name, convertToProjectSegment(segmentDTO));
