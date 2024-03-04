@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.Publication;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ public class KeyWord extends AbstractParameterEntity {
 
     @ManyToMany(mappedBy = "keyWords")
     private List<Project> projects;
+
+    @ManyToMany(mappedBy = "keyWords")
+    private List<Publication> publications;
 
     public KeyWord() {
     }
@@ -27,6 +31,14 @@ public class KeyWord extends AbstractParameterEntity {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
     }
 
     @Override

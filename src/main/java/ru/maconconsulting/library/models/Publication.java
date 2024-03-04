@@ -1,8 +1,6 @@
 package ru.maconconsulting.library.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.models.parameters.KeyWord;
@@ -39,10 +37,27 @@ public class Publication extends AbstractBasedEntityWithId {
     @Column(name = "towns")
     private String towns;
 
+    @ManyToMany
+    @JoinTable(
+            name = "publication_segment",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "segment_id"))
     private List<Segment> segments;
 
+    @ManyToMany
+    @JoinTable(
+            name = "publication_format",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "format_id")
+    )
     private List<Format> formats;
 
+    @ManyToMany
+    @JoinTable(
+            name = "publication_kew_word",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "kew_word_id")
+    )
     private List<KeyWord> keyWords;
 
     public Publication() {

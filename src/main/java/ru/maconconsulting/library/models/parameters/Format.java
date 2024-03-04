@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.Publication;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ public class Format extends AbstractParameterEntity {
 
     @ManyToMany(mappedBy = "formats")
     private List<Project> projects;
+
+    @ManyToMany(mappedBy = "formats")
+    private List<Publication> publications;
 
     public Format() {
     }
@@ -27,6 +31,14 @@ public class Format extends AbstractParameterEntity {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
     }
 
     @Override
