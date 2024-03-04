@@ -4,10 +4,10 @@ import ru.maconconsulting.library.models.Project;
 
 import java.util.List;
 
-import static ru.maconconsulting.library.util.projectfields.ProjectFormatsTestData.PROJECT_FORMAT_1;
-import static ru.maconconsulting.library.util.projectfields.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
-import static ru.maconconsulting.library.util.projectfields.ProjectSegmentsTestData.PROJECT_SEGMENT_1;
-import static ru.maconconsulting.library.util.projectfields.ProjectTypesTestData.PROJECT_TYPE_1;
+import static ru.maconconsulting.library.util.parameters.ProjectFormatsTestData.PROJECT_FORMAT_1;
+import static ru.maconconsulting.library.util.parameters.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
+import static ru.maconconsulting.library.util.parameters.ProjectSegmentsTestData.PROJECT_SEGMENT_1;
+import static ru.maconconsulting.library.util.parameters.ProjectTypesTestData.PROJECT_TYPE_1;
 
 public class ProjectsTestData {
 

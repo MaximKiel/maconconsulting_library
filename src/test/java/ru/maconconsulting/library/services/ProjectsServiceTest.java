@@ -8,25 +8,25 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.projectfields.ProjectFormat;
-import ru.maconconsulting.library.models.projectfields.ProjectKeyWord;
-import ru.maconconsulting.library.models.projectfields.ProjectSegment;
+import ru.maconconsulting.library.models.parameters.ProjectFormat;
+import ru.maconconsulting.library.models.parameters.ProjectKeyWord;
+import ru.maconconsulting.library.models.parameters.ProjectSegment;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
-import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
-import ru.maconconsulting.library.services.projectfields.ProjectKeyWordsService;
-import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
-import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
+import ru.maconconsulting.library.services.parameters.ProjectFormatsService;
+import ru.maconconsulting.library.services.parameters.ProjectKeyWordsService;
+import ru.maconconsulting.library.services.parameters.ProjectSegmentsService;
+import ru.maconconsulting.library.services.parameters.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.maconconsulting.library.util.projectfields.ProjectFormatsTestData.*;
-import static ru.maconconsulting.library.util.projectfields.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
-import static ru.maconconsulting.library.util.projectfields.ProjectKeyWordsTestData.PROJECT_KEY_WORD_DTO_1;
-import static ru.maconconsulting.library.util.projectfields.ProjectSegmentsTestData.*;
-import static ru.maconconsulting.library.util.projectfields.ProjectTypesTestData.*;
+import static ru.maconconsulting.library.util.parameters.ProjectFormatsTestData.*;
+import static ru.maconconsulting.library.util.parameters.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
+import static ru.maconconsulting.library.util.parameters.ProjectKeyWordsTestData.PROJECT_KEY_WORD_DTO_1;
+import static ru.maconconsulting.library.util.parameters.ProjectSegmentsTestData.*;
+import static ru.maconconsulting.library.util.parameters.ProjectTypesTestData.*;
 import static ru.maconconsulting.library.util.ProjectsTestData.*;
 
 @SpringBootTest

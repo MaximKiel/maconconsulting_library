@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.models.projectfields.ProjectFormat;
-import ru.maconconsulting.library.models.projectfields.ProjectKeyWord;
-import ru.maconconsulting.library.models.projectfields.ProjectSegment;
-import ru.maconconsulting.library.models.projectfields.ProjectType;
+import ru.maconconsulting.library.models.parameters.ProjectFormat;
+import ru.maconconsulting.library.models.parameters.ProjectKeyWord;
+import ru.maconconsulting.library.models.parameters.ProjectSegment;
+import ru.maconconsulting.library.models.parameters.ProjectType;
 
 import java.util.Comparator;
 import java.util.List;

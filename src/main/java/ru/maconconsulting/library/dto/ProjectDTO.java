@@ -3,10 +3,10 @@ package ru.maconconsulting.library.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectKeyWordDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectKeyWordDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectSegmentDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectTypeDTO;
 
 import java.util.Comparator;
 import java.util.List;

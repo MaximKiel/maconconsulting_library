@@ -1,9 +1,9 @@
 package ru.maconconsulting.library.utils;
 
-import ru.maconconsulting.library.dto.projectfields.ProjectFormatDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectKeyWordDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectSegmentDTO;
-import ru.maconconsulting.library.dto.projectfields.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectFormatDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectKeyWordDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectSegmentDTO;
+import ru.maconconsulting.library.dto.parameters.ProjectTypeDTO;
 
 public class SearchProject {
 

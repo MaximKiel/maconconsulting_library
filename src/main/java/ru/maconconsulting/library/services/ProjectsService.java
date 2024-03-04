@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.projectfields.*;
+import ru.maconconsulting.library.models.parameters.*;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
-import ru.maconconsulting.library.services.projectfields.ProjectFormatsService;
-import ru.maconconsulting.library.services.projectfields.ProjectKeyWordsService;
-import ru.maconconsulting.library.services.projectfields.ProjectSegmentsService;
-import ru.maconconsulting.library.services.projectfields.ProjectTypesService;
+import ru.maconconsulting.library.services.parameters.ProjectFormatsService;
+import ru.maconconsulting.library.services.parameters.ProjectKeyWordsService;
+import ru.maconconsulting.library.services.parameters.ProjectSegmentsService;
+import ru.maconconsulting.library.services.parameters.ProjectTypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
