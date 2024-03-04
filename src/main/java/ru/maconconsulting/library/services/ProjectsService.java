@@ -6,10 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Project;
 import ru.maconconsulting.library.models.parameters.*;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
-import ru.maconconsulting.library.services.parameters.ProjectFormatsService;
-import ru.maconconsulting.library.services.parameters.ProjectKeyWordsService;
-import ru.maconconsulting.library.services.parameters.ProjectSegmentsService;
-import ru.maconconsulting.library.services.parameters.ProjectTypesService;
+import ru.maconconsulting.library.services.parameters.FormatsService;
+import ru.maconconsulting.library.services.parameters.KeyWordsService;
+import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.services.parameters.TypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
@@ -24,18 +24,18 @@ public class ProjectsService {
     public static final String SPLIT_FOR_SEARCH = ", ";
 
     private final ProjectsRepository projectsRepository;
-    private final ProjectTypesService projectTypesService;
-    private final ProjectSegmentsService projectSegmentsService;
-    private final ProjectFormatsService projectFormatsService;
-    private final ProjectKeyWordsService projectKeyWordsService;
+    private final TypesService typesService;
+    private final SegmentsService segmentsService;
+    private final FormatsService formatsService;
+    private final KeyWordsService keyWordsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService, ProjectFormatsService projectFormatsService, ProjectKeyWordsService projectKeyWordsService) {
+    public ProjectsService(ProjectsRepository projectsRepository, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService) {
         this.projectsRepository = projectsRepository;
-        this.projectTypesService = projectTypesService;
-        this.projectSegmentsService = projectSegmentsService;
-        this.projectFormatsService = projectFormatsService;
-        this.projectKeyWordsService = projectKeyWordsService;
+        this.typesService = typesService;
+        this.segmentsService = segmentsService;
+        this.formatsService = formatsService;
+        this.keyWordsService = keyWordsService;
     }
 
     public List<Project> findAll() {
@@ -58,19 +58,19 @@ public class ProjectsService {
 
     @Transactional
     public void update(String number, Project updatedProject) {
-        Optional<ProjectType> currentType = projectTypesService.findByName(updatedProject.getType().getName());
-        List<ProjectSegment> currentSegments = new ArrayList<>();
-        for (ProjectSegment s : updatedProject.getSegments()) {
-            currentSegments.add(projectSegmentsService.findByName(s.getName()).get());
+        Optional<Type> currentType = typesService.findByName(updatedProject.getType().getName());
+        List<Segment> currentSegments = new ArrayList<>();
+        for (Segment s : updatedProject.getSegments()) {
+            currentSegments.add(segmentsService.findByName(s.getName()).get());
         }
-        List<ProjectFormat> currentFormats = new ArrayList<>();
-        for (ProjectFormat f : updatedProject.getFormats()) {
-            currentFormats.add(projectFormatsService.findByName(f.getName()).get());
+        List<Format> currentFormats = new ArrayList<>();
+        for (Format f : updatedProject.getFormats()) {
+            currentFormats.add(formatsService.findByName(f.getName()).get());
         }
         if (updatedProject.getKeyWords() != null) {
-            List<ProjectKeyWord> currentKeyWord = new ArrayList<>();
-            for (ProjectKeyWord k : updatedProject.getKeyWords()) {
-                currentKeyWord.add(projectKeyWordsService.findByName(k.getName()).get());
+            List<KeyWord> currentKeyWord = new ArrayList<>();
+            for (KeyWord k : updatedProject.getKeyWords()) {
+                currentKeyWord.add(keyWordsService.findByName(k.getName()).get());
             }
             updatedProject.setKeyWords(currentKeyWord);
         } else {
@@ -115,7 +115,7 @@ public class ProjectsService {
         }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {
-                List<String> segmentNames = p.getSegments().stream().map(AbstractProjectFieldEntity::getName).toList();
+                List<String> segmentNames = p.getSegments().stream().map(AbstractParameterEntity::getName).toList();
                 return segmentNames.stream().anyMatch(n -> n.equals(searchProject.getSegment().getName()));
             });
         }
@@ -124,13 +124,13 @@ public class ProjectsService {
         }
         if (searchProject.getFormat() != null && !searchProject.getFormat().getName().equals("")) {
             result = searchElement(result, p -> {
-                List<String> formatNames = p.getFormats().stream().map(AbstractProjectFieldEntity::getName).toList();
+                List<String> formatNames = p.getFormats().stream().map(AbstractParameterEntity::getName).toList();
                 return formatNames.stream().anyMatch(n -> n.equals(searchProject.getFormat().getName()));
             });
         }
         if (searchProject.getKeyWord() != null && !searchProject.getKeyWord().getName().equals("")) {
             result = searchElement(result, p -> {
-                List<String> keyWordNames = p.getKeyWords().stream().map(AbstractProjectFieldEntity::getName).toList();
+                List<String> keyWordNames = p.getKeyWords().stream().map(AbstractParameterEntity::getName).toList();
                 return keyWordNames.stream().anyMatch(n -> n.equals(searchProject.getKeyWord().getName()));
             });
         }
@@ -156,31 +156,31 @@ public class ProjectsService {
 
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
-        project.setType(projectTypesService.findByName(project.getType().getName()).orElseThrow());
-        project.setSegments(enrichListField(projectSegmentsService, project));
-        project.setFormats(enrichListField(projectFormatsService, project));
-        project.setKeyWords(enrichListField(projectKeyWordsService, project));
+        project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
+        project.setSegments(enrichListField(segmentsService, project));
+        project.setFormats(enrichListField(formatsService, project));
+        project.setKeyWords(enrichListField(keyWordsService, project));
     }
 
-    private List<ProjectSegment> enrichListField(ProjectSegmentsService service, Project project) {
-        List<ProjectSegment> entities = new ArrayList<>();
-        for (ProjectSegment f : project.getSegments()) {
+    private List<Segment> enrichListField(SegmentsService service, Project project) {
+        List<Segment> entities = new ArrayList<>();
+        for (Segment f : project.getSegments()) {
             entities.add(service.findByName(f.getName()).orElseThrow());
         }
         return entities;
     }
 
-    private List<ProjectFormat> enrichListField(ProjectFormatsService service, Project project) {
-        List<ProjectFormat> entities = new ArrayList<>();
-        for (ProjectFormat f : project.getFormats()) {
+    private List<Format> enrichListField(FormatsService service, Project project) {
+        List<Format> entities = new ArrayList<>();
+        for (Format f : project.getFormats()) {
             entities.add(service.findByName(f.getName()).orElseThrow());
         }
         return entities;
     }
 
-    private List<ProjectKeyWord> enrichListField(ProjectKeyWordsService service, Project project) {
-        List<ProjectKeyWord> entities = new ArrayList<>();
-        for (ProjectKeyWord k : project.getKeyWords()) {
+    private List<KeyWord> enrichListField(KeyWordsService service, Project project) {
+        List<KeyWord> entities = new ArrayList<>();
+        for (KeyWord k : project.getKeyWords()) {
             entities.add(service.findByName(k.getName()).orElseThrow());
         }
         return entities;

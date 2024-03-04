@@ -3,10 +3,10 @@ package ru.maconconsulting.library.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.dto.parameters.ProjectFormatDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectKeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectSegmentDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.parameters.FormatDTO;
+import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
+import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.TypeDTO;
 
 import java.util.Comparator;
 import java.util.List;
@@ -36,20 +36,20 @@ public class ProjectDTO {
     private String towns;
 
     @NotEmpty(message = "Список сегментов не должен быть пустым!")
-    private List<ProjectSegmentDTO> segments;
+    private List<SegmentDTO> segments;
 
     @NotNull(message = "Тип проекта не должен быть пустым!")
-    private ProjectTypeDTO type;
+    private TypeDTO type;
 
     @NotEmpty(message = "Список форматов не должен быть пустым!")
-    private List<ProjectFormatDTO> formats;
+    private List<FormatDTO> formats;
 
-    private List<ProjectKeyWordDTO> keyWords;
+    private List<KeyWordDTO> keyWords;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegmentDTO> segments, ProjectTypeDTO type, List<ProjectFormatDTO> formats, List<ProjectKeyWordDTO> keyWords) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -120,22 +120,22 @@ public class ProjectDTO {
         this.towns = towns;
     }
 
-    public List<ProjectSegmentDTO> getSegments() {
+    public List<SegmentDTO> getSegments() {
         if (segments != null) {
-            return segments.stream().sorted(Comparator.comparing(ProjectSegmentDTO::getName)).collect(Collectors.toList());
+            return segments.stream().sorted(Comparator.comparing(SegmentDTO::getName)).collect(Collectors.toList());
         }
         return null;
     }
 
-    public void setSegments(List<ProjectSegmentDTO> segments) {
+    public void setSegments(List<SegmentDTO> segments) {
         this.segments = segments;
     }
 
-    public ProjectTypeDTO getType() {
+    public TypeDTO getType() {
         return type;
     }
 
-    public void setType(ProjectTypeDTO type) {
+    public void setType(TypeDTO type) {
         this.type = type;
     }
 
@@ -147,22 +147,22 @@ public class ProjectDTO {
         this.client = client;
     }
 
-    public List<ProjectFormatDTO> getFormats() {
+    public List<FormatDTO> getFormats() {
         if (formats != null) {
-            return formats.stream().sorted(Comparator.comparing(ProjectFormatDTO::getName)).collect(Collectors.toList());
+            return formats.stream().sorted(Comparator.comparing(FormatDTO::getName)).collect(Collectors.toList());
         }
         return null;
     }
 
-    public void setFormats(List<ProjectFormatDTO> formats) {
+    public void setFormats(List<FormatDTO> formats) {
         this.formats = formats;
     }
 
-    public List<ProjectKeyWordDTO> getKeyWords() {
+    public List<KeyWordDTO> getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<ProjectKeyWordDTO> keyWords) {
+    public void setKeyWords(List<KeyWordDTO> keyWords) {
         this.keyWords = keyWords;
     }
 }

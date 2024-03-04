@@ -8,25 +8,25 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.parameters.ProjectFormat;
-import ru.maconconsulting.library.models.parameters.ProjectKeyWord;
-import ru.maconconsulting.library.models.parameters.ProjectSegment;
+import ru.maconconsulting.library.models.parameters.Format;
+import ru.maconconsulting.library.models.parameters.KeyWord;
+import ru.maconconsulting.library.models.parameters.Segment;
 import ru.maconconsulting.library.repositories.ProjectsRepository;
-import ru.maconconsulting.library.services.parameters.ProjectFormatsService;
-import ru.maconconsulting.library.services.parameters.ProjectKeyWordsService;
-import ru.maconconsulting.library.services.parameters.ProjectSegmentsService;
-import ru.maconconsulting.library.services.parameters.ProjectTypesService;
+import ru.maconconsulting.library.services.parameters.FormatsService;
+import ru.maconconsulting.library.services.parameters.KeyWordsService;
+import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.services.parameters.TypesService;
 import ru.maconconsulting.library.utils.SearchProject;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.maconconsulting.library.util.parameters.ProjectFormatsTestData.*;
-import static ru.maconconsulting.library.util.parameters.ProjectKeyWordsTestData.PROJECT_KEY_WORD_1;
-import static ru.maconconsulting.library.util.parameters.ProjectKeyWordsTestData.PROJECT_KEY_WORD_DTO_1;
-import static ru.maconconsulting.library.util.parameters.ProjectSegmentsTestData.*;
-import static ru.maconconsulting.library.util.parameters.ProjectTypesTestData.*;
+import static ru.maconconsulting.library.util.parameters.FormatsTestData.*;
+import static ru.maconconsulting.library.util.parameters.KeyWordsTestData.PROJECT_KEY_WORD_1;
+import static ru.maconconsulting.library.util.parameters.KeyWordsTestData.PROJECT_KEY_WORD_DTO_1;
+import static ru.maconconsulting.library.util.parameters.SegmentsTestData.*;
+import static ru.maconconsulting.library.util.parameters.TypesTestData.*;
 import static ru.maconconsulting.library.util.ProjectsTestData.*;
 
 @SpringBootTest
@@ -37,16 +37,16 @@ class ProjectsServiceTest {
     private ProjectsService projectsService;
 
     @Mock
-    private ProjectTypesService projectTypesService;
+    private TypesService typesService;
 
     @Mock
-    private ProjectSegmentsService projectSegmentsService;
+    private SegmentsService segmentsService;
 
     @Mock
-    private ProjectFormatsService projectFormatsService;
+    private FormatsService formatsService;
 
     @Mock
-    private ProjectKeyWordsService projectKeyWordsService;
+    private KeyWordsService keyWordsService;
 
     @Mock
     private ProjectsRepository projectsRepository;
@@ -89,10 +89,10 @@ class ProjectsServiceTest {
     void save() {
         Project newProject = new Project("23200", 2023, "12.2023", "23200_New", "Client new", "Россия",
                 "Край", "Город", List.of(PROJECT_SEGMENT_1), PROJECT_TYPE_1, List.of(PROJECT_FORMAT_1), List.of(PROJECT_KEY_WORD_1));
-        Mockito.when(projectTypesService.findByName(newProject.getType().getName())).thenReturn(Optional.of(newProject.getType()));
-        Mockito.when(projectSegmentsService.findByName(newProject.getSegments().get(0).getName())).thenReturn(Optional.of(newProject.getSegments().get(0)));
-        Mockito.when(projectFormatsService.findByName(newProject.getFormats().get(0).getName())).thenReturn(Optional.of(newProject.getFormats().get(0)));
-        Mockito.when(projectKeyWordsService.findByName(newProject.getKeyWords().get(0).getName())).thenReturn(Optional.of(newProject.getKeyWords().get(0)));
+        Mockito.when(typesService.findByName(newProject.getType().getName())).thenReturn(Optional.of(newProject.getType()));
+        Mockito.when(segmentsService.findByName(newProject.getSegments().get(0).getName())).thenReturn(Optional.of(newProject.getSegments().get(0)));
+        Mockito.when(formatsService.findByName(newProject.getFormats().get(0).getName())).thenReturn(Optional.of(newProject.getFormats().get(0)));
+        Mockito.when(keyWordsService.findByName(newProject.getKeyWords().get(0).getName())).thenReturn(Optional.of(newProject.getKeyWords().get(0)));
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
 
         projectsService.save(newProject);
@@ -105,17 +105,17 @@ class ProjectsServiceTest {
         String number = updatedProject.getNumber();
         PROJECT_1.setCreatedAt(LocalDateTime.now());
         PROJECT_1.setTitle("Update PROJECT_1");
-        Mockito.when(projectTypesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
+        Mockito.when(typesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
         Mockito.when(projectsRepository.findByNumber(number)).thenReturn(Optional.of(PROJECT_1));
         Mockito.when(projectsRepository.findByTitle("Update PROJECT_1")).thenReturn(Optional.of(updatedProject));
-        for (ProjectSegment segment : updatedProject.getSegments()) {
-            Mockito.when(projectSegmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
+        for (Segment segment : updatedProject.getSegments()) {
+            Mockito.when(segmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
         }
-        for (ProjectFormat format : updatedProject.getFormats()) {
-            Mockito.when(projectFormatsService.findByName(format.getName())).thenReturn(Optional.of(format));
+        for (Format format : updatedProject.getFormats()) {
+            Mockito.when(formatsService.findByName(format.getName())).thenReturn(Optional.of(format));
         }
-        for (ProjectKeyWord keyWord : updatedProject.getKeyWords()) {
-            Mockito.when(projectKeyWordsService.findByName(keyWord.getName())).thenReturn(Optional.of(keyWord));
+        for (KeyWord keyWord : updatedProject.getKeyWords()) {
+            Mockito.when(keyWordsService.findByName(keyWord.getName())).thenReturn(Optional.of(keyWord));
         }
 
         projectsService.update(number, updatedProject);

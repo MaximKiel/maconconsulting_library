@@ -1,9 +1,9 @@
 package ru.maconconsulting.library.utils;
 
-import ru.maconconsulting.library.dto.parameters.ProjectFormatDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectKeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectSegmentDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.parameters.FormatDTO;
+import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
+import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.TypeDTO;
 
 public class SearchProject {
 
@@ -21,18 +21,18 @@ public class SearchProject {
 
     private String town;
 
-    private ProjectSegmentDTO segment;
+    private SegmentDTO segment;
 
-    private ProjectTypeDTO type;
+    private TypeDTO type;
 
-    private ProjectFormatDTO format;
+    private FormatDTO format;
 
-    private ProjectKeyWordDTO keyWord;
+    private KeyWordDTO keyWord;
 
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, ProjectSegmentDTO segment, ProjectTypeDTO type, ProjectFormatDTO format, ProjectKeyWordDTO keyWord) {
+    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, SegmentDTO segment, TypeDTO type, FormatDTO format, KeyWordDTO keyWord) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -102,35 +102,35 @@ public class SearchProject {
         this.town = town;
     }
 
-    public ProjectSegmentDTO getSegment() {
+    public SegmentDTO getSegment() {
         return segment;
     }
 
-    public void setSegment(ProjectSegmentDTO segment) {
+    public void setSegment(SegmentDTO segment) {
         this.segment = segment;
     }
 
-    public ProjectTypeDTO getType() {
+    public TypeDTO getType() {
         return type;
     }
 
-    public void setType(ProjectTypeDTO type) {
+    public void setType(TypeDTO type) {
         this.type = type;
     }
 
-    public ProjectFormatDTO getFormat() {
+    public FormatDTO getFormat() {
         return format;
     }
 
-    public void setFormat(ProjectFormatDTO format) {
+    public void setFormat(FormatDTO format) {
         this.format = format;
     }
 
-    public ProjectKeyWordDTO getKeyWord() {
+    public KeyWordDTO getKeyWord() {
         return keyWord;
     }
 
-    public void setKeyWord(ProjectKeyWordDTO keyWord) {
+    public void setKeyWord(KeyWordDTO keyWord) {
         this.keyWord = keyWord;
     }
 }

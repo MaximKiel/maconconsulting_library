@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.models.parameters.ProjectFormat;
-import ru.maconconsulting.library.models.parameters.ProjectKeyWord;
-import ru.maconconsulting.library.models.parameters.ProjectSegment;
-import ru.maconconsulting.library.models.parameters.ProjectType;
+import ru.maconconsulting.library.models.parameters.Format;
+import ru.maconconsulting.library.models.parameters.KeyWord;
+import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.Type;
 
 import java.util.Comparator;
 import java.util.List;
@@ -53,12 +53,12 @@ public class Project extends AbstractBasedEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
     @NotEmpty(message = "Список сегментов не должен быть пустым!")
-    private List<ProjectSegment> segments;
+    private List<Segment> segments;
 
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     @NotNull(message = "Тип проекта не должен быть пустым!")
-    private ProjectType type;
+    private Type type;
 
     @ManyToMany
     @JoinTable(
@@ -67,7 +67,7 @@ public class Project extends AbstractBasedEntity {
             inverseJoinColumns = @JoinColumn(name = "format_id")
     )
     @NotEmpty(message = "Список форматов не должен быть пустым!")
-    private List<ProjectFormat> formats;
+    private List<Format> formats;
 
     @ManyToMany
     @JoinTable(
@@ -75,12 +75,12 @@ public class Project extends AbstractBasedEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "kew_word_id")
     )
-    private List<ProjectKeyWord> keyWords;
+    private List<KeyWord> keyWords;
 
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<ProjectSegment> segments, ProjectType type, List<ProjectFormat> formats, List<ProjectKeyWord> keyWords) {
+    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<Segment> segments, Type type, List<Format> formats, List<KeyWord> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -159,41 +159,41 @@ public class Project extends AbstractBasedEntity {
         this.client = client;
     }
 
-    public List<ProjectSegment> getSegments() {
+    public List<Segment> getSegments() {
         if (segments != null) {
-            return segments.stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList());
+            return segments.stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList());
         }
         return null;
     }
 
-    public void setSegments(List<ProjectSegment> segments) {
+    public void setSegments(List<Segment> segments) {
         this.segments = segments;
     }
 
-    public ProjectType getType() {
+    public Type getType() {
         return type;
     }
 
-    public List<ProjectFormat> getFormats() {
+    public List<Format> getFormats() {
         if (formats != null) {
-            return formats.stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList());
+            return formats.stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList());
         }
         return null;
     }
 
-    public void setFormats(List<ProjectFormat> formats) {
+    public void setFormats(List<Format> formats) {
         this.formats = formats;
     }
 
-    public void setType(ProjectType type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public List<ProjectKeyWord> getKeyWords() {
+    public List<KeyWord> getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<ProjectKeyWord> keyWords) {
+    public void setKeyWords(List<KeyWord> keyWords) {
         this.keyWords = keyWords;
     }
 

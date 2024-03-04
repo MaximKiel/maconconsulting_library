@@ -10,19 +10,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.ProjectDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectFormatDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectKeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectSegmentDTO;
-import ru.maconconsulting.library.dto.parameters.ProjectTypeDTO;
+import ru.maconconsulting.library.dto.parameters.FormatDTO;
+import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
+import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.TypeDTO;
 import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.parameters.ProjectFormat;
-import ru.maconconsulting.library.models.parameters.ProjectKeyWord;
-import ru.maconconsulting.library.models.parameters.ProjectSegment;
-import ru.maconconsulting.library.models.parameters.ProjectType;
-import ru.maconconsulting.library.services.parameters.ProjectFormatsService;
-import ru.maconconsulting.library.services.parameters.ProjectKeyWordsService;
-import ru.maconconsulting.library.services.parameters.ProjectSegmentsService;
-import ru.maconconsulting.library.services.parameters.ProjectTypesService;
+import ru.maconconsulting.library.models.parameters.Format;
+import ru.maconconsulting.library.models.parameters.KeyWord;
+import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.Type;
+import ru.maconconsulting.library.services.parameters.FormatsService;
+import ru.maconconsulting.library.services.parameters.KeyWordsService;
+import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.services.parameters.TypesService;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.validators.ProjectValidator;
 import ru.maconconsulting.library.utils.SearchProject;
@@ -38,20 +38,20 @@ public class ProjectsController {
 
     public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
     private final ProjectsService projectsService;
-    private final ProjectTypesService projectTypesService;
-    private final ProjectSegmentsService projectSegmentsService;
-    private final ProjectFormatsService projectFormatsService;
-    private final ProjectKeyWordsService projectKeyWordsService;
+    private final TypesService typesService;
+    private final SegmentsService segmentsService;
+    private final FormatsService formatsService;
+    private final KeyWordsService keyWordsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, ProjectTypesService projectTypesService, ProjectSegmentsService projectSegmentsService, ProjectFormatsService projectFormatsService, ProjectKeyWordsService projectKeyWordsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
-        this.projectTypesService = projectTypesService;
-        this.projectSegmentsService = projectSegmentsService;
-        this.projectFormatsService = projectFormatsService;
-        this.projectKeyWordsService = projectKeyWordsService;
+        this.typesService = typesService;
+        this.segmentsService = segmentsService;
+        this.formatsService = formatsService;
+        this.keyWordsService = keyWordsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
     }
@@ -72,10 +72,10 @@ public class ProjectsController {
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
-        model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).collect(Collectors.toList()));
-        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).collect(Collectors.toList()));
+        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/projects/new");
         return "mvc/projects/new";
     }
@@ -96,10 +96,10 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
-        model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
-        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
-        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
-        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
+        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
         log.info("Go to mvc/projects/edit");
         return "mvc/projects/edit";
     }
@@ -126,10 +126,10 @@ public class ProjectsController {
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
-        model.addAttribute("types", projectTypesService.findAll().stream().sorted(Comparator.comparing(ProjectType::getName)).collect(Collectors.toList()));
-        model.addAttribute("segments", projectSegmentsService.findAll().stream().sorted(Comparator.comparing(ProjectSegment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", projectFormatsService.findAll().stream().sorted(Comparator.comparing(ProjectFormat::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", projectKeyWordsService.findAll().stream().sorted(Comparator.comparing(ProjectKeyWord::getName)).collect(Collectors.toList()));
+        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
         log.info("Go to mvc/projects/search");
         return "mvc/projects/search";
     }
@@ -154,19 +154,19 @@ public class ProjectsController {
         return modelMapper.map(project, ProjectDTO.class);
     }
 
-    private ProjectTypeDTO convertToProjectTypeDTO(ProjectType type) {
-        return modelMapper.map(type, ProjectTypeDTO.class);
+    private TypeDTO convertToProjectTypeDTO(Type type) {
+        return modelMapper.map(type, TypeDTO.class);
     }
 
-    private ProjectSegmentDTO convertToProjectSegmentDTO(ProjectSegment segment) {
-        return modelMapper.map(segment, ProjectSegmentDTO.class);
+    private SegmentDTO convertToProjectSegmentDTO(Segment segment) {
+        return modelMapper.map(segment, SegmentDTO.class);
     }
 
-    private ProjectFormatDTO convertToProjectFormatDTO(ProjectFormat format) {
-        return modelMapper.map(format, ProjectFormatDTO.class);
+    private FormatDTO convertToProjectFormatDTO(Format format) {
+        return modelMapper.map(format, FormatDTO.class);
     }
 
-    private ProjectKeyWordDTO convertToProjectKeyWordDTO(ProjectKeyWord keyWord) {
-        return modelMapper.map(keyWord, ProjectKeyWordDTO.class);
+    private KeyWordDTO convertToProjectKeyWordDTO(KeyWord keyWord) {
+        return modelMapper.map(keyWord, KeyWordDTO.class);
     }
 }
