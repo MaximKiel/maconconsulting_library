@@ -16,11 +16,11 @@ public class SearchPublication {
 
     private String relevance;
 
-    private String countries;
+    private String country;
 
-    private String regions;
+    private String region;
 
-    private String towns;
+    private String town;
 
     private SegmentDTO segment;
 
@@ -31,15 +31,15 @@ public class SearchPublication {
     public SearchPublication() {
     }
 
-    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String countries, String regions, String towns, SegmentDTO segment, FormatDTO format, KeyWordDTO keyWord) {
+    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String country, String region, String town, SegmentDTO segment, FormatDTO format, KeyWordDTO keyWord) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
         this.relevance = relevance;
-        this.countries = countries;
-        this.regions = regions;
-        this.towns = towns;
+        this.country = country;
+        this.region = region;
+        this.town = town;
         this.segment = segment;
         this.format = format;
         this.keyWord = keyWord;
@@ -85,28 +85,28 @@ public class SearchPublication {
         this.relevance = relevance;
     }
 
-    public String getCountries() {
-        return countries;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getRegions() {
-        return regions;
+    public String getRegion() {
+        return region;
     }
 
-    public void setRegions(String regions) {
-        this.regions = regions;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    public String getTowns() {
-        return towns;
+    public String getTown() {
+        return town;
     }
 
-    public void setTowns(String towns) {
-        this.towns = towns;
+    public void setTown(String town) {
+        this.town = town;
     }
 
     public SegmentDTO getSegment() {

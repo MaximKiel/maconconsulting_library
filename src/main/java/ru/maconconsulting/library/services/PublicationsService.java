@@ -4,24 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.Publication;
-import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
-import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.AbstractParameterEntity;
 import ru.maconconsulting.library.repositories.PublicationsRepository;
 import ru.maconconsulting.library.services.parameters.FormatsService;
 import ru.maconconsulting.library.services.parameters.KeyWordsService;
 import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.utils.SearchPublication;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static ru.maconconsulting.library.services.CommonContentService.*;
 
 @Service
 @Transactional(readOnly = true)
 public class PublicationsService {
 
-    public static final String SPLIT_FOR_SEARCH = ", ";
     private final PublicationsRepository publicationsRepository;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
@@ -80,35 +82,62 @@ public class PublicationsService {
         publicationsRepository.deleteByTitle(title);
     }
 
+    public List<Publication> search(SearchPublication searchPublication) {
+        List<Publication> result = findAll().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList());
+        if (!searchPublication.getTitle().equals("")) {
+            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().toLowerCase()));
+        }
+        if (!searchPublication.getAnnotation().equals("")) {
+            result = searchElement(result, p -> p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().toLowerCase()));
+        }
+        if (!searchPublication.getSource().equals("")) {
+            result = searchElement(result, p -> p.getSource().toLowerCase().contains(searchPublication.getSource().toLowerCase()));
+        }
+        if (searchPublication.getYear() != 0) {
+            result = searchElement(result, p -> p.getYear().equals(searchPublication.getYear()));
+        }
+        if (!searchPublication.getRelevance().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getRelevance(), searchPublication.getRelevance()));
+        }
+        if (!searchPublication.getCountry().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getCountries(), searchPublication.getCountry()));
+        }
+        if (!searchPublication.getRegion().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getRegions(), searchPublication.getRegion()));
+        }
+        if (!searchPublication.getTown().equals("")) {
+            result = searchElement(result, p -> searchPluralString(p.getTowns(), searchPublication.getTown()));
+        }
+        if (searchPublication.getSegment() != null && !searchPublication.getSegment().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> segmentNames = p.getSegments().stream().map(AbstractParameterEntity::getName).toList();
+                return segmentNames.stream().anyMatch(n -> n.equals(searchPublication.getSegment().getName()));
+            });
+        }
+        if (searchPublication.getFormat() != null && !searchPublication.getFormat().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> formatNames = p.getFormats().stream().map(AbstractParameterEntity::getName).toList();
+                return formatNames.stream().anyMatch(n -> n.equals(searchPublication.getFormat().getName()));
+            });
+        }
+        if (searchPublication.getKeyWord() != null && !searchPublication.getKeyWord().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> keyWordNames = p.getKeyWords().stream().map(AbstractParameterEntity::getName).toList();
+                return keyWordNames.stream().anyMatch(n -> n.equals(searchPublication.getKeyWord().getName()));
+            });
+        }
+        return result;
+    }
+
+    private List<Publication> searchElement(List<Publication> source, Predicate<Publication> predicate) {
+        return source.stream().filter(predicate).collect(Collectors.toList());
+    }
+
     private void enrichPublication(Publication publication) {
         publication.setCreatedAt(LocalDateTime.now());
         publication.setSegments(enrichListField(segmentsService, publication));
         publication.setFormats(enrichListField(formatsService, publication));
         publication.setKeyWords(enrichListField(keyWordsService, publication));
 
-    }
-
-    private List<Segment> enrichListField(SegmentsService service, Publication publication) {
-        List<Segment> segments = new ArrayList<>();
-        for (Segment s : publication.getSegments()) {
-            segments.add(service.findByName(s.getName()).orElseThrow());
-        }
-        return segments;
-    }
-
-    private List<Format> enrichListField(FormatsService service, Publication publication) {
-        List<Format> formats = new ArrayList<>();
-        for (Format f : publication.getFormats()) {
-            formats.add(service.findByName(f.getName()).orElseThrow());
-        }
-        return formats;
-    }
-
-    private List<KeyWord> enrichListField(KeyWordsService service, Publication publication) {
-        List<KeyWord> keyWords = new ArrayList<>();
-        for (KeyWord k : publication.getKeyWords()) {
-            keyWords.add(service.findByName(k.getName()).orElseThrow());
-        }
-        return keyWords;
     }
 }
