@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
+import ru.maconconsulting.library.models.parameters.KeyWord;
 import ru.maconconsulting.library.services.parameters.KeyWordsService;
 
 @Component
@@ -19,7 +20,7 @@ public class KeyWordValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return KeyWord.class.equals(clazz);
     }
 
     @Override

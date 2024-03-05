@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.maconconsulting.library.dto.parameters.TypeDTO;
+import ru.maconconsulting.library.models.parameters.Type;
 import ru.maconconsulting.library.services.parameters.TypesService;
 
 @Component
@@ -19,7 +20,7 @@ public class TypeValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return Type.class.equals(clazz);
     }
 
     @Override

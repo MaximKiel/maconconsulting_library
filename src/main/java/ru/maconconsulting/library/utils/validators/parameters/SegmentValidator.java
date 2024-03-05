@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.models.parameters.Segment;
 import ru.maconconsulting.library.services.parameters.SegmentsService;
 
 @Component
@@ -19,7 +20,7 @@ public class SegmentValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return Segment.class.equals(clazz);
     }
 
     @Override

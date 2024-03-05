@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
+import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.services.parameters.FormatsService;
 
 @Component
@@ -19,7 +20,7 @@ public class FormatValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return Format.class.equals(clazz);
     }
 
     @Override
