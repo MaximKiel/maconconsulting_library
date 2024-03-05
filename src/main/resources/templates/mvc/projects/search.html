@@ -83,7 +83,7 @@
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
 
-    <label for="key_word">Выберите формат отчета проекта: </label>
+    <label for="key_word">Выберите ключевое слово: </label>
     <select th:field="*{keyWord}" id="key_word">
         <option value=""></option>
         <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
