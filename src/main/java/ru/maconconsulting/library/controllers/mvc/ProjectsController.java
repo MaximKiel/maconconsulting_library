@@ -26,7 +26,6 @@ import ru.maconconsulting.library.services.parameters.TypesService;
 import ru.maconconsulting.library.services.ProjectsService;
 import ru.maconconsulting.library.utils.validators.ProjectValidator;
 import ru.maconconsulting.library.utils.SearchProject;
-import ru.maconconsulting.library.utils.exceptions.MaconUserNotFoundException;
 import ru.maconconsulting.library.utils.exceptions.ProjectNotFoundException;
 
 import java.util.Comparator;
@@ -66,7 +65,7 @@ public class ProjectsController {
     public String show(@PathVariable("number") String number, Model model) {
         log.info("Go to mvc/projects/show");
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
-                .orElseThrow(() -> new MaconUserNotFoundException("Проект с номером " + number + " не найден"))));
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
         return "mvc/projects/show";
     }
 
