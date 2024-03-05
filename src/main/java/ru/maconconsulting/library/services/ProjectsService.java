@@ -17,11 +17,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static ru.maconconsulting.library.services.CommonContentService.*;
+
 @Service
 @Transactional(readOnly = true)
 public class ProjectsService {
-
-    public static final String SPLIT_FOR_SEARCH = ", ";
 
     private final ProjectsRepository projectsRepository;
     private final TypesService typesService;
@@ -129,48 +129,11 @@ public class ProjectsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    private Boolean searchPluralString(String pluralString, String searchString) {
-        if (pluralString == null) {
-            return false;
-        }
-        String[] strings = pluralString.split(SPLIT_FOR_SEARCH);
-        for (String s : strings) {
-            if (s.equalsIgnoreCase(searchString)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void enrichProject(Project project) {
         project.setCreatedAt(LocalDateTime.now());
         project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
         project.setSegments(enrichListField(segmentsService, project));
         project.setFormats(enrichListField(formatsService, project));
         project.setKeyWords(enrichListField(keyWordsService, project));
-    }
-
-    private List<Segment> enrichListField(SegmentsService service, Project project) {
-        List<Segment> entities = new ArrayList<>();
-        for (Segment f : project.getSegments()) {
-            entities.add(service.findByName(f.getName()).orElseThrow());
-        }
-        return entities;
-    }
-
-    private List<Format> enrichListField(FormatsService service, Project project) {
-        List<Format> entities = new ArrayList<>();
-        for (Format f : project.getFormats()) {
-            entities.add(service.findByName(f.getName()).orElseThrow());
-        }
-        return entities;
-    }
-
-    private List<KeyWord> enrichListField(KeyWordsService service, Project project) {
-        List<KeyWord> entities = new ArrayList<>();
-        for (KeyWord k : project.getKeyWords()) {
-            entities.add(service.findByName(k.getName()).orElseThrow());
-        }
-        return entities;
     }
 }
