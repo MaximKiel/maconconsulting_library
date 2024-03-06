@@ -41,6 +41,42 @@
     <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
     <br/>
 
+    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
+                th:selected="${project.segments.contains(segment)}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
+    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
+    <br/>
+
+    <label for="type">Выберите тип проекта:</label>
+    <select id="type" name="type">
+        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
+                th:selected="${project.type.getName().equals(type.getName())}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
+    <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
+    <br/>
+
+    <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <select id="formats" name="formats" multiple="multiple" class="select-checkbox">
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
+                th:selected="${project.formats.contains(format)}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">type error</div>
+    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
+    <br/>
+
+    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <select id="key_words" name="keyWords" multiple="multiple" class="select-checkbox">
+        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"
+                th:selected="${project.keyWords.contains(key_word)}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
+    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
+    <br/>
+
     <label for="year">Введите год проекта: </label>
     <input type="number" th:field="*{year}" id="year">
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
@@ -80,42 +116,6 @@
     <input type="text" th:field="*{towns}" id="towns"
            placeholder="Если городов или МО несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Туапсинский район'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
-    <br/>
-
-    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
-    <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
-        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
-                th:selected="${project.segments.contains(segment)}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
-    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
-    <br/>
-
-    <label for="type">Выберите тип проекта:</label>
-    <select id="type" name="type">
-        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
-                th:selected="${project.type.getName().equals(type.getName())}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
-    <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
-    <br/>
-
-    <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
-    <select id="formats" name="formats" multiple="multiple" class="select-checkbox">
-        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
-                th:selected="${project.formats.contains(format)}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">type error</div>
-    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
-    <br/>
-
-    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
-    <select id="key_words" name="keyWords" multiple="multiple" class="select-checkbox">
-        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"
-                th:selected="${project.keyWords.contains(key_word)}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
-    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
     <br/>
 
     <input type="submit" value="Изменить"/>

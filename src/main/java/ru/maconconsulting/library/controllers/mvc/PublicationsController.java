@@ -74,14 +74,14 @@ public class PublicationsController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult) {
-        publicationValidator.validate(publicationDTO, bindingResult);
+//        publicationValidator.validate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/publications/new");
             return "mvc/publications/new";
         }
         publicationsService.save(convertToPublication(publicationDTO));
-        log.info("Go to redirect:/publications/" + publicationDTO.getId());
-        return "redirect:/publications/" + publicationDTO.getId();
+        log.info("Go to redirect:/publications/" + publicationsService.findByTitle(publicationDTO.getTitle()).get().getId());
+        return "redirect:/publications/" + publicationsService.findByTitle(publicationDTO.getTitle()).get().getId();
     }
 
     @GetMapping("/{id}/edit")

@@ -40,6 +40,30 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
+    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
+    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
+    <br/>
+
+    <label for="formats">Выберете форматы (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
+    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
+    <br/>
+
+    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{keyWords}" id="key_words" multiple="multiple" class="select-checkbox">
+        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
+    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
+    <br/>
+
     <label for="annotation">Введите аннотацию (краткое описание материала): </label>
     <input type="text" th:field="*{annotation}" id="annotation">
     <div style="color: red" th:if="${#fields.hasErrors('annotation')}" th:errors="*{annotation}">annotation error</div>
@@ -77,30 +101,6 @@
     <input type="text" th:field="*{towns}" id="towns"
            placeholder="Если городов или МО несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Туапсинский район'">
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
-    <br/>
-
-    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
-    <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
-        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
-    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
-    <br/>
-
-    <label for="formats">Выберете форматы (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
-    <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
-        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
-    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
-    <br/>
-
-    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
-    <select th:field="*{keyWords}" id="key_words" multiple="multiple" class="select-checkbox">
-        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
-    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
     <br/>
 
     <input type="submit" value="Добавить"/>
