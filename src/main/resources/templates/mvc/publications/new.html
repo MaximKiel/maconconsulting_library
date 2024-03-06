@@ -103,6 +103,10 @@
     <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
     <br/>
 
+<!--    TODO: https://www.youtube.com/watch?v=bmMWrTMB5uo-->
+    <label for="file">Загрузите материал: </label>
+    <input type="file" id="file" name="file"/>
+
     <input type="submit" value="Добавить"/>
 </form>
 <script src="/static/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
