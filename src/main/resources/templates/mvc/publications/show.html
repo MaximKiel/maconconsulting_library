@@ -47,11 +47,11 @@
     </tr>
     <tr>
         <td><b>Аннотация:</b></td>
-        <td><p th:text="${publication.getAnnotation()()}">Value</p></td>
+        <td><p th:text="${publication.getAnnotation()}">Value</p></td>
     </tr>
     <tr>
         <td><b>Издатель / источник:</b></td>
-        <td><p th:text="${publication.getSource()()()}">Value</p></td>
+        <td><p th:text="${publication.getSource()}">Value</p></td>
     </tr>
     <tr>
         <td><b>Год:</b></td>
@@ -99,9 +99,9 @@
 </table>
 <hr/>
 
-<a class="btn" th:href="@{/publications/{title}/edit(title=${publication.getTitle()})}">Редактировать</a>
+<a class="btn" th:href="@{/publications/{id}/edit(id=${publication.getId()})}">Редактировать</a>
 <br/>
-<form th:method="DELETE" th:action="@{/publications/{title}(title=${publication.getTitle()})}"
+<form th:method="DELETE" th:action="@{/publications/{id}(id=${publication.getId()})}"
       onclick="return confirm('Вы подтверждаете удаление?')">
     <input class="rm_btn" type="submit" value="Удалить">
 </form>

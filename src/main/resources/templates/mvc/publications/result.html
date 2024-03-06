@@ -44,12 +44,12 @@
     <tbody>
     <tr th:each="publication : ${result}">
         <td>
-            <a th:href="@{/publications/{title}(title=${publication.getTitle()})}" th:target="_blank">
+            <a th:href="@{/publications/{id}(id=${publication.getId()})}" th:target="_blank">
                 <p th:text="${publication.getTitle()}">title</p>
             </a>
         </td>
         <td th:text="${publication.getYear()}">year</td>
-        <td th:text="${publication.getAnnotation()()}">annotation</td>
+        <td th:text="${publication.getAnnotation()}">annotation</td>
     </tr>
     </tbody>
 </table>

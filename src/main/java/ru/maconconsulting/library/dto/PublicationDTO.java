@@ -9,6 +9,8 @@ import java.util.List;
 
 public class PublicationDTO {
 
+    private Integer id;
+
     @NotBlank(message = "Название не должно быть пустым!")
     private String title;
 
@@ -35,7 +37,8 @@ public class PublicationDTO {
     public PublicationDTO() {
     }
 
-    public PublicationDTO(String title, String annotation, String source, Integer year, String relevance, String countries, String regions, String towns, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String countries, String regions, String towns, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+        this.id = id;
         this.title = title;
         this.annotation = annotation;
         this.source = source;
@@ -135,5 +138,13 @@ public class PublicationDTO {
 
     public void setKeyWords(List<KeyWordDTO> keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

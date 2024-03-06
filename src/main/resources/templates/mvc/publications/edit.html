@@ -33,7 +33,7 @@
         </div>
     </div>
 </header>
-<form class="custom_form" th:method="PATCH" th:action="@{/publications/{title}(title=${publication.getTitle()})}" th:object="${publication}">
+<form class="custom_form" th:method="PATCH" th:action="@{/publications/{id}(id=${publication.getId()})}" th:object="${publication}">
 
     <label for="title">Введите название: </label>
     <input type="text" th:field="*{title}" id="title">

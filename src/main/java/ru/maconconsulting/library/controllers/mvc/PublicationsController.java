@@ -55,11 +55,11 @@ public class PublicationsController {
         return "mvc/publications/manage";
     }
 
-    @GetMapping("/{title}")
-    public String show(@PathVariable("title") String title, Model model) {
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model) {
         log.info("Go to mvc/publications/show");
-        model.addAttribute("publication", convertToPublicationDTO(publicationsService.findByTitle(title)
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация с названием " + title + " не найдена"))));
+        model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
         return "mvc/publications/show";
     }
 
@@ -80,14 +80,14 @@ public class PublicationsController {
             return "mvc/publications/new";
         }
         publicationsService.save(convertToPublication(publicationDTO));
-        log.info("Go to redirect:/publications/" + publicationDTO.getTitle());
-        return "redirect:/publications/" + publicationDTO.getTitle();
+        log.info("Go to redirect:/publications/" + publicationDTO.getId());
+        return "redirect:/publications/" + publicationDTO.getId();
     }
 
-    @GetMapping("/{title}/edit")
-    public String edit(Model model, @PathVariable("title") String title) {
-        model.addAttribute("publication", convertToPublicationDTO(publicationsService.findByTitle(title)
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация с названием " + title + " не найдена"))));
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") Integer id) {
+        model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
         model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
@@ -95,22 +95,22 @@ public class PublicationsController {
         return "mvc/publications/edit";
     }
 
-    @PatchMapping("/{title}")
+    @PatchMapping("/{id}")
     public String update(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult,
-                         @PathVariable("title") String title) {
+                         @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/publications/edit");
             return "mvc/publications/edit";
         }
 
-        publicationsService.update(title, convertToPublication(publicationDTO));
-        log.info("Go to redirect:/publications/" + title);
-        return "redirect:/publications/" + title;
+        publicationsService.update(id, convertToPublication(publicationDTO));
+        log.info("Go to redirect:/publications/" + id);
+        return "redirect:/publications/" + id;
     }
 
-    @DeleteMapping("/{title}")
-    public String delete(@PathVariable("title") String title) {
-        publicationsService.delete(title);
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        publicationsService.delete(id);
         log.info("Go to redirect:/publications");
         return "redirect:/publications";
     }

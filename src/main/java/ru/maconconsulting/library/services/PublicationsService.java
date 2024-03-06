@@ -45,6 +45,10 @@ public class PublicationsService {
         return publicationsRepository.findByTitle(title);
     }
 
+    public Optional<Publication> findById(Integer id) {
+        return publicationsRepository.findById(id);
+    }
+
     @Transactional
     public void save(Publication publication) {
         enrichPublication(publication);
@@ -52,10 +56,10 @@ public class PublicationsService {
     }
 
     @Transactional
-    public void update(String title, Publication updatedPublication) {
-        if (findByTitle(title).isPresent()) {
-            updatedPublication.setId(findByTitle(title).get().getId());
-            updatedPublication.setCreatedAt(findByTitle(title).get().getCreatedAt());
+    public void update(Integer id, Publication updatedPublication) {
+        if (findById(id).isPresent()) {
+            updatedPublication.setId(findById(id).get().getId());
+            updatedPublication.setCreatedAt(findById(id).get().getCreatedAt());
             if (updatedPublication.getSegments() != null) {
                 updatedPublication.setSegments(enrichListField(segmentsService, updatedPublication));
             } else {
@@ -78,8 +82,8 @@ public class PublicationsService {
     }
 
     @Transactional
-    public void delete(String title) {
-        publicationsRepository.deleteByTitle(title);
+    public void delete(Integer id) {
+        publicationsRepository.deleteById(id);
     }
 
     public List<Publication> search(SearchPublication searchPublication) {
@@ -93,7 +97,7 @@ public class PublicationsService {
         if (!searchPublication.getSource().equals("")) {
             result = searchElement(result, p -> p.getSource().toLowerCase().contains(searchPublication.getSource().toLowerCase()));
         }
-        if (searchPublication.getYear() != 0) {
+        if (searchPublication.getYear() != null && searchPublication.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchPublication.getYear()));
         }
         if (!searchPublication.getRelevance().equals("")) {
