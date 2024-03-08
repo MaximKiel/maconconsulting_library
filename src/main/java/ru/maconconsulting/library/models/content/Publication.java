@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "publication")
 public class Publication extends AbstractBasedEntityWithId {
 
-//    TODO: put publications and projects classes to new package 'content'
     @Column(name = "title")
     @NotBlank(message = "Название не должно быть пустым!")
     private String title;
