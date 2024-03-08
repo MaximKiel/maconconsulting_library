@@ -8,6 +8,4 @@ import java.util.Optional;
 public interface PublicationsRepository extends JpaRepository<Publication, Integer> {
 
     Optional<Publication> findByTitle(String title);
-
-    void deleteByTitle(String title);
 }

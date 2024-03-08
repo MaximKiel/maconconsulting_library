@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "publication")
 public class Publication extends AbstractBasedEntityWithId {
 
+//    TODO: put publications and projects classes to new package 'content'
     @Column(name = "title")
     @NotBlank(message = "Название не должно быть пустым!")
     private String title;
@@ -27,6 +28,9 @@ public class Publication extends AbstractBasedEntityWithId {
 
     @Column(name = "relevance")
     private String relevance;
+
+    @Column(name = "path")
+    private String path;
 
     @Column(name = "countries")
     private String countries;
@@ -63,12 +67,13 @@ public class Publication extends AbstractBasedEntityWithId {
     public Publication() {
     }
 
-    public Publication(String title, String annotation, String source, Integer year, String relevance, String countries, String regions, String towns, List<Segment> segments, List<Format> formats, List<KeyWord> keyWords) {
+    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String countries, String regions, String towns, List<Segment> segments, List<Format> formats, List<KeyWord> keyWords) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
         this.relevance = relevance;
+        this.path = path;
         this.countries = countries;
         this.regions = regions;
         this.towns = towns;
@@ -180,5 +185,13 @@ public class Publication extends AbstractBasedEntityWithId {
                 ", formats=" + formats +
                 ", keyWords=" + keyWords +
                 '}';
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

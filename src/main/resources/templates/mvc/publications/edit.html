@@ -85,6 +85,11 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
+    <label for="path">Введите путь к файлу: </label>
+    <input type="text" th:field="*{path}" id="path">
+    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
+    <br/>
+
     <label for="countries">Введите название стран: </label>
     <input type="text" th:field="*{countries}" id="countries"
            placeholder="Если стран несколько, вводите их через запятую с пробелом: 'Россия, Армения, Казахстан'">

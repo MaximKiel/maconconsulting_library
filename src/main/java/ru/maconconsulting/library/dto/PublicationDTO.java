@@ -22,6 +22,8 @@ public class PublicationDTO {
 
     private String relevance;
 
+    private String path;
+
     private String countries;
 
     private String regions;
@@ -37,13 +39,14 @@ public class PublicationDTO {
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String countries, String regions, String towns, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String countries, String regions, String towns, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
         this.id = id;
         this.title = title;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
         this.relevance = relevance;
+        this.path = path;
         this.countries = countries;
         this.regions = regions;
         this.towns = towns;
@@ -146,5 +149,13 @@ public class PublicationDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

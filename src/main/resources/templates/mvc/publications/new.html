@@ -85,6 +85,11 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
+    <label for="path">Введите путь к файлу: </label>
+    <input type="text" th:field="*{path}" id="path">
+    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
+    <br/>
+
     <label for="countries">Введите название стран: </label>
     <input type="text" th:field="*{countries}" id="countries"
            placeholder="Если стран несколько, вводите их через запятую с пробелом: 'Россия, Армения, Казахстан'">
@@ -104,10 +109,10 @@
     <br/>
 
 <!--    TODO: https://www.youtube.com/watch?v=bmMWrTMB5uo-->
-    <label for="file">Загрузите материал: </label>
-    <input type="file" id="file" name="file"/>
+<!--    <label for="file">Загрузите материал: </label>-->
+<!--    <input type="file" id="file" name="file"/>-->
 
-    <input type="submit" value="Добавить"/>
+<!--    <input type="submit" value="Добавить"/>-->
 </form>
 <script src="/static/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
