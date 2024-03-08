@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение материала</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/form.css" th:href="@{/css/form.css}"/>
+</head>
+<body>
+<header class="site-header">
+    <div class="wrapper site-header__wrapper">
+        <div class="site-header__start">
+            <a href="/main" class="brand">MACON LIBRARY</a>
+        </div>
+        <div class="site-header__middle">
+            <nav class="nav">
+                <button class="nav__toggle" aria-expanded="false" type="button">
+                    Меню
+                </button>
+                <ul class="nav__wrapper">
+                    <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
+                    <li class="nav__item"><a href="/users">Управление пользователями</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="site-header__end">
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выйти"/>
+            </form>
+        </div>
+    </div>
+</header>
+<form class="custom_form" th:method="PATCH" th:action="@{/publications/{id}(id=${publication.getId()})}" th:object="${publication}">
+
+    <label for="title">Введите название: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
+    <br/>
+
+    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
+        <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
+    <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
+    <br/>
+
+    <label for="formats">Выберете форматы (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
+        <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
+    <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
+    <br/>
+
+    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <select th:field="*{keyWords}" id="key_words" multiple="multiple" class="select-checkbox">
+        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
+    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
+    <br/>
+
+    <label for="annotation">Введите аннотацию (краткое описание материала): </label>
+    <input type="text" th:field="*{annotation}" id="annotation">
+    <div style="color: red" th:if="${#fields.hasErrors('annotation')}" th:errors="*{annotation}">annotation error</div>
+    <br/>
+
+    <label for="source">Введите издательство / источник материала: </label>
+    <input type="text" th:field="*{source}" id="source">
+    <div style="color: red" th:if="${#fields.hasErrors('source')}" th:errors="*{source}">source error</div>
+    <br/>
+
+    <label for="year">Введите год публикации: </label>
+    <input type="number" th:field="*{year}" id="year">
+    <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
+    <br/>
+
+    <label for="relevance">Введите актуальность данных: </label>
+    <input type="text" th:field="*{relevance}" id="relevance"
+           placeholder="В формате месяц.год: '12.2023'">
+    <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
+    <br/>
+
+    <label for="path">Введите путь к файлу: </label>
+    <input type="text" th:field="*{path}" id="path">
+    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
+    <br/>
+
+    <label for="countries">Введите название стран: </label>
+    <input type="text" th:field="*{countries}" id="countries"
+           placeholder="Если стран несколько, вводите их через запятую с пробелом: 'Россия, Армения, Казахстан'">
+    <div style="color: red" th:if="${#fields.hasErrors('countries')}" th:errors="*{countries}">countries error</div>
+    <br/>
+
+    <label for="regions">Введите название субъектов (регионов): </label>
+    <input type="text" th:field="*{regions}" id="regions"
+           placeholder="Если регионов несколько, вводите их через запятую с пробелом: 'Краснодарский край, Республика Татарстан'">
+    <div style="color: red" th:if="${#fields.hasErrors('regions')}" th:errors="*{regions}">regions error</div>
+    <br/>
+
+    <label for="towns">Введите название городов (муниципальных образований): </label>
+    <input type="text" th:field="*{towns}" id="towns"
+           placeholder="Если городов или МО несколько, вводите их через запятую с пробелом: 'Сочи, Анапа, Туапсинский район'">
+    <div style="color: red" th:if="${#fields.hasErrors('towns')}" th:errors="*{towns}">towns error</div>
+    <br/>
+
+    <input type="submit" value="Изменить"/>
+</form>
+<script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
+</body>
+</html>

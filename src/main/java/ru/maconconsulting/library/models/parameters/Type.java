@@ -1,7 +1,7 @@
 package ru.maconconsulting.library.models.parameters;
 
 import jakarta.persistence.*;
-import ru.maconconsulting.library.models.Project;
+import ru.maconconsulting.library.models.content.Project;
 
 import java.util.List;
 

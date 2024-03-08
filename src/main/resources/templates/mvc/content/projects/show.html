@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница проекта</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/table.css" th:href="@{/css/table.css}"/>
+</head>
+<body>
+<header class="site-header">
+    <div class="wrapper site-header__wrapper">
+        <div class="site-header__start">
+            <a href="/main" class="brand">MACON LIBRARY</a>
+        </div>
+        <div class="site-header__middle">
+            <nav class="nav">
+                <button class="nav__toggle" aria-expanded="false" type="button">
+                    Меню
+                </button>
+                <ul class="nav__wrapper">
+                    <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
+                    <li class="nav__item"><a href="/users">Управление пользователями</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="site-header__end">
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выйти"/>
+            </form>
+        </div>
+    </div>
+</header>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Показатель</th>
+        <th>Значение</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><b>Номер проекта:</b></td>
+        <td><p th:text="${project.getNumber()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Год:</b></td>
+        <td><p th:text="${project.getYear()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Актуальность данных:</b></td>
+        <td><p th:text="${project.getRelevance()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Название:</b></td>
+        <td><p th:text="${project.getTitle()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Заказчик:</b></td>
+        <td><p th:text="${project.getClient()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Тип проекта:</b></td>
+        <td><p th:text="${project.getType().getName()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Локация:</b></td>
+        <td>
+            <p th:text="${project.getCountries()}">Value</p>
+            <br/>
+            <p th:text="${project.getRegions()}">Value</p>
+            <br/>
+            <p th:text="${project.getTowns()}">Value</p>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Сегменты рынка:</b></td>
+        <td>
+            <ul>
+                <li th:each="segment : ${project.getSegments()}" th:text="${segment.getName()}">Value</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Форматы отчета:</b></td>
+        <td>
+            <ul>
+                <li th:each="format : ${project.getFormats()}" th:text="${format.getName()}">Value</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Ключевые слова:</b></td>
+        <td>
+            <ul>
+                <li th:each="key_word : ${project.getKeyWords()}" th:text="${key_word.getName()}">Value</li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<hr/>
+
+<a class="btn" th:href="@{/projects/{number}/edit(number=${project.getNumber()})}">Редактировать</a>
+<br/>
+<form th:method="DELETE" th:action="@{/projects/{number}(number=${project.getNumber()})}"
+      onclick="return confirm('Вы подтверждаете удаление?')">
+    <input class="rm_btn" type="submit" value="Удалить">
+</form>
+<script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
+</body>
+</html>

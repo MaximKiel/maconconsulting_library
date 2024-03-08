@@ -3,8 +3,8 @@ package ru.maconconsulting.library.models.parameters;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import ru.maconconsulting.library.models.Project;
-import ru.maconconsulting.library.models.Publication;
+import ru.maconconsulting.library.models.content.Project;
+import ru.maconconsulting.library.models.content.Publication;
 
 import java.util.List;
 
