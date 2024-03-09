@@ -104,10 +104,10 @@ class ProjectsServiceTest {
         Project updatedProject = PROJECT_1;
         String number = updatedProject.getNumber();
         PROJECT_1.setCreatedAt(LocalDateTime.now());
-        PROJECT_1.setTitle("Update PROJECT_1");
+        PROJECT_1.setTitle("Updated PROJECT_1");
         Mockito.when(typesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
         Mockito.when(projectsRepository.findByNumber(number)).thenReturn(Optional.of(PROJECT_1));
-        Mockito.when(projectsRepository.findByTitle("Update PROJECT_1")).thenReturn(Optional.of(updatedProject));
+        Mockito.when(projectsRepository.findByTitle("Updated PROJECT_1")).thenReturn(Optional.of(updatedProject));
         for (Segment segment : updatedProject.getSegments()) {
             Mockito.when(segmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
         }
@@ -121,7 +121,7 @@ class ProjectsServiceTest {
         projectsService.update(number, updatedProject);
 
         Mockito.verify(projectsRepository, Mockito.times(1)).save(updatedProject);
-        Assertions.assertNotNull(projectsService.findByTitle("Update PROJECT_1").orElse(null));
+        Assertions.assertNotNull(projectsService.findByTitle("Updated PROJECT_1").orElse(null));
         Assertions.assertNull(projectsService.findByTitle("23101Р_Тестовый проект 1").orElse(null));
     }
 
