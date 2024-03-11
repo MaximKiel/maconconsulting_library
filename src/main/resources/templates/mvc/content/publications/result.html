@@ -38,6 +38,7 @@
     <tr>
         <th>Название</th>
         <th>Год публикации</th>
+        <th>Локация</th>
         <th>Аннотация</th>
     </tr>
     </thead>
@@ -49,6 +50,7 @@
             </a>
         </td>
         <td th:text="${publication.getYear()}">year</td>
+        <td th:text="${publication.getLocation()}">location</td>
         <td th:text="${publication.getAnnotation()}">annotation</td>
     </tr>
     </tbody>
