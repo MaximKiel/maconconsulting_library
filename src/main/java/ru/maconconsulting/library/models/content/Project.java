@@ -38,15 +38,9 @@ public class Project extends AbstractBasedEntity {
     @NotBlank(message = "Наименование клиента  не должно быть пустым!")
     private String client;
 
-    @Column(name = "countries")
-    @NotBlank(message = "Название страны не должно быть пустым!")
-    private String countries;
-
-    @Column(name = "regions")
-    private String regions;
-
-    @Column(name = "towns")
-    private String towns;
+    @Column(name = "location")
+    @NotBlank(message = "Локация не должна быть пустой!")
+    private String location;
 
     @ManyToMany
     @JoinTable(
@@ -81,15 +75,13 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<Segment> segments, Type type, List<Format> formats, List<KeyWord> keyWords) {
+    public Project(String number, Integer year, String relevance, String title, String client, String location, List<Segment> segments, Type type, List<Format> formats, List<KeyWord> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
-        this.countries = countries;
-        this.regions = regions;
-        this.towns = towns;
+        this.location = location;
         this.segments = segments;
         this.type = type;
         this.formats = formats;
@@ -120,28 +112,12 @@ public class Project extends AbstractBasedEntity {
         this.relevance = relevance;
     }
 
-    public String getCountries() {
-        return countries;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    public String getTowns() {
-        return towns;
-    }
-
-    public void setTowns(String towns) {
-        this.towns = towns;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Integer getYear() {
@@ -206,9 +182,7 @@ public class Project extends AbstractBasedEntity {
                 ", relevance='" + relevance + '\'' +
                 ", title='" + title + '\'' +
                 ", client='" + client + '\'' +
-                ", countries='" + countries + '\'' +
-                ", regions='" + regions + '\'' +
-                ", towns='" + towns + '\'' +
+                ", location='" + location + '\'' +
                 ", segments=" + segments +
                 ", type=" + type +
                 ", formats=" + formats +

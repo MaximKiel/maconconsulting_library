@@ -15,11 +15,7 @@ public class SearchProject {
 
     private String client;
 
-    private String country;
-
-    private String region;
-
-    private String town;
+    private String location;
 
     private SegmentDTO segment;
 
@@ -32,14 +28,12 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String country, String region, String town, SegmentDTO segment, TypeDTO type, FormatDTO format, KeyWordDTO keyWord) {
+    public SearchProject(int year, String relevance, String title, String client, String location, SegmentDTO segment, TypeDTO type, FormatDTO format, KeyWordDTO keyWord) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
-        this.country = country;
-        this.region = region;
-        this.town = town;
+        this.location = location;
         this.segment = segment;
         this.type = type;
         this.format = format;
@@ -78,28 +72,12 @@ public class SearchProject {
         this.client = client;
     }
 
-    public String getCountry() {
-        return country;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public SegmentDTO getSegment() {

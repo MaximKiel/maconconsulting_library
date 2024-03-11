@@ -84,22 +84,16 @@ public class ProjectsService {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
         if (!searchProject.getRelevance().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getRelevance(), searchProject.getRelevance()));
+            result = searchElement(result, p -> p.getRelevance().toLowerCase().contains(searchProject.getRelevance().toLowerCase()));
         }
         if (!searchProject.getTitle().equals("")) {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().toLowerCase()));
         }
         if (!searchProject.getClient().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getClient(), searchProject.getClient()));
+            result = searchElement(result, p -> p.getClient().toLowerCase().contains(searchProject.getClient().toLowerCase()));
         }
-        if (!searchProject.getCountry().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getCountries(), searchProject.getCountry()));
-        }
-        if (!searchProject.getRegion().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getRegions(), searchProject.getRegion()));
-        }
-        if (!searchProject.getTown().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getTowns(), searchProject.getTown()));
+        if (!searchProject.getLocation().equals("")) {
+            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().toLowerCase()));
         }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {

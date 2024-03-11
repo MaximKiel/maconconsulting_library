@@ -101,16 +101,10 @@ public class PublicationsService {
             result = searchElement(result, p -> p.getYear().equals(searchPublication.getYear()));
         }
         if (!searchPublication.getRelevance().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getRelevance(), searchPublication.getRelevance()));
+            result = searchElement(result, p -> p.getRelevance().toLowerCase().contains(searchPublication.getRelevance().toLowerCase()));
         }
-        if (!searchPublication.getCountry().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getCountries(), searchPublication.getCountry()));
-        }
-        if (!searchPublication.getRegion().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getRegions(), searchPublication.getRegion()));
-        }
-        if (!searchPublication.getTown().equals("")) {
-            result = searchElement(result, p -> searchPluralString(p.getTowns(), searchPublication.getTown()));
+        if (!searchPublication.getLocation().equals("")) {
+            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchPublication.getLocation().toLowerCase()));
         }
         if (searchPublication.getSegment() != null && !searchPublication.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {

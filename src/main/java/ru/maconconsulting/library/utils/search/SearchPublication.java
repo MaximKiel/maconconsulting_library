@@ -16,11 +16,7 @@ public class SearchPublication {
 
     private String relevance;
 
-    private String country;
-
-    private String region;
-
-    private String town;
+    private String location;
 
     private SegmentDTO segment;
 
@@ -31,15 +27,13 @@ public class SearchPublication {
     public SearchPublication() {
     }
 
-    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String country, String region, String town, SegmentDTO segment, FormatDTO format, KeyWordDTO keyWord) {
+    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, KeyWordDTO keyWord) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
         this.relevance = relevance;
-        this.country = country;
-        this.region = region;
-        this.town = town;
+        this.location = location;
         this.segment = segment;
         this.format = format;
         this.keyWord = keyWord;
@@ -85,28 +79,12 @@ public class SearchPublication {
         this.relevance = relevance;
     }
 
-    public String getCountry() {
-        return country;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public SegmentDTO getSegment() {

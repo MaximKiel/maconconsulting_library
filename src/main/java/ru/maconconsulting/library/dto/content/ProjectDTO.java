@@ -28,12 +28,8 @@ public class ProjectDTO {
     @NotBlank(message = "Наименование клиента  не должно быть пустым!")
     private String client;
 
-    @NotBlank(message = "Название страны не должно быть пустым!")
-    private String countries;
-
-    private String regions;
-
-    private String towns;
+    @NotBlank(message = "Локация не должна быть пустой!")
+    private String location;
 
     @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<SegmentDTO> segments;
@@ -49,15 +45,13 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String countries, String regions, String towns, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
-        this.countries = countries;
-        this.regions = regions;
-        this.towns = towns;
+        this.location = location;
         this.segments = segments;
         this.type = type;
         this.formats = formats;
@@ -96,28 +90,12 @@ public class ProjectDTO {
         this.title = title;
     }
 
-    public String getCountries() {
-        return countries;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    public String getTowns() {
-        return towns;
-    }
-
-    public void setTowns(String towns) {
-        this.towns = towns;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public List<SegmentDTO> getSegments() {

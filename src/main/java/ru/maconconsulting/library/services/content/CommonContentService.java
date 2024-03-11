@@ -14,8 +14,6 @@ import java.util.List;
 
 public class CommonContentService {
 
-    public static final String SPLIT_FOR_SEARCH = ", ";
-
     public static List<Segment> enrichListField(SegmentsService service, Publication publication) {
         List<Segment> segments = new ArrayList<>();
         for (Segment s : publication.getSegments()) {
@@ -62,18 +60,5 @@ public class CommonContentService {
             entities.add(service.findByName(k.getName()).orElseThrow());
         }
         return entities;
-    }
-
-    public static Boolean searchPluralString(String pluralString, String searchString) {
-        if (pluralString == null) {
-            return false;
-        }
-        String[] strings = pluralString.split(SPLIT_FOR_SEARCH);
-        for (String s : strings) {
-            if (s.equalsIgnoreCase(searchString)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

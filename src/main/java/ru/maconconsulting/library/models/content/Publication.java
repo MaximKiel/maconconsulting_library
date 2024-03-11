@@ -32,14 +32,8 @@ public class Publication extends AbstractBasedEntityWithId {
     @Column(name = "path")
     private String path;
 
-    @Column(name = "countries")
-    private String countries;
-
-    @Column(name = "regions")
-    private String regions;
-
-    @Column(name = "towns")
-    private String towns;
+    @Column(name = "location")
+    private String location;
 
     @ManyToMany
     @JoinTable(
@@ -67,16 +61,14 @@ public class Publication extends AbstractBasedEntityWithId {
     public Publication() {
     }
 
-    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String countries, String regions, String towns, List<Segment> segments, List<Format> formats, List<KeyWord> keyWords) {
+    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, List<Segment> segments, List<Format> formats, List<KeyWord> keyWords) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
         this.relevance = relevance;
         this.path = path;
-        this.countries = countries;
-        this.regions = regions;
-        this.towns = towns;
+        this.location = location;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -122,28 +114,12 @@ public class Publication extends AbstractBasedEntityWithId {
         this.relevance = relevance;
     }
 
-    public String getCountries() {
-        return countries;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    public String getTowns() {
-        return towns;
-    }
-
-    public void setTowns(String towns) {
-        this.towns = towns;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public List<Segment> getSegments() {
@@ -170,6 +146,14 @@ public class Publication extends AbstractBasedEntityWithId {
         this.keyWords = keyWords;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     @Override
     public String toString() {
         return "Publication{" +
@@ -178,20 +162,10 @@ public class Publication extends AbstractBasedEntityWithId {
                 ", source='" + source + '\'' +
                 ", year=" + year +
                 ", relevance='" + relevance + '\'' +
-                ", countries='" + countries + '\'' +
-                ", regions='" + regions + '\'' +
-                ", towns='" + towns + '\'' +
+                ", location='" + location + '\'' +
                 ", segments=" + segments +
                 ", formats=" + formats +
                 ", keyWords=" + keyWords +
                 '}';
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

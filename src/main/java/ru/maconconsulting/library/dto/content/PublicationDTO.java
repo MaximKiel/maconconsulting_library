@@ -24,11 +24,7 @@ public class PublicationDTO {
 
     private String path;
 
-    private String countries;
-
-    private String regions;
-
-    private String towns;
+    private String location;
 
     private List<SegmentDTO> segments;
 
@@ -39,7 +35,7 @@ public class PublicationDTO {
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String countries, String regions, String towns, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
         this.id = id;
         this.title = title;
         this.annotation = annotation;
@@ -47,9 +43,7 @@ public class PublicationDTO {
         this.year = year;
         this.relevance = relevance;
         this.path = path;
-        this.countries = countries;
-        this.regions = regions;
-        this.towns = towns;
+        this.location = location;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -95,28 +89,12 @@ public class PublicationDTO {
         this.relevance = relevance;
     }
 
-    public String getCountries() {
-        return countries;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCountries(String countries) {
-        this.countries = countries;
-    }
-
-    public String getRegions() {
-        return regions;
-    }
-
-    public void setRegions(String regions) {
-        this.regions = regions;
-    }
-
-    public String getTowns() {
-        return towns;
-    }
-
-    public void setTowns(String towns) {
-        this.towns = towns;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public List<SegmentDTO> getSegments() {
