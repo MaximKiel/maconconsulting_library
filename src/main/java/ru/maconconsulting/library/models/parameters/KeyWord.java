@@ -9,7 +9,7 @@ import ru.maconconsulting.library.models.content.Publication;
 import java.util.List;
 
 @Entity
-@Table(name = "kew_word")
+@Table(name = "key_word")
 public class KeyWord extends AbstractParameterEntity {
 
     @ManyToMany(mappedBy = "keyWords")

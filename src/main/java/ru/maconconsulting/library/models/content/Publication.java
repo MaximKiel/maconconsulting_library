@@ -52,9 +52,9 @@ public class Publication extends AbstractBasedEntityWithId {
 
     @ManyToMany
     @JoinTable(
-            name = "publication_kew_word",
+            name = "publication_key_word",
             joinColumns = @JoinColumn(name = "publication_id"),
-            inverseJoinColumns = @JoinColumn(name = "kew_word_id")
+            inverseJoinColumns = @JoinColumn(name = "key_word_id")
     )
     private List<KeyWord> keyWords;
 

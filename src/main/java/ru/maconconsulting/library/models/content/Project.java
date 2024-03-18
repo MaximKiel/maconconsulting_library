@@ -66,9 +66,9 @@ public class Project extends AbstractBasedEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "project_kew_word",
+            name = "project_key_word",
             joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "kew_word_id")
+            inverseJoinColumns = @JoinColumn(name = "key_word_id")
     )
     private List<KeyWord> keyWords;
 
