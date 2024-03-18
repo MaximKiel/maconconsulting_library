@@ -83,17 +83,17 @@ public class ProjectsService {
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
-        if (!searchProject.getRelevance().equals("")) {
-            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchProject.getRelevance().toLowerCase()));
+        if (!searchProject.getRelevance().trim().equals("")) {
+            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchProject.getRelevance().trim().toLowerCase()));
         }
-        if (!searchProject.getTitle().equals("")) {
-            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().toLowerCase()));
+        if (!searchProject.getTitle().trim().equals("")) {
+            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().trim().toLowerCase()));
         }
-        if (!searchProject.getClient().equals("")) {
-            result = searchElement(result, p -> p.getClient().toLowerCase().contains(searchProject.getClient().toLowerCase()));
+        if (!searchProject.getClient().trim().equals("")) {
+            result = searchElement(result, p -> p.getClient().toLowerCase().contains(searchProject.getClient().trim().toLowerCase()));
         }
-        if (!searchProject.getLocation().equals("")) {
-            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().toLowerCase()));
+        if (!searchProject.getLocation().trim().equals("")) {
+            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
         }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {

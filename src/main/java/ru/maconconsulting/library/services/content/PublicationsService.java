@@ -88,23 +88,23 @@ public class PublicationsService {
 
     public List<Publication> search(SearchPublication searchPublication) {
         List<Publication> result = findAll().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList());
-        if (!searchPublication.getTitle().equals("")) {
-            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().toLowerCase()));
+        if (!searchPublication.getTitle().trim().equals("")) {
+            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().trim().toLowerCase()));
         }
-        if (!searchPublication.getAnnotation().equals("")) {
-            result = searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().toLowerCase()));
+        if (!searchPublication.getAnnotation().trim().equals("")) {
+            result = searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().trim().toLowerCase()));
         }
-        if (!searchPublication.getSource().equals("")) {
-            result = searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(searchPublication.getSource().toLowerCase()));
+        if (!searchPublication.getSource().trim().equals("")) {
+            result = searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(searchPublication.getSource().trim().toLowerCase()));
         }
         if (searchPublication.getYear() != null && searchPublication.getYear() != 0) {
             result = searchElement(result, p -> p.getYear() != null && p.getYear().equals(searchPublication.getYear()));
         }
-        if (!searchPublication.getRelevance().equals("")) {
-            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchPublication.getRelevance().toLowerCase()));
+        if (!searchPublication.getRelevance().trim().equals("")) {
+            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchPublication.getRelevance().trim().toLowerCase()));
         }
-        if (!searchPublication.getLocation().equals("")) {
-            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchPublication.getLocation().toLowerCase()));
+        if (!searchPublication.getLocation().trim().equals("")) {
+            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchPublication.getLocation().trim().toLowerCase()));
         }
         if (searchPublication.getSegment() != null && !searchPublication.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {
