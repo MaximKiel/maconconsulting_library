@@ -84,7 +84,7 @@ public class ProjectsService {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
         if (!searchProject.getRelevance().equals("")) {
-            result = searchElement(result, p -> p.getRelevance().toLowerCase().contains(searchProject.getRelevance().toLowerCase()));
+            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchProject.getRelevance().toLowerCase()));
         }
         if (!searchProject.getTitle().equals("")) {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().toLowerCase()));

@@ -92,16 +92,16 @@ public class PublicationsService {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().toLowerCase()));
         }
         if (!searchPublication.getAnnotation().equals("")) {
-            result = searchElement(result, p -> p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().toLowerCase()));
+            result = searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().toLowerCase()));
         }
         if (!searchPublication.getSource().equals("")) {
-            result = searchElement(result, p -> p.getSource().toLowerCase().contains(searchPublication.getSource().toLowerCase()));
+            result = searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(searchPublication.getSource().toLowerCase()));
         }
         if (searchPublication.getYear() != null && searchPublication.getYear() != 0) {
-            result = searchElement(result, p -> p.getYear().equals(searchPublication.getYear()));
+            result = searchElement(result, p -> p.getYear() != null && p.getYear().equals(searchPublication.getYear()));
         }
         if (!searchPublication.getRelevance().equals("")) {
-            result = searchElement(result, p -> p.getRelevance().toLowerCase().contains(searchPublication.getRelevance().toLowerCase()));
+            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchPublication.getRelevance().toLowerCase()));
         }
         if (!searchPublication.getLocation().equals("")) {
             result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchPublication.getLocation().toLowerCase()));
