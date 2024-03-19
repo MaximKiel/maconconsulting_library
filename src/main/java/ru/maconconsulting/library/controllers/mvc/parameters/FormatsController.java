@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
+import ru.maconconsulting.library.models.content.Project;
+import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.services.parameters.FormatsService;
 import ru.maconconsulting.library.utils.exceptions.parameters.FormatNotFoundException;
@@ -82,7 +84,14 @@ public class FormatsController {
     }
 
     @DeleteMapping("/{name}")
-    public String delete(@PathVariable("name") String name) {
+    public String delete(@PathVariable("name") String name, Model model) {
+        if (formatsService.findByName(name).isPresent() && !formatsService.findByName(name).get().getProjects().isEmpty()) {
+            model.addAttribute("projects", formatsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("publications", formatsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
+            log.info("mvc/parameters/delete_error");
+            return "mvc/parameters/delete_error";
+        }
+
         formatsService.delete(name);
         log.info("Go to redirect:/formats");
         return "redirect:/formats";

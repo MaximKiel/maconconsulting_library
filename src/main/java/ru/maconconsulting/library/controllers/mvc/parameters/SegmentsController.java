@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.models.content.Project;
+import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.Segment;
 import ru.maconconsulting.library.services.parameters.SegmentsService;
 import ru.maconconsulting.library.utils.exceptions.parameters.SegmentNotFoundException;
@@ -81,7 +83,14 @@ public class SegmentsController {
     }
 
     @DeleteMapping("/{name}")
-    public String delete(@PathVariable("name") String name) {
+    public String delete(@PathVariable("name") String name, Model model) {
+        if (segmentsService.findByName(name).isPresent() && !segmentsService.findByName(name).get().getProjects().isEmpty()) {
+            model.addAttribute("projects", segmentsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("publications", segmentsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
+            log.info("mvc/parameters/delete_error");
+            return "mvc/parameters/delete_error";
+        }
+
         segmentsService.delete(name);
         log.info("Go to redirect:/segments");
         return "redirect:/segments";

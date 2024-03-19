@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.parameters.TypeDTO;
+import ru.maconconsulting.library.models.content.Project;
+import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.Type;
 import ru.maconconsulting.library.services.parameters.TypesService;
 import ru.maconconsulting.library.utils.validators.parameters.TypeValidator;
 import ru.maconconsulting.library.utils.exceptions.parameters.TypeNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -81,7 +84,14 @@ public class TypesController {
     }
 
     @DeleteMapping("/{name}")
-    public String delete(@PathVariable("name") String name) {
+    public String delete(@PathVariable("name") String name, Model model) {
+        if (typesService.findByName(name).isPresent() && !typesService.findByName(name).get().getProjects().isEmpty()) {
+            model.addAttribute("projects", typesService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("publications", new ArrayList<Publication>());
+            log.info("mvc/parameters/delete_error");
+            return "mvc/parameters/delete_error";
+        }
+
         typesService.delete(name);
         log.info("Go to redirect:/types");
         return "redirect:/types";

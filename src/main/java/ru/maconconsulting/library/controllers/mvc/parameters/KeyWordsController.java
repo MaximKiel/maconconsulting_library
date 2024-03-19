@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
+import ru.maconconsulting.library.models.content.Project;
+import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.KeyWord;
 import ru.maconconsulting.library.services.parameters.KeyWordsService;
 import ru.maconconsulting.library.utils.exceptions.parameters.KeyWordNotFoundException;
@@ -81,7 +83,14 @@ public class KeyWordsController {
     }
 
     @DeleteMapping("/{name}")
-    public String delete(@PathVariable("name") String name) {
+    public String delete(@PathVariable("name") String name, Model model) {
+        if (keyWordsService.findByName(name).isPresent() && !keyWordsService.findByName(name).get().getProjects().isEmpty()) {
+            model.addAttribute("projects", keyWordsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("publications", keyWordsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
+            log.info("mvc/parameters/delete_error");
+            return "mvc/parameters/delete_error";
+        }
+
         keyWordsService.delete(name);
         log.info("Go to redirect:/key_words");
         return "redirect:/key_words";
