@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.AbstractParameterEntity;
+import ru.maconconsulting.library.models.parameters.Format;
+import ru.maconconsulting.library.models.parameters.KeyWord;
+import ru.maconconsulting.library.models.parameters.Segment;
 import ru.maconconsulting.library.repositories.content.PublicationsRepository;
 import ru.maconconsulting.library.services.parameters.FormatsService;
 import ru.maconconsulting.library.services.parameters.KeyWordsService;
@@ -12,13 +15,12 @@ import ru.maconconsulting.library.services.parameters.SegmentsService;
 import ru.maconconsulting.library.utils.search.SearchPublication;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static ru.maconconsulting.library.services.content.CommonContentService.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,7 +53,10 @@ public class PublicationsService {
 
     @Transactional
     public void save(Publication publication) {
-        enrichPublication(publication);
+        publication.setCreatedAt(LocalDateTime.now());
+        publication.setSegments(enrichSegments(segmentsService, publication));
+        publication.setFormats(enrichFormats(formatsService, publication));
+        publication.setKeyWords(enrichKeyWords(keyWordsService, publication));
         publicationsRepository.save(publication);
     }
 
@@ -60,23 +65,12 @@ public class PublicationsService {
         if (findById(id).isPresent()) {
             updatedPublication.setId(findById(id).get().getId());
             updatedPublication.setCreatedAt(findById(id).get().getCreatedAt());
-            if (updatedPublication.getSegments() != null) {
-                updatedPublication.setSegments(enrichListField(segmentsService, updatedPublication));
-            } else {
-                updatedPublication.setSegments(null);
-            }
-
-            if (updatedPublication.getFormats() != null) {
-                updatedPublication.setFormats(enrichListField(formatsService, updatedPublication));
-            } else {
-                updatedPublication.setFormats(null);
-            }
-
-            if (updatedPublication.getKeyWords() != null) {
-                updatedPublication.setKeyWords(enrichListField(keyWordsService, updatedPublication));
-            } else {
-                updatedPublication.setKeyWords(null);
-            }
+            updatedPublication.setSegments(updatedPublication.getSegments() != null ?
+                    enrichSegments(segmentsService, updatedPublication) : null);
+            updatedPublication.setFormats(updatedPublication.getFormats() != null ?
+                    enrichFormats(formatsService, updatedPublication) : null);
+            updatedPublication.setKeyWords(updatedPublication.getKeyWords() != null ?
+                    enrichKeyWords(keyWordsService, updatedPublication) : null);
             publicationsRepository.save(updatedPublication);
         }
     }
@@ -131,11 +125,27 @@ public class PublicationsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    private void enrichPublication(Publication publication) {
-        publication.setCreatedAt(LocalDateTime.now());
-        publication.setSegments(enrichListField(segmentsService, publication));
-        publication.setFormats(enrichListField(formatsService, publication));
-        publication.setKeyWords(enrichListField(keyWordsService, publication));
+    private List<Segment> enrichSegments(SegmentsService service, Publication publication) {
+        List<Segment> segments = new ArrayList<>();
+        for (Segment s : publication.getSegments()) {
+            segments.add(service.findByName(s.getName()).orElseThrow());
+        }
+        return segments;
+    }
 
+    private List<Format> enrichFormats(FormatsService service, Publication publication) {
+        List<Format> formats = new ArrayList<>();
+        for (Format f : publication.getFormats()) {
+            formats.add(service.findByName(f.getName()).orElseThrow());
+        }
+        return formats;
+    }
+
+    private List<KeyWord> enrichKeyWords(KeyWordsService service, Publication publication) {
+        List<KeyWord> keyWords = new ArrayList<>();
+        for (KeyWord k : publication.getKeyWords()) {
+            keyWords.add(service.findByName(k.getName()).orElseThrow());
+        }
+        return keyWords;
     }
 }

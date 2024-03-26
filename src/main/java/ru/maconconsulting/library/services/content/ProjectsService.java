@@ -6,18 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.content.Project;
 import ru.maconconsulting.library.models.parameters.*;
 import ru.maconconsulting.library.repositories.content.ProjectsRepository;
-import ru.maconconsulting.library.services.parameters.FormatsService;
-import ru.maconconsulting.library.services.parameters.KeyWordsService;
-import ru.maconconsulting.library.services.parameters.SegmentsService;
-import ru.maconconsulting.library.services.parameters.TypesService;
+import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.utils.search.SearchProject;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static ru.maconconsulting.library.services.content.CommonContentService.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -52,20 +47,23 @@ public class ProjectsService {
 
     @Transactional
     public void save(Project project) {
-        enrichProject(project);
+        project.setCreatedAt(LocalDateTime.now());
+        project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
+        project.setSegments(enrichSegments(segmentsService, project));
+        project.setFormats(enrichFormats(formatsService, project));
+        project.setKeyWords(enrichKeyWords(keyWordsService, project));
         projectsRepository.save(project);
     }
 
     @Transactional
     public void update(String number, Project updatedProject) {
-        Optional<Type> currentType = typesService.findByName(updatedProject.getType().getName());
-        if (findByNumber(number).isPresent() && currentType.isPresent()) {
+        if (findByNumber(number).isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-            updatedProject.setType(currentType.get());
-            updatedProject.setSegments(enrichListField(segmentsService, updatedProject));
-            updatedProject.setFormats(enrichListField(formatsService, updatedProject));
+            updatedProject.setType(typesService.findByName(updatedProject.getType().getName()).orElseThrow());
+            updatedProject.setSegments(enrichSegments(segmentsService, updatedProject));
+            updatedProject.setFormats(enrichFormats(formatsService, updatedProject));
             if (updatedProject.getKeyWords() != null) {
-                updatedProject.setKeyWords(enrichListField(keyWordsService, updatedProject));
+                updatedProject.setKeyWords(enrichKeyWords(keyWordsService, updatedProject));
             } else {
                 updatedProject.setKeyWords(null);
             }
@@ -123,11 +121,27 @@ public class ProjectsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    private void enrichProject(Project project) {
-        project.setCreatedAt(LocalDateTime.now());
-        project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
-        project.setSegments(enrichListField(segmentsService, project));
-        project.setFormats(enrichListField(formatsService, project));
-        project.setKeyWords(enrichListField(keyWordsService, project));
+    private List<Segment> enrichSegments(SegmentsService service, Project project) {
+        List<Segment> entities = new ArrayList<>();
+        for (Segment f : project.getSegments()) {
+            entities.add(service.findByName(f.getName()).orElseThrow());
+        }
+        return entities;
+    }
+
+    private List<Format> enrichFormats(FormatsService service, Project project) {
+        List<Format> entities = new ArrayList<>();
+        for (Format f : project.getFormats()) {
+            entities.add(service.findByName(f.getName()).orElseThrow());
+        }
+        return entities;
+    }
+
+    private List<KeyWord> enrichKeyWords(KeyWordsService service, Project project) {
+        List<KeyWord> entities = new ArrayList<>();
+        for (KeyWord k : project.getKeyWords()) {
+            entities.add(service.findByName(k.getName()).orElseThrow());
+        }
+        return entities;
     }
 }
