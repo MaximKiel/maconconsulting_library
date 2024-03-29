@@ -27,7 +27,7 @@ public class TypeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         TypeDTO typeDTO = (TypeDTO) target;
         if (typesService.findByName(typeDTO.getName()).isPresent()) {
-            errors.rejectValue("type", "Такой тип уже существует!");
+            errors.rejectValue("name", "422", "Такой тип уже существует!");
         }
     }
 }

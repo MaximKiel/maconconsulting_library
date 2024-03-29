@@ -74,7 +74,7 @@ public class PublicationsController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult) {
-//        publicationValidator.validate(publicationDTO, bindingResult);
+        publicationValidator.validate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/content/publications/new");
             return "mvc/content/publications/new";

@@ -27,7 +27,7 @@ public class PublicationValidator implements Validator {
     public void validate(Object target, Errors errors) {
         PublicationDTO publicationDTO = (PublicationDTO) target;
         if (publicationsService.findByTitle(publicationDTO.getTitle()).isPresent()) {
-            errors.rejectValue("publication", "Публикация с таким названием уже существует!");
+            errors.rejectValue("title", "422","Публикация с таким названием уже существует!");
         }
     }
 }
