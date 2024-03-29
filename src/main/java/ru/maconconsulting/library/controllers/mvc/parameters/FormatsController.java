@@ -73,6 +73,7 @@ public class FormatsController {
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("format") @Valid FormatDTO formatDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
+        formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/parameters/formats/edit");
             return "mvc/parameters/formats/edit";

@@ -73,6 +73,7 @@ public class TypesController {
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("type") @Valid TypeDTO typeDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
+        typeValidator.validate(typeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/parameters/types/edit");
             return "mvc/parameters/types/edit";

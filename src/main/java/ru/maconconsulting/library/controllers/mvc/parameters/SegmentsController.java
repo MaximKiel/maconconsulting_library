@@ -72,6 +72,7 @@ public class SegmentsController {
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("segment") @Valid SegmentDTO segmentDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
+        segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/parameters/segments/edit");
             return "mvc/parameters/segments/edit";

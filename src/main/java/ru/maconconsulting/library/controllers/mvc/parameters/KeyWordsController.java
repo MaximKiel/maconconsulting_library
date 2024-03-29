@@ -72,6 +72,7 @@ public class KeyWordsController {
     @PatchMapping("/{name}")
     public String update(@ModelAttribute("key_word") @Valid KeyWordDTO keyWordDTO, BindingResult bindingResult,
                          @PathVariable("name") String name) {
+        keyWordValidator.validate(keyWordDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/parameters/key_words/edit");
             return "mvc/parameters/key_words/edit";
