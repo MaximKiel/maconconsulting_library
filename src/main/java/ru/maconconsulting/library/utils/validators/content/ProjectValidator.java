@@ -33,4 +33,33 @@ public class ProjectValidator implements Validator {
             errors.rejectValue("title", "422", "Проект с таким названием уже существует!");
         }
     }
+
+//    TODO: implement checkUniqueForUpdate
+    public void checkUniqueForUpdate(Object target, Errors errors) {
+
+    }
+
+    private void checkNumberForUpdate(Object target, Errors errors) {
+        ProjectDTO projectDTO = (ProjectDTO) target;
+        if (projectsService.findByNumber(projectDTO.getNumber()).isPresent()) {
+            boolean check = projectsService.findAll().stream()
+                    .filter(p -> !p.getTitle().equals(projectDTO.getTitle()))
+                    .anyMatch(p -> p.getNumber().equals(projectDTO.getNumber()));
+            if (check) {
+                errors.rejectValue("number", "422", "Проект с таким номером уже существует!");
+            }
+        }
+    }
+
+    private void checkTitleForUpdate(Object target, Errors errors) {
+        ProjectDTO projectDTO = (ProjectDTO) target;
+        if (projectsService.findByTitle(projectDTO.getTitle()).isPresent()) {
+            boolean check = projectsService.findAll().stream()
+                    .filter(p -> !p.getTitle().equals(projectDTO.getNumber()))
+                    .anyMatch(p -> p.getNumber().equals(projectDTO.getTitle()));
+            if (check) {
+                errors.rejectValue("title", "422", "Проект с таким названием уже существует!");
+            }
+        }
+    }
 }

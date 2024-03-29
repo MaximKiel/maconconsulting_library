@@ -106,6 +106,7 @@ public class ProjectsController {
     @PatchMapping("/{number}")
     public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
                          @PathVariable("number") String number) {
+        projectValidator.checkUniqueForUpdate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/content/projects/edit");
             return "mvc/content/projects/edit";
