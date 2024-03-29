@@ -98,6 +98,7 @@ public class PublicationsController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult,
                          @PathVariable("id") Integer id) {
+        publicationValidator.checkTitleForUpdate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Go to mvc/content/publications/edit");
             return "mvc/content/publications/edit";
