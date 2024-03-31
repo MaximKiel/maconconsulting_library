@@ -35,6 +35,10 @@
 </header>
 <form class="custom_form" th:method="POST" th:action="@{/projects/search-result}" th:object="${searchProject}">
 
+    <label for="title">Введите строку для поиска в названии проекта: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <br/>
+
     <label for="year">Введите год проекта: </label>
     <input type="number" th:field="*{year}" id="year">
     <br/>
@@ -43,10 +47,6 @@
     <input type="text" th:field="*{relevance}" id="relevance">
     <br/>
     <p style="color: gray; font-style: italic">В формате месяц год: '12.2023'</p>
-    <br/>
-
-    <label for="title">Введите строку для поиска в названии проекта: </label>
-    <input type="text" th:field="*{title}" id="title">
     <br/>
 
     <label for="client">Введите наименование заказчика: </label>

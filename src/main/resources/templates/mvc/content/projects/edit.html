@@ -35,10 +35,10 @@
 </header>
 <form class="custom_form" th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
 
-    <label for="number">Введите номер проекта: </label>
-    <input type="text" th:field="*{number}" id="number"
-           placeholder="Стандартный формат номера: '23001'. Формат номера для квартальных отчетов: '23000_1Q_Краснодар'">
-    <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
+    <label for="title">Введите название: </label>
+    <input type="text" th:field="*{title}" id="title"
+           placeholder="Название должно совпадать с названием проектной папки на сервере">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
     <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
@@ -86,12 +86,6 @@
     <input type="text" th:field="*{relevance}" id="relevance"
            placeholder="В формате месяц.год: '12.2023'">
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
-    <br/>
-
-    <label for="title">Введите название: </label>
-    <input type="text" th:field="*{title}" id="title"
-           placeholder="Название должно совпадать с названием проектной папки на сервере">
-    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
     <label for="client">Введите заказчика: </label>
