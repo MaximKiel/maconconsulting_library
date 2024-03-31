@@ -28,6 +28,7 @@ import ru.maconconsulting.library.utils.validators.content.ProjectValidator;
 import ru.maconconsulting.library.utils.search.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.content.ProjectNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -71,18 +72,19 @@ public class ProjectsController {
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
-        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+        addParametersToModelAttribute(model);
         log.info("Go to mvc/content/projects/new");
         return "mvc/content/projects/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
+    public String create(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult, Model model) {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+            addParametersToModelAttribute(model);
+            if (projectDTO.getKeyWords() == null) {
+                projectDTO.setKeyWords(new ArrayList<>());
+            }
             log.info("Go to mvc/content/projects/new");
             return "mvc/content/projects/new";
         }
@@ -95,19 +97,22 @@ public class ProjectsController {
     public String edit(Model model, @PathVariable("number") String number) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
-        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).map(this::convertToProjectTypeDTO).collect(Collectors.toList()));
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
+//        Use DTO parameters because they store into ProjectDTO for update
+        addParametersDTOToModelAttribute(model);
         log.info("Go to mvc/content/projects/edit");
         return "mvc/content/projects/edit";
     }
 
     @PatchMapping("/{number}")
     public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
-                         @PathVariable("number") String number) {
+                         @PathVariable("number") String number, Model model) {
         projectValidator.checkUniqueForUpdate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+//          Use DTO parameters because they store into ProjectDTO for update
+            addParametersDTOToModelAttribute(model);
+            if (projectDTO.getKeyWords() == null) {
+                projectDTO.setKeyWords(new ArrayList<>());
+            }
             log.info("Go to mvc/content/projects/edit");
             return "mvc/content/projects/edit";
         }
@@ -126,10 +131,7 @@ public class ProjectsController {
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
-        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+        addParametersToModelAttribute(model);
         log.info("Go to mvc/content/projects/search");
         return "mvc/content/projects/search";
     }
@@ -146,6 +148,27 @@ public class ProjectsController {
         return "mvc/content/projects/result";
     }
 
+    @ExceptionHandler
+    private String handleException(ProjectNotFoundException e) {
+        return "mvc/content/projects/not_found";
+    }
+
+//    For new, create and search methods
+    private void addParametersToModelAttribute(Model model) {
+        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+    }
+
+//    For edit and update methods
+    private void addParametersDTOToModelAttribute(Model model) {
+            model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).map(this::convertToTypeDTO).collect(Collectors.toList()));
+            model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
+            model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
+            model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToKeyWordDTO).collect(Collectors.toList()));
+    }
+
     private Project convertToProject(ProjectDTO projectDTO) {
         return modelMapper.map(projectDTO, Project.class);
     }
@@ -154,19 +177,19 @@ public class ProjectsController {
         return modelMapper.map(project, ProjectDTO.class);
     }
 
-    private TypeDTO convertToProjectTypeDTO(Type type) {
+    private TypeDTO convertToTypeDTO(Type type) {
         return modelMapper.map(type, TypeDTO.class);
     }
 
-    private SegmentDTO convertToProjectSegmentDTO(Segment segment) {
+    private SegmentDTO convertToSegmentDTO(Segment segment) {
         return modelMapper.map(segment, SegmentDTO.class);
     }
 
-    private FormatDTO convertToProjectFormatDTO(Format format) {
+    private FormatDTO convertToFormatDTO(Format format) {
         return modelMapper.map(format, FormatDTO.class);
     }
 
-    private KeyWordDTO convertToProjectKeyWordDTO(KeyWord keyWord) {
+    private KeyWordDTO convertToKeyWordDTO(KeyWord keyWord) {
         return modelMapper.map(keyWord, KeyWordDTO.class);
     }
 }
