@@ -25,6 +25,7 @@ import ru.maconconsulting.library.utils.search.SearchPublication;
 import ru.maconconsulting.library.utils.exceptions.content.PublicationNotFoundException;
 import ru.maconconsulting.library.utils.validators.content.PublicationValidator;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -65,17 +66,18 @@ public class PublicationsController {
 
     @GetMapping("/new")
     public String newPublication(@ModelAttribute("publication") PublicationDTO publicationDTO, Model model) {
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+        addParametersToModelAttribute(model);
         log.info("Go to mvc/content/publications/new");
         return "mvc/content/publications/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult) {
+    public String create(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult,
+                         Model model) {
         publicationValidator.validate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+            addParametersToModelAttribute(model);
+            checkNotNullParameters(publicationDTO);
             log.info("Go to mvc/content/publications/new");
             return "mvc/content/publications/new";
         }
@@ -88,18 +90,20 @@ public class PublicationsController {
     public String edit(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToProjectSegmentDTO).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToProjectFormatDTO).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToProjectKeyWordDTO).collect(Collectors.toList()));
+//        Use DTO parameters because they store into PublicationDTO for update
+        addParametersDTOToModelAttribute(model);
         log.info("Go to mvc/content/publications/edit");
         return "mvc/content/publications/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult,
-                         @PathVariable("id") Integer id) {
+                         @PathVariable("id") Integer id, Model model) {
         publicationValidator.checkTitleForUpdate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
+//        Use DTO parameters because they store into PublicationDTO for update
+            addParametersDTOToModelAttribute(model);
+            checkNotNullParameters(publicationDTO);
             log.info("Go to mvc/content/publications/edit");
             return "mvc/content/publications/edit";
         }
@@ -118,9 +122,7 @@ public class PublicationsController {
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchPublication")SearchPublication searchPublication, Model model) {
-        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+        addParametersToModelAttribute(model);
         log.info("Go to mvc/content/publications/search");
         return "mvc/content/publications/search";
     }
@@ -138,6 +140,37 @@ public class PublicationsController {
         return "mvc/content/publications/result";
     }
 
+    //    For new, create and search methods
+    private void addParametersToModelAttribute(Model model) {
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
+    }
+
+    //    For edit and update methods
+    private void addParametersDTOToModelAttribute(Model model) {
+        model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
+        model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
+        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToKeyWordDTO).collect(Collectors.toList()));
+    }
+
+    private void checkNotNullParameters(PublicationDTO publicationDTO) {
+        if (publicationDTO.getSegments() == null) {
+            publicationDTO.setSegments(new ArrayList<>());
+        }
+        if (publicationDTO.getKeyWords() == null) {
+            publicationDTO.setKeyWords(new ArrayList<>());
+        }
+        if (publicationDTO.getFormats() == null) {
+            publicationDTO.setFormats(new ArrayList<>());
+        }
+    }
+
+    @ExceptionHandler
+    private String handleException(PublicationNotFoundException e) {
+        return "mvc/content/publications/not_found";
+    }
+
     private PublicationDTO convertToPublicationDTO(Publication publication) {
         return modelMapper.map(publication, PublicationDTO.class);
     }
@@ -146,15 +179,15 @@ public class PublicationsController {
         return modelMapper.map(publicationDTO, Publication.class);
     }
 
-    private SegmentDTO convertToProjectSegmentDTO(Segment segment) {
+    private SegmentDTO convertToSegmentDTO(Segment segment) {
         return modelMapper.map(segment, SegmentDTO.class);
     }
 
-    private FormatDTO convertToProjectFormatDTO(Format format) {
+    private FormatDTO convertToFormatDTO(Format format) {
         return modelMapper.map(format, FormatDTO.class);
     }
 
-    private KeyWordDTO convertToProjectKeyWordDTO(KeyWord keyWord) {
+    private KeyWordDTO convertToKeyWordDTO(KeyWord keyWord) {
         return modelMapper.map(keyWord, KeyWordDTO.class);
     }
 }
