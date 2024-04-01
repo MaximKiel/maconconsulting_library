@@ -40,7 +40,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
-    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
@@ -48,7 +48,7 @@
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
 
-    <label for="formats">Выберете форматы (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <label for="formats">Выберете форматы (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
@@ -56,7 +56,7 @@
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
     <br/>
 
-    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command): </label>
+    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{keyWords}" id="key_words" multiple="multiple" class="select-checkbox">
         <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
     </select>

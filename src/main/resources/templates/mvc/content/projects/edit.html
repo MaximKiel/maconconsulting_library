@@ -41,7 +41,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
-    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <label for="segments">Введите сегменты рынка (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
                 th:selected="${project.segments.contains(segment)}"></option>
@@ -50,7 +50,7 @@
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
 
-    <label for="type">Выберите тип проекта:</label>
+    <label for="type">Выберите тип проекта (обязательное поле):</label>
     <select id="type" name="type">
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
                 th:selected="${project.type.getName().equals(type.getName())}"></option>
@@ -59,7 +59,7 @@
     <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
     <br/>
 
-    <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <label for="formats">Выберете форматы отчета проекта (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="formats" name="formats" multiple="multiple" class="select-checkbox">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
                 th:selected="${project.formats.contains(format)}"></option>
@@ -68,7 +68,7 @@
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
     <br/>
 
-    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько, зажмите клавишу Control/Command):</label>
+    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="key_words" name="keyWords" multiple="multiple" class="select-checkbox">
         <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"
                 th:selected="${project.keyWords.contains(key_word)}"></option>
