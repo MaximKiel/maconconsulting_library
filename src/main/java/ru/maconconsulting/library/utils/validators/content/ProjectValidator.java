@@ -27,10 +27,10 @@ public class ProjectValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ProjectDTO projectDTO = (ProjectDTO) target;
         if (projectsService.findByNumber(projectDTO.getNumber()).isPresent()) {
-            errors.rejectValue("number", "422", "Проект с таким номером уже существует!");
+            errors.rejectValue("number", "404", "Проект с таким номером уже существует!");
         }
         if (projectsService.findByTitle(projectDTO.getTitle()).isPresent()) {
-            errors.rejectValue("title", "422", "Проект с таким названием уже существует!");
+            errors.rejectValue("title", "404", "Проект с таким названием уже существует!");
         }
     }
 
@@ -41,7 +41,7 @@ public class ProjectValidator implements Validator {
                     .filter(p -> !p.getNumber().equals(projectDTO.getNumber()))
                     .anyMatch(p -> p.getTitle().equals(projectDTO.getTitle()));
             if (check) {
-                errors.rejectValue("title", "422", "Проект с таким названием уже существует!");
+                errors.rejectValue("title", "404", "Проект с таким названием уже существует!");
             }
         }
     }

@@ -27,7 +27,7 @@ public class FormatValidator implements Validator {
     public void validate(Object target, Errors errors) {
         FormatDTO formatDTO = (FormatDTO) target;
         if (formatsService.findByName(formatDTO.getName()).isPresent()) {
-            errors.rejectValue("name", "422", "Такой формат отчета уже существует!");
+            errors.rejectValue("name", "404", "Такой формат отчета уже существует!");
         }
     }
 }

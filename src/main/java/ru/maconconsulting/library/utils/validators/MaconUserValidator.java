@@ -27,7 +27,7 @@ public class MaconUserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         MaconUserDTO maconUserDTO = (MaconUserDTO) target;
         if (maconUsersService.findByEmail(maconUserDTO.getEmail()).isPresent()) {
-            errors.rejectValue("email", "422", "Пользователь с таким email уже существует!");
+            errors.rejectValue("email", "404", "Пользователь с таким email уже существует!");
         }
     }
 }

@@ -27,7 +27,7 @@ public class KeyWordValidator implements Validator {
     public void validate(Object target, Errors errors) {
         KeyWordDTO keyWordDTO = (KeyWordDTO) target;
         if (keyWordsService.findByName(keyWordDTO.getName()).isPresent()) {
-            errors.rejectValue("name", "422", "Такое ключевое слово уже существует!");
+            errors.rejectValue("name", "404", "Такое ключевое слово уже существует!");
         }
     }
 }

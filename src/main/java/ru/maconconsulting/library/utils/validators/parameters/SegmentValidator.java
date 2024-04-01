@@ -27,7 +27,7 @@ public class SegmentValidator implements Validator {
     public void validate(Object target, Errors errors) {
         SegmentDTO segmentDTO = (SegmentDTO) target;
         if (segmentsService.findByName(segmentDTO.getName()).isPresent()) {
-            errors.rejectValue("name", "422", "Такой сегмент рынка уже существует!");
+            errors.rejectValue("name", "404", "Такой сегмент рынка уже существует!");
         }
     }
 }
