@@ -35,8 +35,8 @@
 </header>
 <form class="custom_form" th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
 
-    <label for="title">Введите название: </label>
-    <input type="text" th:field="*{title}" id="title"
+    <label for="title">Введите название (обязательное поле): </label>
+    <input type="text" th:field="*{title}" id="title" required
            placeholder="Название должно совпадать с названием проектной папки на сервере">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
@@ -77,8 +77,8 @@
     <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
     <br/>
 
-    <label for="year">Введите год проекта: </label>
-    <input type="number" th:field="*{year}" id="year">
+    <label for="year">Введите год проекта (обязательное поле): </label>
+    <input type="number" th:field="*{year}" id="year" required>
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
     <br/>
 
@@ -88,14 +88,14 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
-    <label for="client">Введите заказчика: </label>
-    <input type="text" th:field="*{client}" id="client"
+    <label for="client">Введите заказчика (обязательное поле): </label>
+    <input type="text" th:field="*{client}" id="client" required
            placeholder="Указывать название без указания организационно-правовой формы и кавычек: 'Интерком, СберРешения'">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
 
-    <label for="location">Введите локацию: </label>
-    <input type="text" th:field="*{location}" id="location"
+    <label for="location">Введите локацию (обязательное поле): </label>
+    <input type="text" th:field="*{location}" id="location" required
            placeholder="Пример: 'Россия, Краснодарский край, Сочи'">
     <div style="color: red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">location error</div>
     <br/>
