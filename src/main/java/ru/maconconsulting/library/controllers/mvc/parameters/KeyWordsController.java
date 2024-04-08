@@ -97,6 +97,11 @@ public class KeyWordsController {
         return "redirect:/key_words";
     }
 
+    @ExceptionHandler
+    private String handleException(KeyWordNotFoundException e) {
+        return "mvc/parameters/key_words/not_found";
+    }
+
     private KeyWord convertToProjectKeyWord(KeyWordDTO keyWordDTO) {
         return modelMapper.map(keyWordDTO, KeyWord.class);
     }

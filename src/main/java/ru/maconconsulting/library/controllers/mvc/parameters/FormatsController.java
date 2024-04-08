@@ -98,6 +98,11 @@ public class FormatsController {
         return "redirect:/formats";
     }
 
+    @ExceptionHandler
+    private String handleException(FormatNotFoundException e) {
+        return "mvc/parameters/formats/not_found";
+    }
+
     private Format convertToProjectFormat(FormatDTO formatDTO) {
         return modelMapper.map(formatDTO, Format.class);
     }

@@ -98,6 +98,11 @@ public class TypesController {
         return "redirect:/types";
     }
 
+    @ExceptionHandler
+    private String handleException(TypeNotFoundException e) {
+        return "mvc/parameters/types/not_found";
+    }
+
     private Type convertToProjectType(TypeDTO typeDTO) {
         return modelMapper.map(typeDTO, Type.class);
     }

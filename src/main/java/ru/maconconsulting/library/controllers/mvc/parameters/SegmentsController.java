@@ -97,6 +97,11 @@ public class SegmentsController {
         return "redirect:/segments";
     }
 
+    @ExceptionHandler
+    private String handleException(SegmentNotFoundException e) {
+        return "mvc/parameters/segments/not_found";
+    }
+
     private Segment convertToProjectSegment(SegmentDTO segmentDTO) {
         return modelMapper.map(segmentDTO, Segment.class);
     }
