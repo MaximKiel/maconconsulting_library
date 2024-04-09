@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
 import ru.maconconsulting.library.models.parameters.Segment;
 import ru.maconconsulting.library.models.parameters.Type;
 
@@ -64,18 +63,13 @@ public class Project extends AbstractBasedEntity {
     @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<Format> formats;
 
-    @ManyToMany
-    @JoinTable(
-            name = "project_key_word",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "key_word_id")
-    )
-    private List<KeyWord> keyWords;
+    @Column(name = "key_words")
+    private String keyWords;
 
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String location, List<Segment> segments, Type type, List<Format> formats, List<KeyWord> keyWords) {
+    public Project(String number, Integer year, String relevance, String title, String client, String location, List<Segment> segments, Type type, List<Format> formats, String keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -166,11 +160,11 @@ public class Project extends AbstractBasedEntity {
         this.type = type;
     }
 
-    public List<KeyWord> getKeyWords() {
+    public String getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<KeyWord> keyWords) {
+    public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.models.AbstractBasedEntityWithId;
 import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
 import ru.maconconsulting.library.models.parameters.Segment;
 
 import java.util.List;
@@ -50,18 +49,13 @@ public class Publication extends AbstractBasedEntityWithId {
     )
     private List<Format> formats;
 
-    @ManyToMany
-    @JoinTable(
-            name = "publication_key_word",
-            joinColumns = @JoinColumn(name = "publication_id"),
-            inverseJoinColumns = @JoinColumn(name = "key_word_id")
-    )
-    private List<KeyWord> keyWords;
+    @Column(name = "key_words")
+    private String keyWords;
 
     public Publication() {
     }
 
-    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, List<Segment> segments, List<Format> formats, List<KeyWord> keyWords) {
+    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, List<Segment> segments, List<Format> formats, String keyWords) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
@@ -138,11 +132,11 @@ public class Publication extends AbstractBasedEntityWithId {
         this.formats = formats;
     }
 
-    public List<KeyWord> getKeyWords() {
+    public String getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<KeyWord> keyWords) {
+    public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 

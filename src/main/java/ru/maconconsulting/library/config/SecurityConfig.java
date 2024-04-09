@@ -44,10 +44,6 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
 
-                                .requestMatchers("/key_words/new", "/key_words/create", "/key_words/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/key_words/{name}").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.PATCH, "/key_words/{name}").hasAnyRole("MANAGER", "ADMIN")
-
                                 .requestMatchers("/segments/new", "/segments/create", "/segments/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/segments/{name}").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/segments/{name}").hasAnyRole("MANAGER", "ADMIN")
