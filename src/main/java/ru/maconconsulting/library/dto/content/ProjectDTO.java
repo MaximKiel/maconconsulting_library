@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
 import ru.maconconsulting.library.dto.parameters.TypeDTO;
 
@@ -40,12 +39,12 @@ public class ProjectDTO {
     @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<FormatDTO> formats;
 
-    private List<KeyWordDTO> keyWords;
+    private String keyWords;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, String keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
@@ -136,11 +135,11 @@ public class ProjectDTO {
         this.formats = formats;
     }
 
-    public List<KeyWordDTO> getKeyWords() {
+    public String getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<KeyWordDTO> keyWords) {
+    public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 }

@@ -2,7 +2,6 @@ package ru.maconconsulting.library.dto.content;
 
 import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
 
 import java.util.List;
@@ -30,12 +29,12 @@ public class PublicationDTO {
 
     private List<FormatDTO> formats;
 
-    private List<KeyWordDTO> keyWords;
+    private String keyWords;
 
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, List<SegmentDTO> segments, List<FormatDTO> formats, List<KeyWordDTO> keyWords) {
+    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords) {
         this.id = id;
         this.title = title;
         this.annotation = annotation;
@@ -113,11 +112,11 @@ public class PublicationDTO {
         this.formats = formats;
     }
 
-    public List<KeyWordDTO> getKeyWords() {
+    public String getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<KeyWordDTO> keyWords) {
+    public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 
