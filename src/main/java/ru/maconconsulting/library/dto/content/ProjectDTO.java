@@ -3,9 +3,7 @@ package ru.maconconsulting.library.dto.content;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.SegmentDTO;
-import ru.maconconsulting.library.dto.parameters.TypeDTO;
+import ru.maconconsulting.library.dto.parameters.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,11 +28,11 @@ public class ProjectDTO {
     @NotBlank(message = "Локация не должна быть пустой!")
     private String location;
 
+    @NotEmpty(message = "Список разделов не должен быть пустым!")
+    private List<ChapterDTO> chapters;
+
     @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<SegmentDTO> segments;
-
-    @NotNull(message = "Тип проекта не должен быть пустым!")
-    private TypeDTO type;
 
     @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<FormatDTO> formats;
@@ -44,15 +42,15 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<SegmentDTO> segments, TypeDTO type, List<FormatDTO> formats, String keyWords) {
+    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<ChapterDTO> chapters, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.location = location;
+        this.chapters = chapters;
         this.segments = segments;
-        this.type = type;
         this.formats = formats;
         this.keyWords = keyWords;
     }
@@ -97,6 +95,14 @@ public class ProjectDTO {
         this.location = location;
     }
 
+    public List<ChapterDTO> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<ChapterDTO> chapters) {
+        this.chapters = chapters;
+    }
+
     public List<SegmentDTO> getSegments() {
         if (segments != null) {
             return segments.stream().sorted(Comparator.comparing(SegmentDTO::getName)).collect(Collectors.toList());
@@ -106,14 +112,6 @@ public class ProjectDTO {
 
     public void setSegments(List<SegmentDTO> segments) {
         this.segments = segments;
-    }
-
-    public TypeDTO getType() {
-        return type;
-    }
-
-    public void setType(TypeDTO type) {
-        this.type = type;
     }
 
     public String getClient() {
