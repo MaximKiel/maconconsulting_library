@@ -22,15 +22,13 @@ public class ProjectsService {
     private final TypesService typesService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
-    private final KeyWordsService keyWordsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService) {
+    public ProjectsService(ProjectsRepository projectsRepository, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService) {
         this.projectsRepository = projectsRepository;
         this.typesService = typesService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
-        this.keyWordsService = keyWordsService;
     }
 
     public List<Project> findAll() {
@@ -51,7 +49,6 @@ public class ProjectsService {
         project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
         project.setSegments(enrichSegments(segmentsService, project));
         project.setFormats(enrichFormats(formatsService, project));
-        project.setKeyWords(enrichKeyWords(keyWordsService, project));
         projectsRepository.save(project);
     }
 
@@ -62,11 +59,6 @@ public class ProjectsService {
             updatedProject.setType(typesService.findByName(updatedProject.getType().getName()).orElseThrow());
             updatedProject.setSegments(enrichSegments(segmentsService, updatedProject));
             updatedProject.setFormats(enrichFormats(formatsService, updatedProject));
-            if (updatedProject.getKeyWords() != null) {
-                updatedProject.setKeyWords(enrichKeyWords(keyWordsService, updatedProject));
-            } else {
-                updatedProject.setKeyWords(null);
-            }
             projectsRepository.save(updatedProject);
         }
     }
@@ -108,11 +100,8 @@ public class ProjectsService {
                 return formatNames.stream().anyMatch(n -> n.equals(searchProject.getFormat().getName()));
             });
         }
-        if (searchProject.getKeyWord() != null && !searchProject.getKeyWord().getName().equals("")) {
-            result = searchElement(result, p -> {
-                List<String> keyWordNames = p.getKeyWords().stream().map(AbstractParameterEntity::getName).toList();
-                return keyWordNames.stream().anyMatch(n -> n.equals(searchProject.getKeyWord().getName()));
-            });
+        if (!searchProject.getKeyWord().trim().equals("")) {
+            result = searchElement(result, p -> p.getKeyWords().toLowerCase().contains(searchProject.getKeyWord().trim().toLowerCase()));
         }
         return result;
     }
@@ -133,14 +122,6 @@ public class ProjectsService {
         List<Format> entities = new ArrayList<>();
         for (Format f : project.getFormats()) {
             entities.add(service.findByName(f.getName()).orElseThrow());
-        }
-        return entities;
-    }
-
-    private List<KeyWord> enrichKeyWords(KeyWordsService service, Project project) {
-        List<KeyWord> entities = new ArrayList<>();
-        for (KeyWord k : project.getKeyWords()) {
-            entities.add(service.findByName(k.getName()).orElseThrow());
         }
         return entities;
     }

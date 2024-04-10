@@ -1,8 +1,6 @@
 package ru.maconconsulting.library.utils.search;
 
-import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.*;
 
 public class SearchPublication {
 
@@ -22,12 +20,12 @@ public class SearchPublication {
 
     private FormatDTO format;
 
-    private KeyWordDTO keyWord;
+    private String keyWord;
 
     public SearchPublication() {
     }
 
-    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, KeyWordDTO keyWord) {
+    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, String keyWord) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
@@ -103,11 +101,11 @@ public class SearchPublication {
         this.format = format;
     }
 
-    public KeyWordDTO getKeyWord() {
+    public String getKeyWord() {
         return keyWord;
     }
 
-    public void setKeyWord(KeyWordDTO keyWord) {
+    public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
     }
 }

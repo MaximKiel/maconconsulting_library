@@ -1,9 +1,6 @@
 package ru.maconconsulting.library.utils.search;
 
-import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.SegmentDTO;
-import ru.maconconsulting.library.dto.parameters.TypeDTO;
+import ru.maconconsulting.library.dto.parameters.*;
 
 public class SearchProject {
 
@@ -23,12 +20,12 @@ public class SearchProject {
 
     private FormatDTO format;
 
-    private KeyWordDTO keyWord;
+    private String keyWord;
 
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String location, SegmentDTO segment, TypeDTO type, FormatDTO format, KeyWordDTO keyWord) {
+    public SearchProject(int year, String relevance, String title, String client, String location, SegmentDTO segment, TypeDTO type, FormatDTO format, String keyWord) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -104,11 +101,11 @@ public class SearchProject {
         this.format = format;
     }
 
-    public KeyWordDTO getKeyWord() {
+    public String getKeyWord() {
         return keyWord;
     }
 
-    public void setKeyWord(KeyWordDTO keyWord) {
+    public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
     }
 }

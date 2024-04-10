@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maconconsulting.library.models.content.Publication;
-import ru.maconconsulting.library.models.parameters.AbstractParameterEntity;
-import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
-import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.*;
 import ru.maconconsulting.library.repositories.content.PublicationsRepository;
-import ru.maconconsulting.library.services.parameters.FormatsService;
-import ru.maconconsulting.library.services.parameters.KeyWordsService;
-import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.utils.search.SearchPublication;
 
 import java.time.LocalDateTime;
@@ -29,14 +24,12 @@ public class PublicationsService {
     private final PublicationsRepository publicationsRepository;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
-    private final KeyWordsService keyWordsService;
 
     @Autowired
-    public PublicationsService(PublicationsRepository publicationsRepository, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService) {
+    public PublicationsService(PublicationsRepository publicationsRepository, SegmentsService segmentsService, FormatsService formatsService) {
         this.publicationsRepository = publicationsRepository;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
-        this.keyWordsService = keyWordsService;
     }
 
     public List<Publication> findAll() {
@@ -56,7 +49,6 @@ public class PublicationsService {
         publication.setCreatedAt(LocalDateTime.now());
         publication.setSegments(enrichSegments(segmentsService, publication));
         publication.setFormats(enrichFormats(formatsService, publication));
-        publication.setKeyWords(enrichKeyWords(keyWordsService, publication));
         publicationsRepository.save(publication);
     }
 
@@ -69,8 +61,6 @@ public class PublicationsService {
                     enrichSegments(segmentsService, updatedPublication) : null);
             updatedPublication.setFormats(updatedPublication.getFormats() != null ?
                     enrichFormats(formatsService, updatedPublication) : null);
-            updatedPublication.setKeyWords(updatedPublication.getKeyWords() != null ?
-                    enrichKeyWords(keyWordsService, updatedPublication) : null);
             publicationsRepository.save(updatedPublication);
         }
     }
@@ -112,11 +102,8 @@ public class PublicationsService {
                 return formatNames.stream().anyMatch(n -> n.equals(searchPublication.getFormat().getName()));
             });
         }
-        if (searchPublication.getKeyWord() != null && !searchPublication.getKeyWord().getName().equals("")) {
-            result = searchElement(result, p -> {
-                List<String> keyWordNames = p.getKeyWords().stream().map(AbstractParameterEntity::getName).toList();
-                return keyWordNames.stream().anyMatch(n -> n.equals(searchPublication.getKeyWord().getName()));
-            });
+        if (!searchPublication.getKeyWord().trim().equals("")) {
+            result = searchElement(result, p -> p.getKeyWords().toLowerCase().contains(searchPublication.getKeyWord().trim().toLowerCase()));
         }
         return result;
     }
@@ -139,13 +126,5 @@ public class PublicationsService {
             formats.add(service.findByName(f.getName()).orElseThrow());
         }
         return formats;
-    }
-
-    private List<KeyWord> enrichKeyWords(KeyWordsService service, Publication publication) {
-        List<KeyWord> keyWords = new ArrayList<>();
-        for (KeyWord k : publication.getKeyWords()) {
-            keyWords.add(service.findByName(k.getName()).orElseThrow());
-        }
-        return keyWords;
     }
 }
