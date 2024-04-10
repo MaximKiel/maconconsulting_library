@@ -10,17 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.content.PublicationDTO;
-import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.*;
 import ru.maconconsulting.library.models.content.Publication;
-import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
-import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.*;
 import ru.maconconsulting.library.services.content.PublicationsService;
-import ru.maconconsulting.library.services.parameters.FormatsService;
-import ru.maconconsulting.library.services.parameters.KeyWordsService;
-import ru.maconconsulting.library.services.parameters.SegmentsService;
+import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.utils.search.SearchPublication;
 import ru.maconconsulting.library.utils.exceptions.content.PublicationNotFoundException;
 import ru.maconconsulting.library.utils.validators.content.PublicationValidator;
@@ -38,16 +32,14 @@ public class PublicationsController {
     private final PublicationValidator publicationValidator;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
-    private final KeyWordsService keyWordsService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService, ModelMapper modelMapper) {
+    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper) {
         this.publicationsService = publicationsService;
         this.publicationValidator = publicationValidator;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
-        this.keyWordsService = keyWordsService;
         this.modelMapper = modelMapper;
     }
     @GetMapping
@@ -144,22 +136,17 @@ public class PublicationsController {
     private void addParametersToModelAttribute(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
     }
 
     //    For edit and update methods
     private void addParametersDTOToModelAttribute(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToKeyWordDTO).collect(Collectors.toList()));
     }
 
     private void checkNotNullParameters(PublicationDTO publicationDTO) {
         if (publicationDTO.getSegments() == null) {
             publicationDTO.setSegments(new ArrayList<>());
-        }
-        if (publicationDTO.getKeyWords() == null) {
-            publicationDTO.setKeyWords(new ArrayList<>());
         }
         if (publicationDTO.getFormats() == null) {
             publicationDTO.setFormats(new ArrayList<>());
@@ -185,9 +172,5 @@ public class PublicationsController {
 
     private FormatDTO convertToFormatDTO(Format format) {
         return modelMapper.map(format, FormatDTO.class);
-    }
-
-    private KeyWordDTO convertToKeyWordDTO(KeyWord keyWord) {
-        return modelMapper.map(keyWord, KeyWordDTO.class);
     }
 }

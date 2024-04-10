@@ -10,25 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.content.ProjectDTO;
-import ru.maconconsulting.library.dto.parameters.FormatDTO;
-import ru.maconconsulting.library.dto.parameters.KeyWordDTO;
-import ru.maconconsulting.library.dto.parameters.SegmentDTO;
-import ru.maconconsulting.library.dto.parameters.TypeDTO;
+import ru.maconconsulting.library.dto.parameters.*;
 import ru.maconconsulting.library.models.content.Project;
-import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.KeyWord;
-import ru.maconconsulting.library.models.parameters.Segment;
-import ru.maconconsulting.library.models.parameters.Type;
-import ru.maconconsulting.library.services.parameters.FormatsService;
-import ru.maconconsulting.library.services.parameters.KeyWordsService;
-import ru.maconconsulting.library.services.parameters.SegmentsService;
-import ru.maconconsulting.library.services.parameters.TypesService;
+import ru.maconconsulting.library.models.parameters.*;
+import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.services.content.ProjectsService;
 import ru.maconconsulting.library.utils.validators.content.ProjectValidator;
 import ru.maconconsulting.library.utils.search.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.content.ProjectNotFoundException;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -41,17 +31,15 @@ public class ProjectsController {
     private final TypesService typesService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
-    private final KeyWordsService keyWordsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, KeyWordsService keyWordsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
         this.typesService = typesService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
-        this.keyWordsService = keyWordsService;
         this.modelMapper = modelMapper;
         this.projectValidator = projectValidator;
     }
@@ -82,9 +70,6 @@ public class ProjectsController {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
-            if (projectDTO.getKeyWords() == null) {
-                projectDTO.setKeyWords(new ArrayList<>());
-            }
             log.info("Go to mvc/content/projects/new");
             return "mvc/content/projects/new";
         }
@@ -110,9 +95,6 @@ public class ProjectsController {
         if (bindingResult.hasErrors()) {
 //          Use DTO parameters because they store into ProjectDTO for update
             addParametersDTOToModelAttribute(model);
-            if (projectDTO.getKeyWords() == null) {
-                projectDTO.setKeyWords(new ArrayList<>());
-            }
             log.info("Go to mvc/content/projects/edit");
             return "mvc/content/projects/edit";
         }
@@ -158,7 +140,6 @@ public class ProjectsController {
         model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).collect(Collectors.toList()));
     }
 
 //    For edit and update methods
@@ -166,7 +147,6 @@ public class ProjectsController {
             model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).map(this::convertToTypeDTO).collect(Collectors.toList()));
             model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
             model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
-            model.addAttribute("key_words", keyWordsService.findAll().stream().sorted(Comparator.comparing(KeyWord::getName)).map(this::convertToKeyWordDTO).collect(Collectors.toList()));
     }
 
     private Project convertToProject(ProjectDTO projectDTO) {
@@ -187,9 +167,5 @@ public class ProjectsController {
 
     private FormatDTO convertToFormatDTO(Format format) {
         return modelMapper.map(format, FormatDTO.class);
-    }
-
-    private KeyWordDTO convertToKeyWordDTO(KeyWord keyWord) {
-        return modelMapper.map(keyWord, KeyWordDTO.class);
     }
 }
