@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class FormatsService implements CommonParametersService<Format> {
 
     private final FormatsRepository formatsRepository;
