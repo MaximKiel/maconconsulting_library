@@ -71,14 +71,6 @@
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
     <br/>
 
-    <label for="key_words">Выберете ключевые слова (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
-    <select th:field="*{keyWords}" id="key_words" multiple="multiple" class="select-checkbox">
-        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
-    <a style="color: gray; font-style: italic" href="/key_words">Редактировать список форматов</a><br/>
-    <br/>
-
     <label for="year">Введите год проекта (обязательное поле): </label>
     <input type="number" th:field="*{year}" id="year" required>
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
@@ -100,6 +92,12 @@
     <input type="text" th:field="*{location}" id="location" required
            placeholder="Пример: 'Россия, Краснодарский край, Сочи'">
     <div style="color: red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">location error</div>
+    <br/>
+
+    <label for="keyWords">Введите ключевые слова: </label>
+    <input type="text" th:field="*{keyWords}" id="keyWords"
+           placeholder="Пример: 'Доверительное управление, Эксплуатируемая кровля'">
+    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
     <br/>
 
     <input type="submit" value="Добавить"/>

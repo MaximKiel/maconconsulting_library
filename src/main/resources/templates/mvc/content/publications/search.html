@@ -73,11 +73,9 @@
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
 
-    <label for="key_word">Выберите ключевое слово: </label>
-    <select th:field="*{keyWord}" id="key_word">
-        <option value=""></option>
-        <option th:each="key_word : ${key_words}" th:value="${key_word.getName()}" th:text="${key_word.getName()}"></option>
-    </select>
+    <label for="keyWord">Введите ключевое слово: </label>
+    <input type="text" th:field="*{keyWord}" id="keyWord">
+    <br/>
 
     <input type="submit" value="Найти"/>
 </form>

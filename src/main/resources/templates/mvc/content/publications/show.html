@@ -87,11 +87,7 @@
     </tr>
     <tr>
         <td><b>Ключевые слова:</b></td>
-        <td>
-            <ul>
-                <li th:each="key_word : ${publication.getKeyWords()}" th:text="${key_word.getName()}">Value</li>
-            </ul>
-        </td>
+        <td><p th:text="${publication.getKeyWords()}">Value</p></td>
     </tr>
     </tbody>
 </table>
