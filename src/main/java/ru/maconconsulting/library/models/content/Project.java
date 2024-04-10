@@ -5,9 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.AbstractBasedEntity;
-import ru.maconconsulting.library.models.parameters.Format;
-import ru.maconconsulting.library.models.parameters.Segment;
-import ru.maconconsulting.library.models.parameters.Type;
+import ru.maconconsulting.library.models.parameters.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -43,16 +41,19 @@ public class Project extends AbstractBasedEntity {
 
     @ManyToMany
     @JoinTable(
+            name = "project_chapter",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "chapter_id"))
+    @NotEmpty(message = "Список разделов не должен быть пустым!")
+    private List<Chapter> chapters;
+
+    @ManyToMany
+    @JoinTable(
             name = "project_segment",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
     @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<Segment> segments;
-
-    @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    @NotNull(message = "Тип проекта не должен быть пустым!")
-    private Type type;
 
     @ManyToMany
     @JoinTable(
@@ -69,15 +70,15 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(String number, Integer year, String relevance, String title, String client, String location, List<Segment> segments, Type type, List<Format> formats, String keyWords) {
+    public Project(String number, Integer year, String relevance, String title, String client, String location, List<Chapter> chapters, List<Segment> segments, List<Format> formats, String keyWords) {
         this.number = number;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.location = location;
+        this.chapters = chapters;
         this.segments = segments;
-        this.type = type;
         this.formats = formats;
         this.keyWords = keyWords;
     }
@@ -130,6 +131,14 @@ public class Project extends AbstractBasedEntity {
         this.client = client;
     }
 
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<Chapter> chapters) {
+        this.chapters = chapters;
+    }
+
     public List<Segment> getSegments() {
         if (segments != null) {
             return segments.stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList());
@@ -141,10 +150,6 @@ public class Project extends AbstractBasedEntity {
         this.segments = segments;
     }
 
-    public Type getType() {
-        return type;
-    }
-
     public List<Format> getFormats() {
         if (formats != null) {
             return formats.stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList());
@@ -154,10 +159,6 @@ public class Project extends AbstractBasedEntity {
 
     public void setFormats(List<Format> formats) {
         this.formats = formats;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getKeyWords() {
@@ -177,10 +178,10 @@ public class Project extends AbstractBasedEntity {
                 ", title='" + title + '\'' +
                 ", client='" + client + '\'' +
                 ", location='" + location + '\'' +
+                ", chapters=" + chapters +
                 ", segments=" + segments +
-                ", type=" + type +
                 ", formats=" + formats +
-                ", keyWords=" + keyWords +
+                ", keyWords='" + keyWords + '\'' +
                 '}';
     }
 }

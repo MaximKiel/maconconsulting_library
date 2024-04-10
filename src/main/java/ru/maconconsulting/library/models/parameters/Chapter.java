@@ -1,21 +1,23 @@
 package ru.maconconsulting.library.models.parameters;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import ru.maconconsulting.library.models.content.Project;
 
 import java.util.List;
 
 @Entity
-@Table(name = "type")
-public class Type extends AbstractParameterEntity {
+@Table(name = "chapter")
+public class Chapter extends AbstractParameterEntity {
 
-    @OneToMany(mappedBy = "type")
+    @ManyToMany(mappedBy = "chapters")
     private List<Project> projects;
 
-    public Type() {
+    public Chapter() {
     }
 
-    public Type(String name) {
+    public Chapter(String name) {
         super(name);
     }
 
@@ -29,6 +31,8 @@ public class Type extends AbstractParameterEntity {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Chapter{" +
+                "projects=" + projects +
+                '}';
     }
 }
