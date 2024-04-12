@@ -62,12 +62,16 @@
         <td><p th:text="${project.getClient()}">Value</p></td>
     </tr>
     <tr>
-        <td><b>Тип проекта:</b></td>
-        <td><p th:text="${project.getType().getName()}">Value</p></td>
-    </tr>
-    <tr>
         <td><b>Локация:</b></td>
         <td><p th:text="${project.getLocation()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Разделы отчета:</b></td>
+        <td>
+            <ul>
+                <li th:each="chapter : ${project.getChapters()}" th:text="${chapter.getName()}">Value</li>
+            </ul>
+        </td>
     </tr>
     <tr>
         <td><b>Сегменты рынка:</b></td>

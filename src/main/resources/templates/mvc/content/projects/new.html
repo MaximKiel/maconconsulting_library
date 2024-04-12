@@ -47,20 +47,20 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
+    <label for="chapters">Выберете разделы отчета  (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
+    <select th:field="*{chapters}" id="chapters" multiple="multiple" class="select-checkbox">
+        <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('chapters')}" th:errors="*{chapters}">chapters error</div>
+    <a style="color: gray; font-style: italic" href="/chapters">Редактировать список разделов</a><br/>
+    <br/>
+
     <label for="segments">Выберете сегменты рынка  (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
-    <br/>
-
-    <label for="type">Выберите тип проекта (обязательное поле): </label>
-    <select th:field="*{type}" id="type">
-        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
-    </select>
-    <div style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">type error</div>
-    <a style="color: gray; font-style: italic" href="/types">Редактировать список типов проектов</a><br/>
     <br/>
 
     <label for="formats">Выберете форматы отчета (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>

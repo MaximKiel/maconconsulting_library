@@ -57,16 +57,16 @@
     <input type="text" th:field="*{location}" id="location">
     <br/>
 
+    <label for="chapter">Выберете раздел отчета: </label>
+    <select th:field="*{chapter}" id="chapter">
+        <option value=""></option>
+        <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"></option>
+    </select>
+
     <label for="segment">Выберете сегмент рынка: </label>
     <select th:field="*{segment}" id="segment">
         <option value=""></option>
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
-    </select>
-
-    <label for="type">Выберите тип проекта: </label>
-    <select th:field="*{type}" id="type">
-        <option value=""></option>
-        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
 
     <label for="format">Выберите формат отчета проекта: </label>
