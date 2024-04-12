@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Новый тип</title>
+    <title>Изменение раздела</title>
     <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
@@ -33,12 +33,12 @@
         </div>
     </div>
 </header>
-<form class="custom_form" th:method="POST" th:action="@{/types/create}" th:object="${type}">
-    <label for="name">Введите название типа: </label>
+<form class="custom_form" th:method="PATCH" th:action="@{/chapters/{name}(name=${chapter.getName()})}" th:object="${chapter}">
+    <label for="name">Введите название раздела: </label>
     <input type="text" th:field="*{name}" id="name">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
     <br/>
-    <input type="submit" value="Добавить"/>
+    <input type="submit" value="Изменить"/>
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
