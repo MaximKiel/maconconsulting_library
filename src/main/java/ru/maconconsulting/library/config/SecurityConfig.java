@@ -40,17 +40,17 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/publications/{id}").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/publications/{id}").hasAnyRole("MANAGER", "ADMIN")
 
-                                .requestMatchers("/formats/new", "/formats/create", "/formats/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.PATCH, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers("/chapters/new", "/chapters/create", "/chapters/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/chapters/{name}").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/chapters/{name}").hasAnyRole("MANAGER", "ADMIN")
 
                                 .requestMatchers("/segments/new", "/segments/create", "/segments/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/segments/{name}").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/segments/{name}").hasAnyRole("MANAGER", "ADMIN")
 
-                                .requestMatchers("/types/new", "/types/create", "/types/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/types/{name}").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers(HttpMethod.PATCH, "/types/{name}").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers("/formats/new", "/formats/create", "/formats/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
 
                                 .anyRequest().hasAnyRole("USER", "MANAGER", "ADMIN")
                 )
