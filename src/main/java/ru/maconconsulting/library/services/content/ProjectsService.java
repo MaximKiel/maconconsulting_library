@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
-    private final TypesService typesService;
+    private final ChaptersService chaptersService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService) {
+    public ProjectsService(ProjectsRepository projectsRepository, ChaptersService chaptersService, SegmentsService segmentsService, FormatsService formatsService) {
         this.projectsRepository = projectsRepository;
-        this.typesService = typesService;
+        this.chaptersService = chaptersService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
     }
@@ -46,7 +46,7 @@ public class ProjectsService {
     @Transactional
     public void save(Project project) {
         project.setCreatedAt(LocalDateTime.now());
-        project.setType(typesService.findByName(project.getType().getName()).orElseThrow());
+        project.setChapters(enrichChapters(chaptersService, project));
         project.setSegments(enrichSegments(segmentsService, project));
         project.setFormats(enrichFormats(formatsService, project));
         projectsRepository.save(project);
@@ -56,7 +56,7 @@ public class ProjectsService {
     public void update(String number, Project updatedProject) {
         if (findByNumber(number).isPresent()) {
             updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-            updatedProject.setType(typesService.findByName(updatedProject.getType().getName()).orElseThrow());
+            updatedProject.setChapters(enrichChapters(chaptersService, updatedProject));
             updatedProject.setSegments(enrichSegments(segmentsService, updatedProject));
             updatedProject.setFormats(enrichFormats(formatsService, updatedProject));
             projectsRepository.save(updatedProject);
@@ -85,14 +85,17 @@ public class ProjectsService {
         if (!searchProject.getLocation().trim().equals("")) {
             result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
         }
+        if (searchProject.getChapter() != null && !searchProject.getChapter().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> chapterNames = p.getChapters().stream().map(AbstractParameterEntity::getName).toList();
+                return chapterNames.stream().anyMatch(n -> n.equals(searchProject.getChapter().getName()));
+            });
+        }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {
                 List<String> segmentNames = p.getSegments().stream().map(AbstractParameterEntity::getName).toList();
                 return segmentNames.stream().anyMatch(n -> n.equals(searchProject.getSegment().getName()));
             });
-        }
-        if (searchProject.getType() != null && !searchProject.getType().getName().equals("")) {
-            result = searchElement(result, p -> p.getType().getName().equals(searchProject.getType().getName()));
         }
         if (searchProject.getFormat() != null && !searchProject.getFormat().getName().equals("")) {
             result = searchElement(result, p -> {
@@ -110,10 +113,18 @@ public class ProjectsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
+    private List<Chapter> enrichChapters(ChaptersService service, Project project) {
+        List<Chapter> entities = new ArrayList<>();
+        for (Chapter c : project.getChapters()) {
+            entities.add(service.findByName(c.getName()).orElseThrow());
+        }
+        return entities;
+    }
+
     private List<Segment> enrichSegments(SegmentsService service, Project project) {
         List<Segment> entities = new ArrayList<>();
-        for (Segment f : project.getSegments()) {
-            entities.add(service.findByName(f.getName()).orElseThrow());
+        for (Segment s : project.getSegments()) {
+            entities.add(service.findByName(s.getName()).orElseThrow());
         }
         return entities;
     }
