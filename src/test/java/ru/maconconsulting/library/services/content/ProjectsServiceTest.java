@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static ru.maconconsulting.library.util.parameters.FormatsTestData.*;
 import static ru.maconconsulting.library.util.parameters.SegmentsTestData.*;
-import static ru.maconconsulting.library.util.parameters.TypesTestData.*;
+import static ru.maconconsulting.library.util.parameters.ChaptersTestData.*;
 import static ru.maconconsulting.library.util.content.ProjectsTestData.*;
 
 @SpringBootTest
@@ -30,7 +30,7 @@ class ProjectsServiceTest {
     private ProjectsService projectsService;
 
     @Mock
-    private TypesService typesService;
+    private ChaptersService chaptersService;
 
     @Mock
     private SegmentsService segmentsService;
@@ -78,13 +78,13 @@ class ProjectsServiceTest {
     @Test
     void save() {
         Project newProject = new Project("23200", 2023, "12.2023", "23200_New", "Client new",
-                "Россия, Край, Город", List.of(PROJECT_SEGMENT_1), PROJECT_TYPE_1, List.of(PROJECT_FORMAT_1),  "Доверительное управление");
-        Mockito.when(typesService.findByName(newProject.getType().getName())).thenReturn(Optional.of(newProject.getType()));
+                "Россия, Край, Город", List.of(CHAPTER_1), List.of(SEGMENT_1), List.of(FORMAT_1),  "Доверительное управление");
+        Mockito.when(chaptersService.findByName(newProject.getChapters().get(0).getName())).thenReturn(Optional.of(newProject.getChapters().get(0)));
         Mockito.when(segmentsService.findByName(newProject.getSegments().get(0).getName())).thenReturn(Optional.of(newProject.getSegments().get(0)));
         Mockito.when(formatsService.findByName(newProject.getFormats().get(0).getName())).thenReturn(Optional.of(newProject.getFormats().get(0)));
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
-
         projectsService.save(newProject);
+
         Mockito.verify(projectsRepository, Mockito.times(1)).save(newProject);
     }
 
@@ -94,16 +94,17 @@ class ProjectsServiceTest {
         String number = updatedProject.getNumber();
         PROJECT_1.setCreatedAt(LocalDateTime.now());
         PROJECT_1.setTitle("Updated PROJECT_1");
-        Mockito.when(typesService.findByName(updatedProject.getType().getName())).thenReturn(Optional.of(updatedProject.getType()));
         Mockito.when(projectsRepository.findByNumber(number)).thenReturn(Optional.of(PROJECT_1));
         Mockito.when(projectsRepository.findByTitle("Updated PROJECT_1")).thenReturn(Optional.of(updatedProject));
+        for (Chapter chapter : updatedProject.getChapters()) {
+            Mockito.when(chaptersService.findByName(chapter.getName())).thenReturn(Optional.of(chapter));
+        }
         for (Segment segment : updatedProject.getSegments()) {
             Mockito.when(segmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
         }
         for (Format format : updatedProject.getFormats()) {
             Mockito.when(formatsService.findByName(format.getName())).thenReturn(Optional.of(format));
         }
-
         projectsService.update(number, updatedProject);
 
         Mockito.verify(projectsRepository, Mockito.times(1)).save(updatedProject);
@@ -122,7 +123,7 @@ class ProjectsServiceTest {
 
     @Test
     void search() {
-        SearchProject searchProject = new SearchProject(2023, "", "", "", "", PROJECT_SEGMENT_DTO_1, PROJECT_TYPE_DTO_1, PROJECT_FORMAT_DTO_1, "");
+        SearchProject searchProject = new SearchProject(2023, "", "", "", "", CHAPTER_DTO_1, SEGMENT_DTO_1, FORMAT_DTO_1, "");
         List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
         List<Project> actualProjects = projectsService.search(searchProject);

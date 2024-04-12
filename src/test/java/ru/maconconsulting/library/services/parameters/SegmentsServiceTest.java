@@ -27,7 +27,7 @@ class SegmentsServiceTest {
 
     @Test
     void findAll() {
-        List<Segment> expectedSegments = List.of(PROJECT_SEGMENT_1, PROJECT_SEGMENT_2, PROJECT_SEGMENT_3);
+        List<Segment> expectedSegments = List.of(SEGMENT_1, SEGMENT_2, SEGMENT_3);
         Mockito.when(segmentsRepository.findAll()).thenReturn(expectedSegments);
         List<Segment> actualSegments = segmentsService.findAll();
 
@@ -39,27 +39,27 @@ class SegmentsServiceTest {
 
     @Test
     void findByName() {
-        String name = PROJECT_SEGMENT_1.getName();
-        Mockito.when(segmentsRepository.findByName(name)).thenReturn(Optional.of(PROJECT_SEGMENT_1));
-        Optional<Segment> actualProjectSegment = segmentsService.findByName(name);
+        String name = SEGMENT_1.getName();
+        Mockito.when(segmentsRepository.findByName(name)).thenReturn(Optional.of(SEGMENT_1));
+        Optional<Segment> actualSegment = segmentsService.findByName(name);
 
         Mockito.verify(segmentsRepository, Mockito.times(1)).findByName(name);
-        Assertions.assertNotNull(actualProjectSegment.orElse(null));
-        Assertions.assertEquals(PROJECT_SEGMENT_1, actualProjectSegment.orElse(null));
+        Assertions.assertNotNull(actualSegment.orElse(null));
+        Assertions.assertEquals(SEGMENT_1, actualSegment.orElse(null));
     }
 
     @Test
     void save() {
         Segment newSegment = new Segment("Новый сегмент");
         Mockito.when(segmentsRepository.save(newSegment)).thenReturn(newSegment);
-
         segmentsService.save(newSegment);
+
         Mockito.verify(segmentsRepository, Mockito.times(1)).save(newSegment);
     }
 
     @Test
     void update() {
-        Segment updatedSegment = PROJECT_SEGMENT_1;
+        Segment updatedSegment = SEGMENT_1;
         String name = updatedSegment.getName();
         updatedSegment.setName("Новое имя сегмента");
         Mockito.when(segmentsRepository.findByName("Новое имя сегмента")).thenReturn(Optional.of(updatedSegment));
@@ -72,7 +72,7 @@ class SegmentsServiceTest {
 
     @Test
     void delete() {
-        String name = PROJECT_SEGMENT_1.getName();
+        String name = SEGMENT_1.getName();
         segmentsService.delete(name);
 
         Mockito.verify(segmentsRepository, Mockito.times(1)).deleteByName(name);

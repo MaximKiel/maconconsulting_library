@@ -5,9 +5,9 @@ import ru.maconconsulting.library.models.parameters.Segment;
 
 public class SegmentsTestData {
 
-    public static final Segment PROJECT_SEGMENT_1 = new Segment("МЖС");
-    public static final Segment PROJECT_SEGMENT_2 = new Segment("Гостиницы");
-    public static final Segment PROJECT_SEGMENT_3 = new Segment("Коттеджные поселки");
+    public static final Segment SEGMENT_1 = new Segment("МЖС");
+    public static final Segment SEGMENT_2 = new Segment("Гостиницы");
+    public static final Segment SEGMENT_3 = new Segment("Коттеджные поселки");
 
-    public static final SegmentDTO PROJECT_SEGMENT_DTO_1 = new SegmentDTO("МЖС");
+    public static final SegmentDTO SEGMENT_DTO_1 = new SegmentDTO("МЖС");
 }

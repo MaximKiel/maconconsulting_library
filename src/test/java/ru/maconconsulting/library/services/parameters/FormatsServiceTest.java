@@ -28,7 +28,7 @@ public class FormatsServiceTest {
 
     @Test
     void findAll() {
-        List<Format> expectedFormats = List.of(PROJECT_FORMAT_1, PROJECT_FORMAT_2, PROJECT_FORMAT_3);
+        List<Format> expectedFormats = List.of(FORMAT_1, FORMAT_2, FORMAT_3);
         Mockito.when(formatsRepository.findAll()).thenReturn(expectedFormats);
         List<Format> actualFormats = formatsService.findAll();
 
@@ -40,27 +40,27 @@ public class FormatsServiceTest {
 
     @Test
     void findByName() {
-        String name = PROJECT_FORMAT_1.getName();
-        Mockito.when(formatsRepository.findByName(name)).thenReturn(Optional.of(PROJECT_FORMAT_1));
-        Optional<Format> actualProjectFormat = formatsService.findByName(name);
+        String name = FORMAT_1.getName();
+        Mockito.when(formatsRepository.findByName(name)).thenReturn(Optional.of(FORMAT_1));
+        Optional<Format> actualFormat = formatsService.findByName(name);
 
         Mockito.verify(formatsRepository, Mockito.times(1)).findByName(name);
-        Assertions.assertNotNull(actualProjectFormat.orElse(null));
-        Assertions.assertEquals(PROJECT_FORMAT_1, actualProjectFormat.orElse(null));
+        Assertions.assertNotNull(actualFormat.orElse(null));
+        Assertions.assertEquals(FORMAT_1, actualFormat.orElse(null));
     }
 
     @Test
     void save() {
         Format newFormat = new Format("Новый формат");
         Mockito.when(formatsRepository.save(newFormat)).thenReturn(newFormat);
-
         formatsService.save(newFormat);
+
         Mockito.verify(formatsRepository, Mockito.times(1)).save(newFormat);
     }
 
     @Test
     void update() {
-        Format updatedFormat = PROJECT_FORMAT_1;
+        Format updatedFormat = FORMAT_1;
         String name = updatedFormat.getName();
         updatedFormat.setName("Новое имя формата");
         Mockito.when(formatsRepository.findByName("Новое имя формата")).thenReturn(Optional.of(updatedFormat));
@@ -73,7 +73,7 @@ public class FormatsServiceTest {
 
     @Test
     void delete() {
-        String name = PROJECT_FORMAT_1.getName();
+        String name = FORMAT_1.getName();
         formatsService.delete(name);
 
         Mockito.verify(formatsRepository, Mockito.times(1)).deleteByName(name);

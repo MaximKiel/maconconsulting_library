@@ -76,12 +76,12 @@ class PublicationsServiceTest {
         Publication newPublication = new Publication("Новый материал", "new annotation",
                 "new source", 2024, "01.2024", "/test/publ/new",
                 "Россия, Краснодарский край, Краснодар",
-                List.of(PROJECT_SEGMENT_1), List.of(PROJECT_FORMAT_1),  "Доверительное управление");
+                List.of(SEGMENT_1), List.of(FORMAT_1),  "Доверительное управление");
         Mockito.when(segmentsService.findByName(newPublication.getSegments().get(0).getName())).thenReturn(Optional.of(newPublication.getSegments().get(0)));
         Mockito.when(formatsService.findByName(newPublication.getFormats().get(0).getName())).thenReturn(Optional.of(newPublication.getFormats().get(0)));
         Mockito.when(publicationsRepository.save(newPublication)).thenReturn(newPublication);
-
         publicationsService.save(newPublication);
+
         Mockito.verify(publicationsRepository, Mockito.times(1)).save(newPublication);
     }
 
@@ -91,7 +91,6 @@ class PublicationsServiceTest {
         Integer id = PUBLICATION_1.getId();
         PUBLICATION_1.setCreatedAt(LocalDateTime.now());
         PUBLICATION_1.setTitle("Updated PUBLICATION_1");
-
         Mockito.when(publicationsRepository.findById(id)).thenReturn(Optional.of(PUBLICATION_1));
         Mockito.when(publicationsRepository.findByTitle("Updated PUBLICATION_1")).thenReturn(Optional.of(updatedPublication));
         for (Segment segment : updatedPublication.getSegments()) {
@@ -119,7 +118,7 @@ class PublicationsServiceTest {
     @Test
     void search() {
         SearchPublication searchPublication = new SearchPublication("", "",
-                "", 2024, "", "", PROJECT_SEGMENT_DTO_1, PROJECT_FORMAT_DTO_1, "");
+                "", 2024, "", "", SEGMENT_DTO_1, FORMAT_DTO_1, "");
         List<Publication> expectedPublications = List.of(PUBLICATION_1, PUBLICATION_2);
         Mockito.when(publicationsRepository.findAll()).thenReturn(expectedPublications);
         List<Publication> actualPublications = publicationsService.search(searchPublication);
