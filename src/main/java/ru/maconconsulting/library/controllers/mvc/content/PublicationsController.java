@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/publications")
 public class PublicationsController {
 
-    public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
+    public static final Logger log = LoggerFactory.getLogger(PublicationsController.class);
     private final PublicationsService publicationsService;
     private final PublicationValidator publicationValidator;
     private final SegmentsService segmentsService;

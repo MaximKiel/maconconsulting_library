@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/segments")
 public class SegmentsController {
 
-    public static final Logger log = LoggerFactory.getLogger(TypesController.class);
+    public static final Logger log = LoggerFactory.getLogger(SegmentsController.class);
     private final SegmentsService segmentsService;
     private final ModelMapper modelMapper;
     private final SegmentValidator segmentValidator;
@@ -56,14 +56,14 @@ public class SegmentsController {
             log.info("Go to mvc/parameters/segments/new");
             return "mvc/parameters/segments/new";
         }
-        segmentsService.save(convertToProjectSegment(segmentDTO));
+        segmentsService.save(convertToSegment(segmentDTO));
         log.info("Go to redirect:/segments");
         return "redirect:/segments";
     }
 
     @GetMapping("/{name}/edit")
     public String edit(Model model, @PathVariable("name") String name) {
-        model.addAttribute("segment", convertToProjectSegmentDTO(segmentsService.findByName(name)
+        model.addAttribute("segment", convertToSegmentDTO(segmentsService.findByName(name)
                 .orElseThrow(() -> new SegmentNotFoundException("Сегмент рынка  " + name + " не найден"))));
         log.info("Go to mvc/parameters/segments/edit");
         return "mvc/parameters/segments/edit";
@@ -78,17 +78,17 @@ public class SegmentsController {
             return "mvc/parameters/segments/edit";
         }
 
-        segmentsService.update(name, convertToProjectSegment(segmentDTO));
+        segmentsService.update(name, convertToSegment(segmentDTO));
         log.info("Go to redirect:/segments");
         return "redirect:/segments";
     }
 
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name, Model model) {
-        if (segmentsService.findByName(name).isPresent() && !segmentsService.findByName(name).get().getProjects().isEmpty()) {
+        if (segmentsService.findByName(name).isPresent() && (!segmentsService.findByName(name).get().getProjects().isEmpty() || !segmentsService.findByName(name).get().getPublications().isEmpty() )) {
             model.addAttribute("projects", segmentsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
             model.addAttribute("publications", segmentsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("mvc/parameters/delete_error");
+            log.info("Go to mvc/parameters/delete_error");
             return "mvc/parameters/delete_error";
         }
 
@@ -102,11 +102,11 @@ public class SegmentsController {
         return "mvc/parameters/segments/not_found";
     }
 
-    private Segment convertToProjectSegment(SegmentDTO segmentDTO) {
+    private Segment convertToSegment(SegmentDTO segmentDTO) {
         return modelMapper.map(segmentDTO, Segment.class);
     }
 
-    private SegmentDTO convertToProjectSegmentDTO(Segment segment) {
+    private SegmentDTO convertToSegmentDTO(Segment segment) {
         return modelMapper.map(segment, SegmentDTO.class);
     }
 }

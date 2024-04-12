@@ -28,16 +28,16 @@ public class ProjectsController {
 
     public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
     private final ProjectsService projectsService;
-    private final TypesService typesService;
+    private final ChaptersService chaptersService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
     private final ModelMapper modelMapper;
     private final ProjectValidator projectValidator;
 
     @Autowired
-    public ProjectsController(ProjectsService projectsService, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
+    public ProjectsController(ProjectsService projectsService, ChaptersService chaptersService, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectValidator projectValidator) {
         this.projectsService = projectsService;
-        this.typesService = typesService;
+        this.chaptersService = chaptersService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
         this.modelMapper = modelMapper;
@@ -137,14 +137,14 @@ public class ProjectsController {
 
 //    For new, create and search methods
     private void addParametersToModelAttribute(Model model) {
-        model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).collect(Collectors.toList()));
+        model.addAttribute("chapters", chaptersService.findAll().stream().sorted(Comparator.comparing(Chapter::getName)).collect(Collectors.toList()));
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
     }
 
 //    For edit and update methods
     private void addParametersDTOToModelAttribute(Model model) {
-            model.addAttribute("types", typesService.findAll().stream().sorted(Comparator.comparing(Type::getName)).map(this::convertToTypeDTO).collect(Collectors.toList()));
+            model.addAttribute("chapters", chaptersService.findAll().stream().sorted(Comparator.comparing(Chapter::getName)).map(this::convertToChapterDTO).collect(Collectors.toList()));
             model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
             model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
     }
@@ -157,8 +157,8 @@ public class ProjectsController {
         return modelMapper.map(project, ProjectDTO.class);
     }
 
-    private TypeDTO convertToTypeDTO(Type type) {
-        return modelMapper.map(type, TypeDTO.class);
+    private ChapterDTO convertToChapterDTO(Chapter chapter) {
+        return modelMapper.map(chapter, ChapterDTO.class);
     }
 
     private SegmentDTO convertToSegmentDTO(Segment segment) {

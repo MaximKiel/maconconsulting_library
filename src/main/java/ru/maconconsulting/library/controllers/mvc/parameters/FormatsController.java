@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/formats")
 public class FormatsController {
 
-    public static final Logger log = LoggerFactory.getLogger(TypesController.class);
+    public static final Logger log = LoggerFactory.getLogger(FormatsController.class);
     private final FormatsService formatsService;
     private final ModelMapper modelMapper;
     private final FormatValidator formatValidator;
@@ -57,14 +57,14 @@ public class FormatsController {
             return "mvc/parameters/formats/new";
         }
 
-        formatsService.save(convertToProjectFormat(formatDTO));
+        formatsService.save(convertToFormat(formatDTO));
         log.info("Go to redirect:/formats");
         return "redirect:/formats";
     }
 
     @GetMapping("/{name}/edit")
     public String edit(Model model, @PathVariable("name") String name) {
-        model.addAttribute("format", convertToProjectFormatDTO(formatsService.findByName(name)
+        model.addAttribute("format", convertToFormatDTO(formatsService.findByName(name)
                 .orElseThrow(() -> new FormatNotFoundException("Формат отчета " + name + " не найден"))));
         log.info("Go to mvc/parameters/formats/edit");
         return "mvc/parameters/formats/edit";
@@ -79,17 +79,17 @@ public class FormatsController {
             return "mvc/parameters/formats/edit";
         }
 
-        formatsService.update(name, convertToProjectFormat(formatDTO));
+        formatsService.update(name, convertToFormat(formatDTO));
         log.info("Go to redirect:/formats");
         return "redirect:/formats";
     }
 
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name, Model model) {
-        if (formatsService.findByName(name).isPresent() && !formatsService.findByName(name).get().getProjects().isEmpty()) {
+        if (formatsService.findByName(name).isPresent() && (!formatsService.findByName(name).get().getProjects().isEmpty() || !formatsService.findByName(name).get().getPublications().isEmpty())) {
             model.addAttribute("projects", formatsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
             model.addAttribute("publications", formatsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("mvc/parameters/delete_error");
+            log.info("Go to mvc/parameters/delete_error");
             return "mvc/parameters/delete_error";
         }
 
@@ -103,11 +103,11 @@ public class FormatsController {
         return "mvc/parameters/formats/not_found";
     }
 
-    private Format convertToProjectFormat(FormatDTO formatDTO) {
+    private Format convertToFormat(FormatDTO formatDTO) {
         return modelMapper.map(formatDTO, Format.class);
     }
 
-    private FormatDTO convertToProjectFormatDTO(Format format) {
+    private FormatDTO convertToFormatDTO(Format format) {
         return modelMapper.map(format, FormatDTO.class);
     }
 }
