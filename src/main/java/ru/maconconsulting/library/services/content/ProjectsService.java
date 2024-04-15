@@ -35,12 +35,12 @@ public class ProjectsService {
         return projectsRepository.findAll();
     }
 
-    public Optional<Project> findByNumber(String number) {
-        return projectsRepository.findByNumber(number);
-    }
-
     public Optional<Project> findByTitle(String title) {
         return projectsRepository.findByTitle(title);
+    }
+
+    public Optional<Project> findById(Integer id) {
+        return projectsRepository.findById(id);
     }
 
     @Transactional
@@ -53,23 +53,27 @@ public class ProjectsService {
     }
 
     @Transactional
-    public void update(String number, Project updatedProject) {
-        if (findByNumber(number).isPresent()) {
-            updatedProject.setCreatedAt(findByNumber(number).get().getCreatedAt());
-            updatedProject.setChapters(enrichChapters(chaptersService, updatedProject));
-            updatedProject.setSegments(enrichSegments(segmentsService, updatedProject));
-            updatedProject.setFormats(enrichFormats(formatsService, updatedProject));
+    public void update(Integer id, Project updatedProject) {
+        if (findById(id).isPresent()) {
+            updatedProject.setId(findById(id).get().getId());
+            updatedProject.setCreatedAt(findById(id).get().getCreatedAt());
+            updatedProject.setChapters(updatedProject.getChapters() != null ?
+                    enrichChapters(chaptersService, updatedProject) : null);
+            updatedProject.setSegments(updatedProject.getSegments() != null ?
+                    enrichSegments(segmentsService, updatedProject) : null);
+            updatedProject.setFormats(updatedProject.getFormats() != null ?
+                    enrichFormats(formatsService, updatedProject) : null);
             projectsRepository.save(updatedProject);
         }
     }
 
     @Transactional
-    public void delete(String number) {
-        projectsRepository.deleteByNumber(number);
+    public void delete(Integer id) {
+        projectsRepository.deleteById(id);
     }
 
     public List<Project> search(SearchProject searchProject) {
-        List<Project> result = findAll().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList());
+        List<Project> result = findAll().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList());
         if (searchProject.getYear() != 0) {
             result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
         }
@@ -80,7 +84,7 @@ public class ProjectsService {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().trim().toLowerCase()));
         }
         if (!searchProject.getClient().trim().equals("")) {
-            result = searchElement(result, p -> p.getClient().toLowerCase().contains(searchProject.getClient().trim().toLowerCase()));
+            result = searchElement(result, p -> p.getClient() != null && !p.getClient().equals("") && p.getClient().toLowerCase().contains(searchProject.getClient().trim().toLowerCase()));
         }
         if (!searchProject.getLocation().trim().equals("")) {
             result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
@@ -104,7 +108,10 @@ public class ProjectsService {
             });
         }
         if (!searchProject.getKeyWord().trim().equals("")) {
-            result = searchElement(result, p -> p.getKeyWords().toLowerCase().contains(searchProject.getKeyWord().trim().toLowerCase()));
+            result = searchElement(result, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(searchProject.getKeyWord().trim().toLowerCase()));
+        }
+        if (!searchProject.getMethodology().trim().equals("")) {
+            result = searchElement(result, p -> p.getMethodology() != null && !p.getMethodology().equals("") && p.getMethodology().toLowerCase().contains(searchProject.getMethodology().trim().toLowerCase()));
         }
         return result;
     }
