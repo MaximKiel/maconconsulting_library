@@ -22,10 +22,12 @@ public class SearchProject {
 
     private String keyWord;
 
+    private String methodology;
+
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String location, ChapterDTO chapter, SegmentDTO segment, FormatDTO format, String keyWord) {
+    public SearchProject(int year, String relevance, String title, String client, String location, ChapterDTO chapter, SegmentDTO segment, FormatDTO format, String keyWord, String methodology) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -35,6 +37,7 @@ public class SearchProject {
         this.segment = segment;
         this.format = format;
         this.keyWord = keyWord;
+        this.methodology = methodology;
     }
 
     public int getYear() {
@@ -107,5 +110,13 @@ public class SearchProject {
 
     public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
+    }
+
+    public String getMethodology() {
+        return methodology;
+    }
+
+    public void setMethodology(String methodology) {
+        this.methodology = methodology;
     }
 }

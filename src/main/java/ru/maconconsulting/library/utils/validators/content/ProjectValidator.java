@@ -26,9 +26,6 @@ public class ProjectValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProjectDTO projectDTO = (ProjectDTO) target;
-        if (projectsService.findByNumber(projectDTO.getNumber()).isPresent()) {
-            errors.rejectValue("number", "404", "Проект с таким номером уже существует!");
-        }
         if (projectsService.findByTitle(projectDTO.getTitle()).isPresent()) {
             errors.rejectValue("title", "404", "Проект с таким названием уже существует!");
         }
@@ -38,7 +35,7 @@ public class ProjectValidator implements Validator {
         ProjectDTO projectDTO = (ProjectDTO) target;
         if (projectsService.findByTitle(projectDTO.getTitle()).isPresent()) {
             boolean check = projectsService.findAll().stream()
-                    .filter(p -> !p.getNumber().equals(projectDTO.getNumber()))
+                    .filter(p -> !p.getId().equals(projectDTO.getId()))
                     .anyMatch(p -> p.getTitle().equals(projectDTO.getTitle()));
             if (check) {
                 errors.rejectValue("title", "404", "Проект с таким названием уже существует!");
