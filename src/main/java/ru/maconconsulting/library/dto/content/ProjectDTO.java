@@ -1,18 +1,14 @@
 package ru.maconconsulting.library.dto.content;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.parameters.*;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProjectDTO {
 
-    @NotBlank(message = "Номер проекта не должен быть пустым!")
-    private String number;
+    private Integer id;
 
     @NotNull(message = "Год проекта не должен быть пустым!")
     private Integer year;
@@ -22,28 +18,26 @@ public class ProjectDTO {
     @NotBlank(message = "Название проекта не должно быть пустым!")
     private String title;
 
-    @NotBlank(message = "Наименование клиента  не должно быть пустым!")
     private String client;
 
     @NotBlank(message = "Локация не должна быть пустой!")
     private String location;
 
-    @NotEmpty(message = "Список разделов не должен быть пустым!")
     private List<ChapterDTO> chapters;
 
-    @NotEmpty(message = "Список сегментов не должен быть пустым!")
     private List<SegmentDTO> segments;
 
-    @NotEmpty(message = "Список форматов не должен быть пустым!")
     private List<FormatDTO> formats;
 
     private String keyWords;
 
+    private String methodology;
+
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String number, Integer year, String relevance, String title, String client, String location, List<ChapterDTO> chapters, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords) {
-        this.number = number;
+    public ProjectDTO(Integer id, Integer year, String relevance, String title, String client, String location, List<ChapterDTO> chapters, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords, String methodology) {
+        this.id = id;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
@@ -53,14 +47,15 @@ public class ProjectDTO {
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
+        this.methodology = methodology;
     }
 
-    public String getNumber() {
-        return number;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getYear() {
@@ -87,6 +82,14 @@ public class ProjectDTO {
         this.title = title;
     }
 
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -104,29 +107,15 @@ public class ProjectDTO {
     }
 
     public List<SegmentDTO> getSegments() {
-        if (segments != null) {
-            return segments.stream().sorted(Comparator.comparing(SegmentDTO::getName)).collect(Collectors.toList());
-        }
-        return null;
+        return segments;
     }
 
     public void setSegments(List<SegmentDTO> segments) {
         this.segments = segments;
     }
 
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
     public List<FormatDTO> getFormats() {
-        if (formats != null) {
-            return formats.stream().sorted(Comparator.comparing(FormatDTO::getName)).collect(Collectors.toList());
-        }
-        return null;
+        return formats;
     }
 
     public void setFormats(List<FormatDTO> formats) {
@@ -139,5 +128,13 @@ public class ProjectDTO {
 
     public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public String getMethodology() {
+        return methodology;
+    }
+
+    public void setMethodology(String methodology) {
+        this.methodology = methodology;
     }
 }
