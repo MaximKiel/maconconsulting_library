@@ -33,7 +33,7 @@
         </div>
     </div>
 </header>
-<form class="custom_form" th:method="PATCH" th:action="@{/projects/{number}(number=${project.getNumber()})}" th:object="${project}">
+<form class="custom_form" th:method="PATCH" th:action="@{/projects/{id}(id=${project.getId()})}" th:object="${project}">
 
     <label for="title">Введите название (обязательное поле): </label>
     <input type="text" th:field="*{title}" id="title" required
@@ -41,7 +41,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
-    <label for="chapters">Введите разделы отчета (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
+    <label for="chapters">Введите разделы отчета (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="chapters" name="chapters" multiple="multiple" class="select-checkbox">
         <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"
                 th:selected="${project.chapters.contains(chapter)}"></option>
@@ -50,7 +50,7 @@
     <a style="color: gray; font-style: italic" href="/chapters">Редактировать список разделов</a><br/>
     <br/>
 
-    <label for="segments">Введите сегменты рынка (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
+    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
         th:selected="${project.segments.contains(segment)}"></option>
@@ -59,7 +59,7 @@
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
 
-    <label for="formats">Выберете форматы отчета проекта (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
+    <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="formats" name="formats" multiple="multiple" class="select-checkbox">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
                 th:selected="${project.formats.contains(format)}"></option>
@@ -79,8 +79,8 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
-    <label for="client">Введите заказчика (обязательное поле): </label>
-    <input type="text" th:field="*{client}" id="client" required
+    <label for="client">Введите заказчика: </label>
+    <input type="text" th:field="*{client}" id="client"
            placeholder="Указывать название без указания организационно-правовой формы и кавычек: 'Интерком, СберРешения'">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
@@ -95,6 +95,12 @@
     <input type="text" th:field="*{keyWords}" id="keyWords"
            placeholder="Пример: 'Доверительное управление, Эксплуатируемая кровля'">
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
+    <br/>
+
+    <label for="methodology">Введите ключевые слова: </label>
+    <input type="text" th:field="*{methodology}" id="methodology"
+           placeholder="Пример: 'Анализ на основе оценок параметров ЕРЗ'">
+    <div style="color: red" th:if="${#fields.hasErrors('methodology')}" th:errors="*{methodology}">methodology error</div>
     <br/>
 
     <input type="submit" value="Изменить"/>

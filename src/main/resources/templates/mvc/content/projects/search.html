@@ -69,7 +69,7 @@
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
 
-    <label for="format">Выберите формат отчета проекта: </label>
+    <label for="format">Выберите формат отчета: </label>
     <select th:field="*{format}" id="format">
         <option value=""></option>
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
@@ -77,6 +77,10 @@
 
     <label for="keyWord">Введите ключевое слово: </label>
     <input type="text" th:field="*{keyWord}" id="keyWord">
+    <br/>
+
+    <label for="methodology">Введите методологию: </label>
+    <input type="text" th:field="*{methodology}" id="methodology">
     <br/>
 
     <input type="submit" value="Найти"/>

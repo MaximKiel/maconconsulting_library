@@ -42,10 +42,6 @@
     </thead>
     <tbody>
     <tr>
-        <td><b>Номер проекта:</b></td>
-        <td><p th:text="${project.getNumber()}">Value</p></td>
-    </tr>
-    <tr>
         <td><b>Год:</b></td>
         <td><p th:text="${project.getYear()}">Value</p></td>
     </tr>
@@ -92,6 +88,10 @@
     <tr>
         <td><b>Ключевые слова:</b></td>
         <td><p th:text="${project.getKeyWords()}">Value</p></td>
+    </tr>
+    <tr>
+        <td><b>Особенности методологии:</b></td>
+        <td><p th:text="${project.getMethodology()}">Value</p></td>
     </tr>
     </tbody>
 </table>

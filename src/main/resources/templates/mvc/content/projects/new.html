@@ -35,19 +35,13 @@
 </header>
 <form class="custom_form" th:method="POST" th:action="@{/projects/create}" th:object="${project}">
 
-    <label for="number">Введите номер проекта (обязательное поле): </label>
-    <input type="text" th:field="*{number}" id="number" required
-           placeholder="Стандартный формат номера: '23001'. Формат номера для квартальных отчетов: '23000_1Q_Краснодар'">
-    <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">number error</div>
-    <br/>
-
     <label for="title">Введите название (обязательное поле): </label>
     <input type="text" th:field="*{title}" id="title" required
            placeholder="Название должно совпадать с названием проектной папки на сервере">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
-    <label for="chapters">Выберете разделы отчета  (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
+    <label for="chapters">Выберете разделы отчета  (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{chapters}" id="chapters" multiple="multiple" class="select-checkbox">
         <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"></option>
     </select>
@@ -55,7 +49,7 @@
     <a style="color: gray; font-style: italic" href="/chapters">Редактировать список разделов</a><br/>
     <br/>
 
-    <label for="segments">Выберете сегменты рынка  (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
+    <label for="segments">Выберете сегменты рынка  (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
@@ -63,7 +57,7 @@
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
 
-    <label for="formats">Выберете форматы отчета (обязательное поле) (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
+    <label for="formats">Выберете форматы отчета (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
@@ -82,8 +76,8 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
-    <label for="client">Введите заказчика (обязательное поле): </label>
-    <input type="text" th:field="*{client}" id="client" required
+    <label for="client">Введите заказчика: </label>
+    <input type="text" th:field="*{client}" id="client"
            placeholder="Указывать название без указания организационно-правовой формы и кавычек: 'Интерком, СберРешения'">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
@@ -98,6 +92,12 @@
     <input type="text" th:field="*{keyWords}" id="keyWords"
            placeholder="Пример: 'Доверительное управление, Эксплуатируемая кровля'">
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
+    <br/>
+
+    <label for="methodology">Введите ключевые слова: </label>
+    <input type="text" th:field="*{methodology}" id="methodology"
+           placeholder="Пример: 'Анализ на основе оценок параметров ЕРЗ'">
+    <div style="color: red" th:if="${#fields.hasErrors('methodology')}" th:errors="*{methodology}">methodology error</div>
     <br/>
 
     <input type="submit" value="Добавить"/>

@@ -37,19 +37,18 @@
     <thead>
     <tr>
         <th>Название проекта</th>
-        <th>Заказчик</th>
-        <th>Тип отчета</th>
+        <th>Год</th>
         <th>Локация</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="project : ${result}">
         <td>
-            <a th:href="@{/projects/{number}(number=${project.getNumber()})}" th:target="_blank">
+            <a th:href="@{/projects/{id}(id=${project.getId()})}" th:target="_blank">
             <p th:text="${project.getTitle()}">title</p>
             </a>
         </td>
-        <td th:text="${project.getClient()}">client</td>
+        <td th:text="${project.getYear()}">year</td>
         <td th:text="${project.getLocation()}">location</td>
     </tr>
     </tbody>
