@@ -19,6 +19,7 @@ import ru.maconconsulting.library.utils.validators.content.ProjectValidator;
 import ru.maconconsulting.library.utils.search.SearchProject;
 import ru.maconconsulting.library.utils.exceptions.content.ProjectNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -50,10 +51,10 @@ public class ProjectsController {
         return "mvc/content/projects/manage";
     }
 
-    @GetMapping("/{number}")
-    public String show(@PathVariable("number") String number, Model model) {
-        model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
+                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
         log.info("Go to mvc/content/projects/show");
         return "mvc/content/projects/show";
     }
@@ -70,43 +71,45 @@ public class ProjectsController {
         projectValidator.validate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
+            checkNotNullParameters(projectDTO);
             log.info("Go to mvc/content/projects/new");
             return "mvc/content/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
-        log.info("Go to redirect:/projects/" + projectDTO.getNumber());
-        return "redirect:/projects/" + projectDTO.getNumber();
+        log.info("Go to redirect:/projects/" + projectsService.findByTitle(projectDTO.getTitle()).get().getId());
+        return "redirect:/projects/" + projectsService.findByTitle(projectDTO.getTitle()).get().getId();
     }
 
-    @GetMapping("/{number}/edit")
-    public String edit(Model model, @PathVariable("number") String number) {
-        model.addAttribute("project", convertToProjectDTO(projectsService.findByNumber(number)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект с номером " + number + " не найден"))));
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") Integer id) {
+        model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
+                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
 //        Use DTO parameters because they store into ProjectDTO for update
         addParametersDTOToModelAttribute(model);
         log.info("Go to mvc/content/projects/edit");
         return "mvc/content/projects/edit";
     }
 
-    @PatchMapping("/{number}")
+    @PatchMapping("/{id}")
     public String update(@ModelAttribute("project") @Valid ProjectDTO projectDTO, BindingResult bindingResult,
-                         @PathVariable("number") String number, Model model) {
+                         @PathVariable("id") Integer id, Model model) {
         projectValidator.checkUniqueForUpdate(projectDTO, bindingResult);
         if (bindingResult.hasErrors()) {
 //          Use DTO parameters because they store into ProjectDTO for update
             addParametersDTOToModelAttribute(model);
+            checkNotNullParameters(projectDTO);
             log.info("Go to mvc/content/projects/edit");
             return "mvc/content/projects/edit";
         }
 
-        projectsService.update(number, convertToProject(projectDTO));
-        log.info("Go to redirect:/projects/" + number);
-        return "redirect:/projects/" + number;
+        projectsService.update(id, convertToProject(projectDTO));
+        log.info("Go to redirect:/projects/" + id);
+        return "redirect:/projects/" + id;
     }
 
-    @DeleteMapping("/{number}")
-    public String delete(@PathVariable("number") String number) {
-        projectsService.delete(number);
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        projectsService.delete(id);
         log.info("Go to redirect:/projects");
         return "redirect:/projects";
     }
@@ -147,6 +150,18 @@ public class ProjectsController {
             model.addAttribute("chapters", chaptersService.findAll().stream().sorted(Comparator.comparing(Chapter::getName)).map(this::convertToChapterDTO).collect(Collectors.toList()));
             model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
             model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
+    }
+
+    private void checkNotNullParameters(ProjectDTO projectDTO) {
+        if (projectDTO.getChapters() == null) {
+            projectDTO.setChapters(new ArrayList<>());
+        }
+        if (projectDTO.getSegments() == null) {
+            projectDTO.setSegments(new ArrayList<>());
+        }
+        if (projectDTO.getFormats() == null) {
+            projectDTO.setFormats(new ArrayList<>());
+        }
     }
 
     private Project convertToProject(ProjectDTO projectDTO) {

@@ -132,13 +132,18 @@ public class PublicationsController {
         return "mvc/content/publications/result";
     }
 
-    //    For new, create and search methods
+    @ExceptionHandler
+    private String handleException(PublicationNotFoundException e) {
+        return "mvc/content/publications/not_found";
+    }
+
+//    For new, create and search methods
     private void addParametersToModelAttribute(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
     }
 
-    //    For edit and update methods
+//    For edit and update methods
     private void addParametersDTOToModelAttribute(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
@@ -151,11 +156,6 @@ public class PublicationsController {
         if (publicationDTO.getFormats() == null) {
             publicationDTO.setFormats(new ArrayList<>());
         }
-    }
-
-    @ExceptionHandler
-    private String handleException(PublicationNotFoundException e) {
-        return "mvc/content/publications/not_found";
     }
 
     private PublicationDTO convertToPublicationDTO(Publication publication) {
