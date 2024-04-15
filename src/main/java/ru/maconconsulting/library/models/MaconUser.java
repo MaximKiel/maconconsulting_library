@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "macon_user")
-public class MaconUser extends AbstractBasedEntityWithId {
+public class MaconUser extends AbstractBasedEntity {
 
     @Column(name = "name")
     @NotBlank(message = "Имя не должно быть пустым!")

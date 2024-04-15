@@ -2,7 +2,7 @@ package ru.maconconsulting.library.models.content;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import ru.maconconsulting.library.models.AbstractBasedEntityWithId;
+import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.models.parameters.Segment;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "publication")
-public class Publication extends AbstractBasedEntityWithId {
+public class Publication extends AbstractBasedEntity {
 
     @Column(name = "title")
     @NotBlank(message = "Название не должно быть пустым!")

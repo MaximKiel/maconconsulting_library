@@ -2,10 +2,10 @@ package ru.maconconsulting.library.models.parameters;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import ru.maconconsulting.library.models.AbstractBasedEntityWithId;
+import ru.maconconsulting.library.models.AbstractBasedEntity;
 
 @MappedSuperclass
-public abstract class AbstractParameterEntity extends AbstractBasedEntityWithId {
+public abstract class AbstractParameterEntity extends AbstractBasedEntity {
 
     @Column(name = "name")
     @NotBlank
