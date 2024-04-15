@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc.content;
+package ru.maconconsulting.library.controllers.content;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -44,23 +44,23 @@ public class PublicationsController {
     }
     @GetMapping
     public String getAllPublications() {
-        log.info("Go to mvc/content/publications/manage");
-        return "mvc/content/publications/manage";
+        log.info("Go to content/publications/manage");
+        return "content/publications/manage";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
-        log.info("Go to mvc/content/publications/show");
-        return "mvc/content/publications/show";
+        log.info("Go to content/publications/show");
+        return "content/publications/show";
     }
 
     @GetMapping("/new")
     public String newPublication(@ModelAttribute("publication") PublicationDTO publicationDTO, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to mvc/content/publications/new");
-        return "mvc/content/publications/new";
+        log.info("Go to content/publications/new");
+        return "content/publications/new";
     }
 
     @PostMapping("/create")
@@ -70,8 +70,8 @@ public class PublicationsController {
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
             checkNotNullParameters(publicationDTO);
-            log.info("Go to mvc/content/publications/new");
-            return "mvc/content/publications/new";
+            log.info("Go to content/publications/new");
+            return "content/publications/new";
         }
         publicationsService.save(convertToPublication(publicationDTO));
         log.info("Go to redirect:/publications/" + publicationsService.findByTitle(publicationDTO.getTitle()).get().getId());
@@ -84,8 +84,8 @@ public class PublicationsController {
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
 //        Use DTO parameters because they store into PublicationDTO for update
         addParametersDTOToModelAttribute(model);
-        log.info("Go to mvc/content/publications/edit");
-        return "mvc/content/publications/edit";
+        log.info("Go to content/publications/edit");
+        return "content/publications/edit";
     }
 
     @PatchMapping("/{id}")
@@ -96,8 +96,8 @@ public class PublicationsController {
 //        Use DTO parameters because they store into PublicationDTO for update
             addParametersDTOToModelAttribute(model);
             checkNotNullParameters(publicationDTO);
-            log.info("Go to mvc/content/publications/edit");
-            return "mvc/content/publications/edit";
+            log.info("Go to content/publications/edit");
+            return "content/publications/edit";
         }
 
         publicationsService.update(id, convertToPublication(publicationDTO));
@@ -115,26 +115,26 @@ public class PublicationsController {
     @GetMapping("/search")
     public String search(@ModelAttribute("searchPublication")SearchPublication searchPublication, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to mvc/content/publications/search");
-        return "mvc/content/publications/search";
+        log.info("Go to content/publications/search");
+        return "content/publications/search";
     }
 
     @PostMapping("/search-result")
     public String showSearchResult(Model model, @ModelAttribute("searchPublication") SearchPublication searchPublication,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/content/publications/search");
-            return "mvc/content/publications/search";
+            log.info("Go to content/publications/search");
+            return "content/publications/search";
         }
 
         model.addAttribute("result", publicationsService.search(searchPublication));
-        log.info("Go to mvc/content/publications/result");
-        return "mvc/content/publications/result";
+        log.info("Go to content/publications/result");
+        return "content/publications/result";
     }
 
     @ExceptionHandler
     private String handleException(PublicationNotFoundException e) {
-        return "mvc/content/publications/not_found";
+        return "content/publications/not_found";
     }
 
 //    For new, create and search methods

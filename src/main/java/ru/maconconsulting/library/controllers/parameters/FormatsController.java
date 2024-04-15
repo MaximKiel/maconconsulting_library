@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc.parameters;
+package ru.maconconsulting.library.controllers.parameters;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -39,22 +39,22 @@ public class FormatsController {
     @GetMapping
     public String getAllFormats(Model model) {
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/parameters/formats/manage");
-        return "mvc/parameters/formats/manage";
+        log.info("Go to parameters/formats/manage");
+        return "parameters/formats/manage";
     }
 
     @GetMapping("/new")
     public String newFormat(@ModelAttribute("format") FormatDTO formatDTO) {
-        log.info("Go to mvc/parameters/formats/new");
-        return "mvc/parameters/formats/new";
+        log.info("Go to parameters/formats/new");
+        return "parameters/formats/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("format") @Valid FormatDTO formatDTO, BindingResult bindingResult) {
         formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/formats/new");
-            return "mvc/parameters/formats/new";
+            log.info("Go to parameters/formats/new");
+            return "parameters/formats/new";
         }
 
         formatsService.save(convertToFormat(formatDTO));
@@ -66,8 +66,8 @@ public class FormatsController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("format", convertToFormatDTO(formatsService.findByName(name)
                 .orElseThrow(() -> new FormatNotFoundException("Формат отчета " + name + " не найден"))));
-        log.info("Go to mvc/parameters/formats/edit");
-        return "mvc/parameters/formats/edit";
+        log.info("Go to parameters/formats/edit");
+        return "parameters/formats/edit";
     }
 
     @PatchMapping("/{name}")
@@ -75,8 +75,8 @@ public class FormatsController {
                          @PathVariable("name") String name) {
         formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/formats/edit");
-            return "mvc/parameters/formats/edit";
+            log.info("Go to parameters/formats/edit");
+            return "parameters/formats/edit";
         }
 
         formatsService.update(name, convertToFormat(formatDTO));
@@ -87,10 +87,10 @@ public class FormatsController {
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name, Model model) {
         if (formatsService.findByName(name).isPresent() && (!formatsService.findByName(name).get().getProjects().isEmpty() || !formatsService.findByName(name).get().getPublications().isEmpty())) {
-            model.addAttribute("projects", formatsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("projects", formatsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList()));
             model.addAttribute("publications", formatsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("Go to mvc/parameters/delete_error");
-            return "mvc/parameters/delete_error";
+            log.info("Go to parameters/delete_error");
+            return "parameters/delete_error";
         }
 
         formatsService.delete(name);
@@ -100,7 +100,7 @@ public class FormatsController {
 
     @ExceptionHandler
     private String handleException(FormatNotFoundException e) {
-        return "mvc/parameters/formats/not_found";
+        return "parameters/formats/not_found";
     }
 
     private Format convertToFormat(FormatDTO formatDTO) {

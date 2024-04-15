@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc.parameters;
+package ru.maconconsulting.library.controllers.parameters;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -38,22 +38,22 @@ public class ChaptersController {
     @GetMapping
     public String getAllChapters(Model model) {
         model.addAttribute("chapters", chaptersService.findAll().stream().sorted(Comparator.comparing(Chapter::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/parameters/chapters/manage");
-        return "mvc/parameters/chapters/manage";
+        log.info("Go to parameters/chapters/manage");
+        return "parameters/chapters/manage";
     }
 
     @GetMapping("/new")
     public String newChapter(@ModelAttribute("chapter") ChapterDTO chapterDTO) {
-        log.info("Go to mvc/parameters/chapters/new");
-        return "mvc/parameters/chapters/new";
+        log.info("Go to parameters/chapters/new");
+        return "parameters/chapters/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("chapter") @Valid ChapterDTO chapterDTO, BindingResult bindingResult) {
         chapterValidator.validate(chapterDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/chapters/new");
-            return "mvc/parameters/chapters/new";
+            log.info("Go to parameters/chapters/new");
+            return "parameters/chapters/new";
         }
 
         chaptersService.save(convertToChapter(chapterDTO));
@@ -65,8 +65,8 @@ public class ChaptersController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("chapter", convertToChapterDTO(chaptersService.findByName(name)
                 .orElseThrow(() -> new ChapterNotFoundException("Раздел " + name + " не найден"))));
-        log.info("Go to mvc/parameters/chapters/edit");
-        return "mvc/parameters/chapters/edit";
+        log.info("Go to parameters/chapters/edit");
+        return "parameters/chapters/edit";
     }
 
     @PatchMapping("/{name}")
@@ -74,8 +74,8 @@ public class ChaptersController {
                          @PathVariable("name") String name) {
         chapterValidator.validate(chapterDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/chapters/edit");
-            return "mvc/parameters/chapters/edit";
+            log.info("Go to parameters/chapters/edit");
+            return "parameters/chapters/edit";
         }
 
         chaptersService.update(name, convertToChapter(chapterDTO));
@@ -86,9 +86,9 @@ public class ChaptersController {
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name, Model model) {
         if (chaptersService.findByName(name).isPresent() && !chaptersService.findByName(name).get().getProjects().isEmpty()) {
-            model.addAttribute("projects", chaptersService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
-            log.info("Go to mvc/parameters/chapters/delete_error");
-            return "mvc/parameters/chapters/delete_error";
+            model.addAttribute("projects", chaptersService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList()));
+            log.info("Go to parameters/chapters/delete_error");
+            return "parameters/delete_error";
         }
 
         chaptersService.delete(name);
@@ -98,7 +98,7 @@ public class ChaptersController {
 
     @ExceptionHandler
     private String handleException(ChapterNotFoundException e) {
-        return "mvc/parameters/chapters/not_found";
+        return "parameters/chapters/not_found";
     }
 
     private Chapter convertToChapter(ChapterDTO chapterDTO) {

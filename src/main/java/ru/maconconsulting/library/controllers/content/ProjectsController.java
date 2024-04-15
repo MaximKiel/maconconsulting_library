@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc.content;
+package ru.maconconsulting.library.controllers.content;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -47,23 +47,23 @@ public class ProjectsController {
 
     @GetMapping
     public String getAllProjects() {
-        log.info("Go to mvc/content/projects/manage");
-        return "mvc/content/projects/manage";
+        log.info("Go to content/projects/manage");
+        return "content/projects/manage";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
-        log.info("Go to mvc/content/projects/show");
-        return "mvc/content/projects/show";
+        log.info("Go to content/projects/show");
+        return "content/projects/show";
     }
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to mvc/content/projects/new");
-        return "mvc/content/projects/new";
+        log.info("Go to content/projects/new");
+        return "content/projects/new";
     }
 
     @PostMapping("/create")
@@ -72,8 +72,8 @@ public class ProjectsController {
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
             checkNotNullParameters(projectDTO);
-            log.info("Go to mvc/content/projects/new");
-            return "mvc/content/projects/new";
+            log.info("Go to content/projects/new");
+            return "content/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
         log.info("Go to redirect:/projects/" + projectsService.findByTitle(projectDTO.getTitle()).get().getId());
@@ -86,8 +86,8 @@ public class ProjectsController {
                 .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
 //        Use DTO parameters because they store into ProjectDTO for update
         addParametersDTOToModelAttribute(model);
-        log.info("Go to mvc/content/projects/edit");
-        return "mvc/content/projects/edit";
+        log.info("Go to content/projects/edit");
+        return "content/projects/edit";
     }
 
     @PatchMapping("/{id}")
@@ -98,8 +98,8 @@ public class ProjectsController {
 //          Use DTO parameters because they store into ProjectDTO for update
             addParametersDTOToModelAttribute(model);
             checkNotNullParameters(projectDTO);
-            log.info("Go to mvc/content/projects/edit");
-            return "mvc/content/projects/edit";
+            log.info("Go to content/projects/edit");
+            return "content/projects/edit";
         }
 
         projectsService.update(id, convertToProject(projectDTO));
@@ -117,25 +117,25 @@ public class ProjectsController {
     @GetMapping("/search")
     public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to mvc/content/projects/search");
-        return "mvc/content/projects/search";
+        log.info("Go to content/projects/search");
+        return "content/projects/search";
     }
 
     @PostMapping("/search-result")
     public String showSearchResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/content/projects/search");
-            return "mvc/content/projects/search";
+            log.info("Go to content/projects/search");
+            return "content/projects/search";
         }
         model.addAttribute("result", projectsService.search(searchProject));
-        log.info("Go to mvc/content/projects/result");
-        return "mvc/content/projects/result";
+        log.info("Go to content/projects/result");
+        return "content/projects/result";
     }
 
     @ExceptionHandler
     private String handleException(ProjectNotFoundException e) {
-        return "mvc/content/projects/not_found";
+        return "content/projects/not_found";
     }
 
 //    For new, create and search methods

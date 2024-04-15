@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc.parameters;
+package ru.maconconsulting.library.controllers.parameters;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -39,22 +39,22 @@ public class SegmentsController {
     @GetMapping
     public String getAllSegments(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/parameters/segments/manage");
-        return "mvc/parameters/segments/manage";
+        log.info("Go to parameters/segments/manage");
+        return "parameters/segments/manage";
     }
 
     @GetMapping("/new")
     public String newSegment(@ModelAttribute("segment") SegmentDTO segmentDTO) {
-        log.info("Go to mvc/parameters/segments/new");
-        return "mvc/parameters/segments/new";
+        log.info("Go to parameters/segments/new");
+        return "parameters/segments/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("segment") @Valid SegmentDTO segmentDTO, BindingResult bindingResult) {
         segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/segments/new");
-            return "mvc/parameters/segments/new";
+            log.info("Go to parameters/segments/new");
+            return "parameters/segments/new";
         }
         segmentsService.save(convertToSegment(segmentDTO));
         log.info("Go to redirect:/segments");
@@ -65,8 +65,8 @@ public class SegmentsController {
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("segment", convertToSegmentDTO(segmentsService.findByName(name)
                 .orElseThrow(() -> new SegmentNotFoundException("Сегмент рынка  " + name + " не найден"))));
-        log.info("Go to mvc/parameters/segments/edit");
-        return "mvc/parameters/segments/edit";
+        log.info("Go to parameters/segments/edit");
+        return "parameters/segments/edit";
     }
 
     @PatchMapping("/{name}")
@@ -74,8 +74,8 @@ public class SegmentsController {
                          @PathVariable("name") String name) {
         segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/parameters/segments/edit");
-            return "mvc/parameters/segments/edit";
+            log.info("Go to parameters/segments/edit");
+            return "parameters/segments/edit";
         }
 
         segmentsService.update(name, convertToSegment(segmentDTO));
@@ -86,10 +86,10 @@ public class SegmentsController {
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name, Model model) {
         if (segmentsService.findByName(name).isPresent() && (!segmentsService.findByName(name).get().getProjects().isEmpty() || !segmentsService.findByName(name).get().getPublications().isEmpty() )) {
-            model.addAttribute("projects", segmentsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getNumber)).collect(Collectors.toList()));
+            model.addAttribute("projects", segmentsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList()));
             model.addAttribute("publications", segmentsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("Go to mvc/parameters/delete_error");
-            return "mvc/parameters/delete_error";
+            log.info("Go to parameters/delete_error");
+            return "parameters/delete_error";
         }
 
         segmentsService.delete(name);
@@ -99,7 +99,7 @@ public class SegmentsController {
 
     @ExceptionHandler
     private String handleException(SegmentNotFoundException e) {
-        return "mvc/parameters/segments/not_found";
+        return "parameters/segments/not_found";
     }
 
     private Segment convertToSegment(SegmentDTO segmentDTO) {

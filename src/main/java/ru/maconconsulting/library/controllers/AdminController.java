@@ -1,4 +1,4 @@
-package ru.maconconsulting.library.controllers.mvc;
+package ru.maconconsulting.library.controllers;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -37,30 +37,30 @@ public class AdminController {
     @GetMapping
     public String getAllMaconUsers(Model model) {
         model.addAttribute("maconUsers", maconUsersService.findAll().stream().sorted(Comparator.comparing(MaconUser::getName)).collect(Collectors.toList()));
-        log.info("Go to mvc/users/manage");
-        return "mvc/users/manage";
+        log.info("Go to users/manage");
+        return "users/manage";
     }
 
     @GetMapping("/{login}")
     public String show(@PathVariable("login") String login, Model model) {
         model.addAttribute("maconUser", maconUsersService.findByLogin(login)
                 .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден")));
-        log.info("Go to mvc/users/show");
-        return "mvc/users/show";
+        log.info("Go to users/show");
+        return "users/show";
     }
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("maconUser") MaconUser maconUser) {
-        log.info("Go to mvc/users/new");
-        return "mvc/users/new";
+        log.info("Go to users/new");
+        return "users/new";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("maconUser") @Valid MaconUserDTO maconUserDTO, BindingResult bindingResult) {
         maconUserValidator.validate(maconUserDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/users/new");
-            return "mvc/users/new";
+            log.info("Go to users/new");
+            return "users/new";
         }
         maconUsersService.save(convertToMaconUser(maconUserDTO));
         log.info("Go to redirect:/users");
@@ -71,16 +71,16 @@ public class AdminController {
     public String edit(Model model, @PathVariable("login") String login) {
         model.addAttribute("maconUser", maconUsersService.findByLogin(login)
                 .orElseThrow(() -> new MaconUserNotFoundException("Пользователь с логином " + login + " не найден")));
-        log.info("Go to mvc/users/edit");
-        return "mvc/users/edit";
+        log.info("Go to users/edit");
+        return "users/edit";
     }
 
     @PatchMapping("/{login}")
     public String update(@ModelAttribute("maconUser") MaconUser maconUser, BindingResult bindingResult,
                          @PathVariable("login") String login) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to mvc/users/edit");
-            return "mvc/users/edit";
+            log.info("Go to users/edit");
+            return "users/edit";
         }
 
         maconUsersService.update(login, maconUser);
