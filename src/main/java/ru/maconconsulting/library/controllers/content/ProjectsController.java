@@ -114,23 +114,42 @@ public class ProjectsController {
         return "redirect:/projects";
     }
 
-    @GetMapping("/search")
-    public String search(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
+    @GetMapping("/search-project")
+    public String searchProject(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/projects/search");
-        return "content/projects/search";
+        log.info("Go to content/projects/search_project");
+        return "content/projects/search_project";
     }
 
-    @PostMapping("/search-result")
-    public String showSearchResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
+    @PostMapping("/search-project-result")
+    public String showSearchProjectResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to content/projects/search");
-            return "content/projects/search";
+            log.info("Go to content/projects/search_project");
+            return "content/projects/search_project";
         }
-        model.addAttribute("result", projectsService.search(searchProject));
-        log.info("Go to content/projects/result");
-        return "content/projects/result";
+        model.addAttribute("result", projectsService.searchProject(searchProject));
+        log.info("Go to content/projects/result_project");
+        return "content/projects/result_project";
+    }
+
+    @GetMapping("/search-methodology")
+    public String searchMethodology(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
+        addParametersToModelAttribute(model);
+        log.info("Go to content/projects/search_methodology");
+        return "content/projects/search_methodology";
+    }
+
+    @PostMapping("/search-methodology-result")
+    public String showSearchMethodologyResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
+                                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.info("Go to content/projects/search_methodology");
+            return "content/projects/search_methodology";
+        }
+        model.addAttribute("result", projectsService.searchMethodology(searchProject));
+        log.info("Go to content/projects/result_methodology");
+        return "content/projects/result_methodology";
     }
 
     @ExceptionHandler

@@ -72,48 +72,57 @@ public class ProjectsService {
         projectsRepository.deleteById(id);
     }
 
-    public List<Project> search(SearchProject searchProject) {
-        List<Project> result = findAll().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList());
+    public List<Project> searchProject(SearchProject searchProject) {
+        List<Project> projects = findAll().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList());
+        return search(projects, searchProject);
+    }
+
+    public List<Project> searchMethodology(SearchProject searchProject) {
+        List<Project> projects = findAll().stream().filter(p -> p.getMethodology() != null && !p.getMethodology().trim().equals("")).sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList());
+        return search(projects, searchProject);
+    }
+
+    private List<Project> search(List<Project> projects, SearchProject searchProject) {
         if (searchProject.getYear() != 0) {
-            result = searchElement(result, p -> p.getYear().equals(searchProject.getYear()));
+            projects = searchElement(projects, p -> p.getYear().equals(searchProject.getYear()));
         }
-        if (!searchProject.getRelevance().trim().equals("")) {
-            result = searchElement(result, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchProject.getRelevance().trim().toLowerCase()));
+        if (searchProject.getRelevance() != null && !searchProject.getRelevance().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getRelevance() != null && !p.getRelevance().equals("") && p.getRelevance().toLowerCase().contains(searchProject.getRelevance().trim().toLowerCase()));
         }
-        if (!searchProject.getTitle().trim().equals("")) {
-            result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().trim().toLowerCase()));
+        if (searchProject.getTitle() != null && !searchProject.getTitle().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getTitle().toLowerCase().contains(searchProject.getTitle().trim().toLowerCase()));
         }
-        if (!searchProject.getClient().trim().equals("")) {
-            result = searchElement(result, p -> p.getClient() != null && !p.getClient().equals("") && p.getClient().toLowerCase().contains(searchProject.getClient().trim().toLowerCase()));
+        if (searchProject.getClient() != null && !searchProject.getClient().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getClient() != null && !p.getClient().equals("") && p.getClient().toLowerCase().contains(searchProject.getClient().trim().toLowerCase()));
         }
-        if (!searchProject.getLocation().trim().equals("")) {
-            result = searchElement(result, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
+        if (searchProject.getLocation() != null && !searchProject.getLocation().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
         }
         if (searchProject.getChapter() != null && !searchProject.getChapter().getName().equals("")) {
-            result = searchElement(result, p -> {
+            projects = searchElement(projects, p -> {
                 List<String> chapterNames = p.getChapters().stream().map(AbstractParameterEntity::getName).toList();
                 return chapterNames.stream().anyMatch(n -> n.equals(searchProject.getChapter().getName()));
             });
         }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
-            result = searchElement(result, p -> {
+            projects = searchElement(projects, p -> {
                 List<String> segmentNames = p.getSegments().stream().map(AbstractParameterEntity::getName).toList();
                 return segmentNames.stream().anyMatch(n -> n.equals(searchProject.getSegment().getName()));
             });
         }
         if (searchProject.getFormat() != null && !searchProject.getFormat().getName().equals("")) {
-            result = searchElement(result, p -> {
+            projects = searchElement(projects, p -> {
                 List<String> formatNames = p.getFormats().stream().map(AbstractParameterEntity::getName).toList();
                 return formatNames.stream().anyMatch(n -> n.equals(searchProject.getFormat().getName()));
             });
         }
-        if (!searchProject.getKeyWord().trim().equals("")) {
-            result = searchElement(result, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(searchProject.getKeyWord().trim().toLowerCase()));
+        if (searchProject.getKeyWord() != null && !searchProject.getKeyWord().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(searchProject.getKeyWord().trim().toLowerCase()));
         }
-        if (!searchProject.getMethodology().trim().equals("")) {
-            result = searchElement(result, p -> p.getMethodology() != null && !p.getMethodology().equals("") && p.getMethodology().toLowerCase().contains(searchProject.getMethodology().trim().toLowerCase()));
+        if (searchProject.getMethodology() != null && !searchProject.getMethodology().trim().equals("")) {
+            projects = searchElement(projects, p -> p.getMethodology() != null && !p.getMethodology().equals("") && p.getMethodology().toLowerCase().contains(searchProject.getMethodology().trim().toLowerCase()));
         }
-        return result;
+        return projects;
     }
 
     private List<Project> searchElement(List<Project> source, Predicate<Project> predicate) {

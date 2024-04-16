@@ -33,7 +33,7 @@
         </div>
     </div>
 </header>
-<form class="custom_form" th:method="POST" th:action="@{/projects/search-result}" th:object="${searchProject}">
+<form class="custom_form" th:method="POST" th:action="@{/projects/search-project-result}" th:object="${searchProject}">
 
     <label for="title">Введите строку для поиска в названии проекта: </label>
     <input type="text" th:field="*{title}" id="title">

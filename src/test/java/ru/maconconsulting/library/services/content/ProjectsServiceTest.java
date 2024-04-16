@@ -123,12 +123,26 @@ class ProjectsServiceTest {
     }
 
     @Test
-    void search() {
-        SearchProject searchProject = new SearchProject(2023, "", "", "", "",
-                CHAPTER_DTO_1, SEGMENT_DTO_1, FORMAT_DTO_1, "", "");
-        List<Project> expectedProjects = List.of(PROJECT_1, PROJECT_2);
+    void searchProject() {
+        SearchProject searchProject = new SearchProject(0, "", "", "", "",
+                null, null, null, "Доверительное управление", "");
+        List<Project> expectedProjects = List.of(PROJECT_2, PROJECT_3);
         Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
-        List<Project> actualProjects = projectsService.search(searchProject);
+        List<Project> actualProjects = projectsService.searchProject(searchProject);
+
+        Mockito.verify(projectsRepository, Mockito.times(1)).findAll();
+        Assertions.assertNotNull(actualProjects);
+        Assertions.assertEquals(expectedProjects.size(), actualProjects.size());
+        Assertions.assertEquals(expectedProjects, actualProjects);
+    }
+
+    @Test
+    void searchMethodology() {
+        SearchProject searchProject = new SearchProject(0, null, null, "", "",
+                null, null, null, "", "");
+        List<Project> expectedProjects = List.of(PROJECT_2);
+        Mockito.when(projectsRepository.findAll()).thenReturn(expectedProjects);
+        List<Project> actualProjects = projectsService.searchMethodology(searchProject);
 
         Mockito.verify(projectsRepository, Mockito.times(1)).findAll();
         Assertions.assertNotNull(actualProjects);

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Результат поиска</title>
+    <title>Результат поиска методологии</title>
     <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
@@ -37,8 +37,7 @@
     <thead>
     <tr>
         <th>Название проекта</th>
-        <th>Год</th>
-        <th>Локация</th>
+        <th>Методология</th>
     </tr>
     </thead>
     <tbody>
@@ -48,8 +47,7 @@
             <p th:text="${project.getTitle()}">title</p>
             </a>
         </td>
-        <td th:text="${project.getYear()}">year</td>
-        <td th:text="${project.getLocation()}">location</td>
+        <td th:text="${project.getMethodology()}">location</td>
     </tr>
     </tbody>
 </table>
