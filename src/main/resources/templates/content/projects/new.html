@@ -94,7 +94,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
     <br/>
 
-    <label for="methodology">Введите ключевые слова: </label>
+    <label for="methodology">Введите методологию: </label>
     <input type="text" th:field="*{methodology}" id="methodology"
            placeholder="Пример: 'Анализ на основе оценок параметров ЕРЗ'">
     <div style="color: red" th:if="${#fields.hasErrors('methodology')}" th:errors="*{methodology}">methodology error</div>
