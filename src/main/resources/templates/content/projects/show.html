@@ -99,9 +99,11 @@
 
 <a class="btn" th:href="@{/projects/{id}/edit(id=${project.getId()})}">Редактировать</a>
 <br/>
+<a class="btn" style="background-color: darkblue" th:href="${link}" th:target="_blank">Перейти в проектную папку на Яндекс Диск</a>
+<br/>
 <form th:method="DELETE" th:action="@{/projects/{id}(id=${project.getId()})}"
       onclick="return confirm('Вы подтверждаете удаление?')">
-    <input class="rm_btn" type="submit" value="Удалить">
+    <input class="rm_btn" style="background-color: darkred" type="submit" value="Удалить">
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>

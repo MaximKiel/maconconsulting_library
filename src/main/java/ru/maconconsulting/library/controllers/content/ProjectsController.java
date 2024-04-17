@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class ProjectsController {
 
     public static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
+    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/Проекты";
     private final ProjectsService projectsService;
     private final ChaptersService chaptersService;
     private final SegmentsService segmentsService;
@@ -53,8 +54,10 @@ public class ProjectsController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
+        Project project = projectsService.findById(id).orElseThrow(() -> new ProjectNotFoundException("Проект не найден"));
+        model.addAttribute("project", convertToProjectDTO(project));
+        model.addAttribute("link", YANDEX_DISK_LINK + "/" + project.getYear()
+                + ". Проекты/" + project.getTitle());
         log.info("Go to content/projects/show");
         return "content/projects/show";
     }
