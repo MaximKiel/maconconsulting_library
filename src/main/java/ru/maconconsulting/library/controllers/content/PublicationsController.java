@@ -74,8 +74,10 @@ public class PublicationsController {
             return "content/publications/new";
         }
         publicationsService.save(convertToPublication(publicationDTO));
-        log.info("Go to redirect:/publications/" + publicationsService.findByTitle(publicationDTO.getTitle()).get().getId());
-        return "redirect:/publications/" + publicationsService.findByTitle(publicationDTO.getTitle()).get().getId();
+        Publication publication = publicationsService.findByTitle(publicationDTO.getTitle())
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"));
+        log.info("Go to redirect:/publications/" + publication.getId());
+        return "redirect:/publications/" + publication.getId();
     }
 
     @GetMapping("/{id}/edit")

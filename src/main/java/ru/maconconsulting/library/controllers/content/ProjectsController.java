@@ -79,8 +79,10 @@ public class ProjectsController {
             return "content/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
-        log.info("Go to redirect:/projects/" + projectsService.findByTitle(projectDTO.getTitle()).get().getId());
-        return "redirect:/projects/" + projectsService.findByTitle(projectDTO.getTitle()).get().getId();
+        Project project = projectsService.findByTitle(projectDTO.getTitle())
+                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"));
+        log.info("Go to redirect:/projects/" + project.getId());
+        return "redirect:/projects/" + project.getId();
     }
 
     @GetMapping("/{id}/edit")
