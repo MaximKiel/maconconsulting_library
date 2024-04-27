@@ -19,8 +19,8 @@ import ru.maconconsulting.library.utils.search.SearchPublication;
 import ru.maconconsulting.library.utils.exceptions.content.PublicationNotFoundException;
 import ru.maconconsulting.library.utils.validators.content.PublicationValidator;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Controller
@@ -153,10 +153,10 @@ public class PublicationsController {
 
     private void checkNotNullParameters(PublicationDTO publicationDTO) {
         if (publicationDTO.getSegments() == null) {
-            publicationDTO.setSegments(new ArrayList<>());
+            publicationDTO.setSegments(new HashSet<>());
         }
         if (publicationDTO.getFormats() == null) {
-            publicationDTO.setFormats(new ArrayList<>());
+            publicationDTO.setFormats(new HashSet<>());
         }
     }
 

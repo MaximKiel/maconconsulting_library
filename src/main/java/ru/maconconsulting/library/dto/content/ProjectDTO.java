@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.parameters.*;
 
-import java.util.List;
+import java.util.Set;
 
 public class ProjectDTO {
 
@@ -23,11 +23,11 @@ public class ProjectDTO {
     @NotBlank(message = "Локация не должна быть пустой!")
     private String location;
 
-    private List<ChapterDTO> chapters;
+    private Set<TypeDTO> types;
 
-    private List<SegmentDTO> segments;
+    private Set<SegmentDTO> segments;
 
-    private List<FormatDTO> formats;
+    private Set<FormatDTO> formats;
 
     private String keyWords;
 
@@ -36,14 +36,14 @@ public class ProjectDTO {
     public ProjectDTO() {
     }
 
-    public ProjectDTO(Integer id, Integer year, String relevance, String title, String client, String location, List<ChapterDTO> chapters, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords, String methodology) {
+    public ProjectDTO(Integer id, Integer year, String relevance, String title, String client, String location, Set<TypeDTO> types, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords, String methodology) {
         this.id = id;
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.location = location;
-        this.chapters = chapters;
+        this.types = types;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -98,27 +98,27 @@ public class ProjectDTO {
         this.location = location;
     }
 
-    public List<ChapterDTO> getChapters() {
-        return chapters;
+    public Set<TypeDTO> getTypes() {
+        return types;
     }
 
-    public void setChapters(List<ChapterDTO> chapters) {
-        this.chapters = chapters;
+    public void setTypes(Set<TypeDTO> types) {
+        this.types = types;
     }
 
-    public List<SegmentDTO> getSegments() {
+    public Set<SegmentDTO> getSegments() {
         return segments;
     }
 
-    public void setSegments(List<SegmentDTO> segments) {
+    public void setSegments(Set<SegmentDTO> segments) {
         this.segments = segments;
     }
 
-    public List<FormatDTO> getFormats() {
+    public Set<FormatDTO> getFormats() {
         return formats;
     }
 
-    public void setFormats(List<FormatDTO> formats) {
+    public void setFormats(Set<FormatDTO> formats) {
         this.formats = formats;
     }
 

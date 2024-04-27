@@ -5,27 +5,27 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import ru.maconconsulting.library.models.content.Project;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "chapter")
-public class Chapter extends AbstractParameterEntity {
+@Table(name = "type")
+public class Type extends AbstractParameterEntity {
 
-    @ManyToMany(mappedBy = "chapters")
-    private List<Project> projects;
+    @ManyToMany(mappedBy = "types")
+    private Set<Project> projects;
 
-    public Chapter() {
+    public Type() {
     }
 
-    public Chapter(String name) {
+    public Type(String name) {
         super(name);
     }
 
-    public List<Project> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 

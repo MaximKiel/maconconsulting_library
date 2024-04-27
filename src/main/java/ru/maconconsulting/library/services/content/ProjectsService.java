@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
-    private final ChaptersService chaptersService;
+    private final TypesService typesService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
 
     @Autowired
-    public ProjectsService(ProjectsRepository projectsRepository, ChaptersService chaptersService, SegmentsService segmentsService, FormatsService formatsService) {
+    public ProjectsService(ProjectsRepository projectsRepository, TypesService typesService, SegmentsService segmentsService, FormatsService formatsService) {
         this.projectsRepository = projectsRepository;
-        this.chaptersService = chaptersService;
+        this.typesService = typesService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
     }
@@ -46,7 +46,7 @@ public class ProjectsService {
     @Transactional
     public void save(Project project) {
         project.setCreatedAt(LocalDateTime.now());
-        project.setChapters(enrichChapters(chaptersService, project));
+        project.setTypes(enrichTypes(typesService, project));
         project.setSegments(enrichSegments(segmentsService, project));
         project.setFormats(enrichFormats(formatsService, project));
         projectsRepository.save(project);
@@ -57,8 +57,8 @@ public class ProjectsService {
         if (findById(id).isPresent()) {
             updatedProject.setId(findById(id).get().getId());
             updatedProject.setCreatedAt(findById(id).get().getCreatedAt());
-            updatedProject.setChapters(updatedProject.getChapters() != null ?
-                    enrichChapters(chaptersService, updatedProject) : null);
+            updatedProject.setTypes(updatedProject.getTypes() != null ?
+                    enrichTypes(typesService, updatedProject) : null);
             updatedProject.setSegments(updatedProject.getSegments() != null ?
                     enrichSegments(segmentsService, updatedProject) : null);
             updatedProject.setFormats(updatedProject.getFormats() != null ?
@@ -98,10 +98,10 @@ public class ProjectsService {
         if (searchProject.getLocation() != null && !searchProject.getLocation().trim().equals("")) {
             projects = searchElement(projects, p -> p.getLocation().toLowerCase().contains(searchProject.getLocation().trim().toLowerCase()));
         }
-        if (searchProject.getChapter() != null && !searchProject.getChapter().getName().equals("")) {
+        if (searchProject.getType() != null && !searchProject.getType().getName().equals("")) {
             projects = searchElement(projects, p -> {
-                List<String> chapterNames = p.getChapters().stream().map(AbstractParameterEntity::getName).toList();
-                return chapterNames.stream().anyMatch(n -> n.equals(searchProject.getChapter().getName()));
+                List<String> typeNames = p.getTypes().stream().map(AbstractParameterEntity::getName).toList();
+                return typeNames.stream().anyMatch(n -> n.equals(searchProject.getType().getName()));
             });
         }
         if (searchProject.getSegment() != null && !searchProject.getSegment().getName().equals("")) {
@@ -129,24 +129,24 @@ public class ProjectsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    private List<Chapter> enrichChapters(ChaptersService service, Project project) {
-        List<Chapter> entities = new ArrayList<>();
-        for (Chapter c : project.getChapters()) {
-            entities.add(service.findByName(c.getName()).orElseThrow());
+    private Set<Type> enrichTypes(TypesService service, Project project) {
+        Set<Type> entities = new HashSet<>();
+        for (Type t : project.getTypes()) {
+            entities.add(service.findByName(t.getName()).orElseThrow());
         }
         return entities;
     }
 
-    private List<Segment> enrichSegments(SegmentsService service, Project project) {
-        List<Segment> entities = new ArrayList<>();
+    private Set<Segment> enrichSegments(SegmentsService service, Project project) {
+        Set<Segment> entities = new HashSet<>();
         for (Segment s : project.getSegments()) {
             entities.add(service.findByName(s.getName()).orElseThrow());
         }
         return entities;
     }
 
-    private List<Format> enrichFormats(FormatsService service, Project project) {
-        List<Format> entities = new ArrayList<>();
+    private Set<Format> enrichFormats(FormatsService service, Project project) {
+        Set<Format> entities = new HashSet<>();
         for (Format f : project.getFormats()) {
             entities.add(service.findByName(f.getName()).orElseThrow());
         }

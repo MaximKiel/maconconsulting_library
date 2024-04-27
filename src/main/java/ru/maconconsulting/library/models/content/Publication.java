@@ -6,7 +6,7 @@ import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.models.parameters.Segment;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "publication")
@@ -39,7 +39,7 @@ public class Publication extends AbstractBasedEntity {
             name = "publication_segment",
             joinColumns = @JoinColumn(name = "publication_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
-    private List<Segment> segments;
+    private Set<Segment> segments;
 
     @ManyToMany
     @JoinTable(
@@ -47,7 +47,7 @@ public class Publication extends AbstractBasedEntity {
             joinColumns = @JoinColumn(name = "publication_id"),
             inverseJoinColumns = @JoinColumn(name = "format_id")
     )
-    private List<Format> formats;
+    private Set<Format> formats;
 
     @Column(name = "key_words")
     private String keyWords;
@@ -55,7 +55,7 @@ public class Publication extends AbstractBasedEntity {
     public Publication() {
     }
 
-    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, List<Segment> segments, List<Format> formats, String keyWords) {
+    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, Set<Segment> segments, Set<Format> formats, String keyWords) {
         this.title = title;
         this.annotation = annotation;
         this.source = source;
@@ -116,19 +116,19 @@ public class Publication extends AbstractBasedEntity {
         this.location = location;
     }
 
-    public List<Segment> getSegments() {
+    public Set<Segment> getSegments() {
         return segments;
     }
 
-    public void setSegments(List<Segment> segments) {
+    public void setSegments(Set<Segment> segments) {
         this.segments = segments;
     }
 
-    public List<Format> getFormats() {
+    public Set<Format> getFormats() {
         return formats;
     }
 
-    public void setFormats(List<Format> formats) {
+    public void setFormats(Set<Format> formats) {
         this.formats = formats;
     }
 

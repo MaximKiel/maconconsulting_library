@@ -16,10 +16,11 @@ import ru.maconconsulting.library.utils.search.SearchProject;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static ru.maconconsulting.library.util.parameters.FormatsTestData.*;
 import static ru.maconconsulting.library.util.parameters.SegmentsTestData.*;
-import static ru.maconconsulting.library.util.parameters.ChaptersTestData.*;
+import static ru.maconconsulting.library.util.parameters.TypesTestData.*;
 import static ru.maconconsulting.library.util.content.ProjectsTestData.*;
 
 @SpringBootTest
@@ -30,7 +31,7 @@ class ProjectsServiceTest {
     private ProjectsService projectsService;
 
     @Mock
-    private ChaptersService chaptersService;
+    private TypesService typesService;
 
     @Mock
     private SegmentsService segmentsService;
@@ -78,11 +79,11 @@ class ProjectsServiceTest {
     @Test
     void save() {
         Project newProject = new Project(2023, "12.2023", "23200_New", "Client new",
-                "Россия, Край, Город", List.of(CHAPTER_1), List.of(SEGMENT_1), List.of(FORMAT_1),
+                "Россия, Край, Город", Set.of(TYPE_1), Set.of(SEGMENT_1), Set.of(FORMAT_1),
                 "Доверительное управление", "Анализ оценок ЕРЗ");
-        Mockito.when(chaptersService.findByName(newProject.getChapters().get(0).getName())).thenReturn(Optional.of(newProject.getChapters().get(0)));
-        Mockito.when(segmentsService.findByName(newProject.getSegments().get(0).getName())).thenReturn(Optional.of(newProject.getSegments().get(0)));
-        Mockito.when(formatsService.findByName(newProject.getFormats().get(0).getName())).thenReturn(Optional.of(newProject.getFormats().get(0)));
+        Mockito.when(typesService.findByName(TYPE_1.getName())).thenReturn(Optional.of(TYPE_1));
+        Mockito.when(segmentsService.findByName(SEGMENT_1.getName())).thenReturn(Optional.of(SEGMENT_1));
+        Mockito.when(formatsService.findByName(FORMAT_1.getName())).thenReturn(Optional.of(FORMAT_1));
         Mockito.when(projectsRepository.save(newProject)).thenReturn(newProject);
         projectsService.save(newProject);
 
@@ -97,8 +98,8 @@ class ProjectsServiceTest {
         PROJECT_1.setTitle("Updated PROJECT_1");
         Mockito.when(projectsRepository.findById(id)).thenReturn(Optional.of(PROJECT_1));
         Mockito.when(projectsRepository.findByTitle("Updated PROJECT_1")).thenReturn(Optional.of(updatedProject));
-        for (Chapter chapter : updatedProject.getChapters()) {
-            Mockito.when(chaptersService.findByName(chapter.getName())).thenReturn(Optional.of(chapter));
+        for (Type type : updatedProject.getTypes()) {
+            Mockito.when(typesService.findByName(type.getName())).thenReturn(Optional.of(type));
         }
         for (Segment segment : updatedProject.getSegments()) {
             Mockito.when(segmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));

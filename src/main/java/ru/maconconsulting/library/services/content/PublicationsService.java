@@ -10,10 +10,7 @@ import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.utils.search.SearchPublication;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -112,16 +109,16 @@ public class PublicationsService {
         return source.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    private List<Segment> enrichSegments(SegmentsService service, Publication publication) {
-        List<Segment> segments = new ArrayList<>();
+    private Set<Segment> enrichSegments(SegmentsService service, Publication publication) {
+        Set<Segment> segments = new HashSet<>();
         for (Segment s : publication.getSegments()) {
             segments.add(service.findByName(s.getName()).orElseThrow());
         }
         return segments;
     }
 
-    private List<Format> enrichFormats(FormatsService service, Publication publication) {
-        List<Format> formats = new ArrayList<>();
+    private Set<Format> enrichFormats(FormatsService service, Publication publication) {
+        Set<Format> formats = new HashSet<>();
         for (Format f : publication.getFormats()) {
             formats.add(service.findByName(f.getName()).orElseThrow());
         }

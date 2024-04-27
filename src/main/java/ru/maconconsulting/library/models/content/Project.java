@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -32,17 +32,17 @@ public class Project extends AbstractBasedEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "project_chapter",
+            name = "project_type",
             joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "chapter_id"))
-    private List<Chapter> chapters;
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
+    private Set<Type> types;
 
     @ManyToMany
     @JoinTable(
             name = "project_segment",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
-    private List<Segment> segments;
+    private Set<Segment> segments;
 
     @ManyToMany
     @JoinTable(
@@ -50,7 +50,7 @@ public class Project extends AbstractBasedEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "format_id")
     )
-    private List<Format> formats;
+    private Set<Format> formats;
 
     @Column(name = "key_words")
     private String keyWords;
@@ -61,13 +61,13 @@ public class Project extends AbstractBasedEntity {
     public Project() {
     }
 
-    public Project(Integer year, String relevance, String title, String client, String location, List<Chapter> chapters, List<Segment> segments, List<Format> formats, String keyWords, String methodology) {
+    public Project(Integer year, String relevance, String title, String client, String location, Set<Type> types, Set<Segment> segments, Set<Format> formats, String keyWords, String methodology) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.location = location;
-        this.chapters = chapters;
+        this.types = types;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -114,27 +114,27 @@ public class Project extends AbstractBasedEntity {
         this.location = location;
     }
 
-    public List<Chapter> getChapters() {
-        return chapters;
+    public Set<Type> getTypes() {
+        return types;
     }
 
-    public void setChapters(List<Chapter> chapters) {
-        this.chapters = chapters;
+    public void setTypes(Set<Type> types) {
+        this.types = types;
     }
 
-    public List<Segment> getSegments() {
+    public Set<Segment> getSegments() {
         return segments;
     }
 
-    public void setSegments(List<Segment> segments) {
+    public void setSegments(Set<Segment> segments) {
         this.segments = segments;
     }
 
-    public List<Format> getFormats() {
+    public Set<Format> getFormats() {
         return formats;
     }
 
-    public void setFormats(List<Format> formats) {
+    public void setFormats(Set<Format> formats) {
         this.formats = formats;
     }
 
@@ -162,7 +162,7 @@ public class Project extends AbstractBasedEntity {
                 ", title='" + title + '\'' +
                 ", client='" + client + '\'' +
                 ", location='" + location + '\'' +
-                ", chapters=" + chapters +
+                ", types=" + types +
                 ", segments=" + segments +
                 ", formats=" + formats +
                 ", keyWords='" + keyWords + '\'' +

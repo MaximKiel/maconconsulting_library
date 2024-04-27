@@ -14,7 +14,7 @@ public class SearchProject {
 
     private String location;
 
-    private ChapterDTO chapter;
+    private TypeDTO typeDTO;
 
     private SegmentDTO segment;
 
@@ -27,13 +27,13 @@ public class SearchProject {
     public SearchProject() {
     }
 
-    public SearchProject(int year, String relevance, String title, String client, String location, ChapterDTO chapter, SegmentDTO segment, FormatDTO format, String keyWord, String methodology) {
+    public SearchProject(int year, String relevance, String title, String client, String location, TypeDTO typeDTO, SegmentDTO segment, FormatDTO format, String keyWord, String methodology) {
         this.year = year;
         this.relevance = relevance;
         this.title = title;
         this.client = client;
         this.location = location;
-        this.chapter = chapter;
+        this.typeDTO = typeDTO;
         this.segment = segment;
         this.format = format;
         this.keyWord = keyWord;
@@ -80,12 +80,12 @@ public class SearchProject {
         this.location = location;
     }
 
-    public ChapterDTO getChapter() {
-        return chapter;
+    public TypeDTO getType() {
+        return typeDTO;
     }
 
-    public void setChapter(ChapterDTO chapter) {
-        this.chapter = chapter;
+    public void setType(TypeDTO typeDTO) {
+        this.typeDTO = typeDTO;
     }
 
     public SegmentDTO getSegment() {

@@ -16,6 +16,7 @@ import ru.maconconsulting.library.utils.search.SearchPublication;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static ru.maconconsulting.library.util.content.PublicationsTestData.*;
 import static ru.maconconsulting.library.util.parameters.FormatsTestData.*;
@@ -76,9 +77,9 @@ class PublicationsServiceTest {
         Publication newPublication = new Publication("Новый материал", "new annotation",
                 "new source", 2024, "01.2024", "/test/publ/new",
                 "Россия, Краснодарский край, Краснодар",
-                List.of(SEGMENT_1), List.of(FORMAT_1),  "Доверительное управление");
-        Mockito.when(segmentsService.findByName(newPublication.getSegments().get(0).getName())).thenReturn(Optional.of(newPublication.getSegments().get(0)));
-        Mockito.when(formatsService.findByName(newPublication.getFormats().get(0).getName())).thenReturn(Optional.of(newPublication.getFormats().get(0)));
+                Set.of(SEGMENT_1), Set.of(FORMAT_1),  "Доверительное управление");
+        Mockito.when(segmentsService.findByName(SEGMENT_1.getName())).thenReturn(Optional.of(SEGMENT_1));
+        Mockito.when(formatsService.findByName(FORMAT_1.getName())).thenReturn(Optional.of(FORMAT_1));
         Mockito.when(publicationsRepository.save(newPublication)).thenReturn(newPublication);
         publicationsService.save(newPublication);
 

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
 
-import java.util.List;
+import java.util.Set;
 
 public class PublicationDTO {
 
@@ -25,16 +25,16 @@ public class PublicationDTO {
 
     private String location;
 
-    private List<SegmentDTO> segments;
+    private Set<SegmentDTO> segments;
 
-    private List<FormatDTO> formats;
+    private Set<FormatDTO> formats;
 
     private String keyWords;
 
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, List<SegmentDTO> segments, List<FormatDTO> formats, String keyWords) {
+    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
         this.id = id;
         this.title = title;
         this.annotation = annotation;
@@ -96,19 +96,19 @@ public class PublicationDTO {
         this.location = location;
     }
 
-    public List<SegmentDTO> getSegments() {
+    public Set<SegmentDTO> getSegments() {
         return segments;
     }
 
-    public void setSegments(List<SegmentDTO> segments) {
+    public void setSegments(Set<SegmentDTO> segments) {
         this.segments = segments;
     }
 
-    public List<FormatDTO> getFormats() {
+    public Set<FormatDTO> getFormats() {
         return formats;
     }
 
-    public void setFormats(List<FormatDTO> formats) {
+    public void setFormats(Set<FormatDTO> formats) {
         this.formats = formats;
     }
 

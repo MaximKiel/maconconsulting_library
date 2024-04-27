@@ -6,17 +6,17 @@ import jakarta.persistence.Table;
 import ru.maconconsulting.library.models.content.Project;
 import ru.maconconsulting.library.models.content.Publication;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "segment")
 public class Segment extends AbstractParameterEntity {
 
     @ManyToMany(mappedBy = "segments")
-    private List<Project> projects;
+    private Set<Project> projects;
 
     @ManyToMany(mappedBy = "segments")
-    private List<Publication> publications;
+    private Set<Publication> publications;
 
     public Segment() {
     }
@@ -25,19 +25,19 @@ public class Segment extends AbstractParameterEntity {
         super(name);
     }
 
-    public List<Project> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 
-    public List<Publication> getPublications() {
+    public Set<Publication> getPublications() {
         return publications;
     }
 
-    public void setPublications(List<Publication> publications) {
+    public void setPublications(Set<Publication> publications) {
         this.publications = publications;
     }
 
