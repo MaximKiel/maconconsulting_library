@@ -57,10 +57,10 @@
     <input type="text" th:field="*{location}" id="location">
     <br/>
 
-    <label for="chapter">Выберете раздел отчета: </label>
-    <select th:field="*{chapter}" id="chapter">
+    <label for="type">Выберете тип исследования: </label>
+    <select th:field="*{type}" id="type">
         <option value=""></option>
-        <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"></option>
+        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
 
     <label for="segment">Выберете сегмент рынка: </label>

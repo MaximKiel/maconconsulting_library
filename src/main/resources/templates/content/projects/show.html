@@ -62,10 +62,10 @@
         <td><p th:text="${project.getLocation()}">Value</p></td>
     </tr>
     <tr>
-        <td><b>Разделы отчета:</b></td>
+        <td><b>Типы исследования:</b></td>
         <td>
             <ul>
-                <li th:each="chapter : ${project.getChapters()}" th:text="${chapter.getName()}">Value</li>
+                <li th:each="type : ${project.getTypes()}" th:text="${type.getName()}">Value</li>
             </ul>
         </td>
     </tr>

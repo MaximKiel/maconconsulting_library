@@ -41,16 +41,16 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
-    <label for="chapters">Введите разделы отчета (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
-    <select id="chapters" name="chapters" multiple="multiple" class="select-checkbox">
-        <option th:each="chapter : ${chapters}" th:value="${chapter.getName()}" th:text="${chapter.getName()}"
-                th:selected="${project.chapters.contains(chapter)}"></option>
+    <label for="types">Выберете типы исследования (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
+    <select id="types" name="types" multiple="multiple" class="select-checkbox">
+        <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
+                th:selected="${project.types.contains(type)}"></option>
     </select>
-    <div style="color: red" th:if="${#fields.hasErrors('chapters')}" th:errors="*{chapters}">chapters error</div>
-    <a style="color: gray; font-style: italic" href="/chapters">Редактировать список разделов</a><br/>
+    <div style="color: red" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">types error</div>
+    <a style="color: gray; font-style: italic" href="/types">Редактировать список типов</a><br/>
     <br/>
 
-    <label for="segments">Введите сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
+    <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
         th:selected="${project.segments.contains(segment)}"></option>

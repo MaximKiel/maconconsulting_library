@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <title>Управление разделами</title>
+    <title>Управление типами</title>
     <link rel="stylesheet" type="text/css" href="/css/reset.min.css" th:href="@{/css/reset.min.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css" th:href="@{/css/header.css}"/>
@@ -36,19 +36,19 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Раздел</th>
+        <th>Тип исследования</th>
         <th>Редактировать</th>
         <th>Удалить</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="chapter : ${chapters}">
-        <td th:text="${chapter.getName()}">name</td>
+    <tr th:each="type : ${types}">
+        <td th:text="${type.getName()}">name</td>
         <td>
-            <a th:href="@{/chapters/{name}/edit(name=${chapter.getName()})}">Редактировать</a>
+            <a th:href="@{/types/{name}/edit(name=${type.getName()})}">Редактировать</a>
         </td>
         <td>
-            <form th:method="DELETE" th:action="@{/chapters/{name}(name=${chapter.getName()})}"
+            <form th:method="DELETE" th:action="@{/types/{name}(name=${type.getName()})}"
                   onclick="return confirm('Вы подтверждаете удаление?')">
                 <input type="submit" value="Удалить">
             </form>
@@ -56,7 +56,7 @@
     </tr>
     </tbody>
 </table>
-<a href="/chapters/new">Добавить раздел</a><br/>
+<a href="/types/new">Добавить раздел</a><br/>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>
 </html>
