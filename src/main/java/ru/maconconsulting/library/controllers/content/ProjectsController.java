@@ -47,25 +47,26 @@ public class ProjectsController {
     }
 
     @GetMapping
-    public String getAllProjects() {
-        log.info("Go to content/projects/manage");
+    public String getAll() {
+        log.info("Show manage projects view - call ProjectsController method getAll()");
         return "content/projects/manage";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        Project project = projectsService.findById(id).orElseThrow(() -> new ProjectNotFoundException("Проект не найден"));
+        Project project = projectsService.findById(id)
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с ID=" + id + " не найден"));
         model.addAttribute("project", convertToProjectDTO(project));
         model.addAttribute("link", YANDEX_DISK_LINK + "/" + project.getYear()
                 + ". Проекты/" + project.getTitle());
-        log.info("Go to content/projects/show");
+        log.info("Show project with ID=" + id + " page view - call ProjectsController method show()");
         return "content/projects/show";
     }
 
     @GetMapping("/new")
     public String newProject(@ModelAttribute("project") ProjectDTO projectDTO, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/projects/new");
+        log.info("Show view for create new project - call ProjectsController method newProject()");
         return "content/projects/new";
     }
 
@@ -75,23 +76,23 @@ public class ProjectsController {
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
             checkNotNullParameters(projectDTO);
-            log.info("Go to content/projects/new");
+            log.info("Catch error for create new project - recall ProjectsController method newProject()");
             return "content/projects/new";
         }
         projectsService.save(convertToProject(projectDTO));
         Project project = projectsService.findByTitle(projectDTO.getTitle())
-                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"));
-        log.info("Go to redirect:/projects/" + project.getId());
+                .orElseThrow(() -> new ProjectNotFoundException("Проект " + projectDTO.getTitle() + " не найден"));
+        log.info("Create new project with ID=" + project.getId() + " - redirect to ProjectsController method show()");
         return "redirect:/projects/" + project.getId();
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("project", convertToProjectDTO(projectsService.findById(id)
-                .orElseThrow(() -> new ProjectNotFoundException("Проект не найден"))));
+                .orElseThrow(() -> new ProjectNotFoundException("Проект с ID=" + id + " не найден"))));
 //        Use DTO parameters because they store into ProjectDTO for update
         addParametersDTOToModelAttribute(model);
-        log.info("Go to content/projects/edit");
+        log.info("Show view for edit project with ID=" + id + " - call ProjectsController method edit()");
         return "content/projects/edit";
     }
 
@@ -103,26 +104,26 @@ public class ProjectsController {
 //          Use DTO parameters because they store into ProjectDTO for update
             addParametersDTOToModelAttribute(model);
             checkNotNullParameters(projectDTO);
-            log.info("Go to content/projects/edit");
+            log.info("Catch error for update project with ID=" + id + " - recall ProjectsController method edit()");
             return "content/projects/edit";
         }
 
         projectsService.update(id, convertToProject(projectDTO));
-        log.info("Go to redirect:/projects/" + id);
+        log.info("Update project with ID=" + id + " - redirect to ProjectsController method show()");
         return "redirect:/projects/" + id;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Integer id) {
         projectsService.delete(id);
-        log.info("Go to redirect:/projects");
+        log.info("Delete project with ID=" + id + " - redirect to ProjectsController method getAll()");
         return "redirect:/projects";
     }
 
     @GetMapping("/search-project")
     public String searchProject(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/projects/search_project");
+        log.info("Show view for search project - call ProjectsController method searchProject()");
         return "content/projects/search_project";
     }
 
@@ -130,18 +131,18 @@ public class ProjectsController {
     public String showSearchProjectResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to content/projects/search_project");
+            log.info("Catch error for search project - recall ProjectsController method searchProject()");
             return "content/projects/search_project";
         }
         model.addAttribute("result", projectsService.searchProject(searchProject));
-        log.info("Go to content/projects/result_project");
+        log.info("Show view for search project result - call ProjectsController method showSearchProjectResult()");
         return "content/projects/result_project";
     }
 
     @GetMapping("/search-methodology")
     public String searchMethodology(@ModelAttribute("searchProject") SearchProject searchProject, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/projects/search_methodology");
+        log.info("Show view for search methodology - call ProjectsController method searchMethodology()");
         return "content/projects/search_methodology";
     }
 
@@ -149,16 +150,17 @@ public class ProjectsController {
     public String showSearchMethodologyResult(Model model, @ModelAttribute("searchProject") SearchProject searchProject,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to content/projects/search_methodology");
+            log.info("Catch error for search methodology - recall ProjectsController method searchMethodology()");
             return "content/projects/search_methodology";
         }
         model.addAttribute("result", projectsService.searchMethodology(searchProject));
-        log.info("Go to content/projects/result_methodology");
+        log.info("Show view for search methodology result- call ProjectsController method showSearchMethodologyResult()");
         return "content/projects/result_methodology";
     }
 
     @ExceptionHandler
     private String handleException(ProjectNotFoundException e) {
+        log.info("Catch ProjectNotFoundException: " + e.getMessage());
         return "content/projects/not_found";
     }
 

@@ -37,15 +37,15 @@ public class SegmentsController {
     }
 
     @GetMapping
-    public String getAllSegments(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
-        log.info("Go to parameters/segments/manage");
+        log.info("Show manage segments view - call SegmentsController method getAll()");
         return "parameters/segments/manage";
     }
 
     @GetMapping("/new")
     public String newSegment(@ModelAttribute("segment") SegmentDTO segmentDTO) {
-        log.info("Go to parameters/segments/new");
+        log.info("Show view for create new segment - call SegmentsController method newSegment()");
         return "parameters/segments/new";
     }
 
@@ -53,19 +53,21 @@ public class SegmentsController {
     public String create(@ModelAttribute("segment") @Valid SegmentDTO segmentDTO, BindingResult bindingResult) {
         segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to parameters/segments/new");
+            log.info("Catch error for create new segment - recall SegmentsController method newSegment()");
             return "parameters/segments/new";
         }
         segmentsService.save(convertToSegment(segmentDTO));
-        log.info("Go to redirect:/segments");
+        Segment segment = segmentsService.findByName(segmentDTO.getName())
+                .orElseThrow(() -> new SegmentNotFoundException("Сегмент " + segmentDTO.getName() + " не найден"));
+        log.info("Create new segment with ID=" + segment.getId() + " - redirect to SegmentsController method show()");
         return "redirect:/segments";
     }
 
     @GetMapping("/{name}/edit")
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("segment", convertToSegmentDTO(segmentsService.findByName(name)
-                .orElseThrow(() -> new SegmentNotFoundException("Сегмент рынка  " + name + " не найден"))));
-        log.info("Go to parameters/segments/edit");
+                .orElseThrow(() -> new SegmentNotFoundException("Сегмент  " + name + " не найден"))));
+        log.info("Show view for edit segment with name=" + name + " - call SegmentsController method edit()");
         return "parameters/segments/edit";
     }
 
@@ -74,12 +76,12 @@ public class SegmentsController {
                          @PathVariable("name") String name) {
         segmentValidator.validate(segmentDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to parameters/segments/edit");
+            log.info("Catch error for update segment with name=" + name + " - recall SegmentsController method edit()");
             return "parameters/segments/edit";
         }
 
         segmentsService.update(name, convertToSegment(segmentDTO));
-        log.info("Go to redirect:/segments");
+        log.info("Update segment with name=" + name + " - redirect to SegmentsController method show()");
         return "redirect:/segments";
     }
 
@@ -88,17 +90,18 @@ public class SegmentsController {
         if (segmentsService.findByName(name).isPresent() && (!segmentsService.findByName(name).get().getProjects().isEmpty() || !segmentsService.findByName(name).get().getPublications().isEmpty() )) {
             model.addAttribute("projects", segmentsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList()));
             model.addAttribute("publications", segmentsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("Go to parameters/delete_error");
+            log.info("Catch error for delete segment with name=" + name + " - show delete parameter page");
             return "parameters/delete_error";
         }
 
         segmentsService.delete(name);
-        log.info("Go to redirect:/segments");
+        log.info("Delete segment with name=" + name + " - redirect to SegmentsController method getAll()");
         return "redirect:/segments";
     }
 
     @ExceptionHandler
     private String handleException(SegmentNotFoundException e) {
+        log.info("Catch SegmentNotFoundException: " + e.getMessage());
         return "parameters/segments/not_found";
     }
 

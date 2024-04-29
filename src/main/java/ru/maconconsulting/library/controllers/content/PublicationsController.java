@@ -43,23 +43,23 @@ public class PublicationsController {
         this.modelMapper = modelMapper;
     }
     @GetMapping
-    public String getAllPublications() {
-        log.info("Go to content/publications/manage");
+    public String getAll() {
+        log.info("Show manage publications view - call PublicationsController method getAll()");
         return "content/publications/manage";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
-        log.info("Go to content/publications/show");
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"))));
+        log.info("Show publication with ID=" + id + " page view - call PublicationsController method show()");
         return "content/publications/show";
     }
 
     @GetMapping("/new")
     public String newPublication(@ModelAttribute("publication") PublicationDTO publicationDTO, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/publications/new");
+        log.info("Show view for create new publication - call PublicationsController method newPublication()");
         return "content/publications/new";
     }
 
@@ -70,23 +70,23 @@ public class PublicationsController {
         if (bindingResult.hasErrors()) {
             addParametersToModelAttribute(model);
             checkNotNullParameters(publicationDTO);
-            log.info("Go to content/publications/new");
+            log.info("Catch error for create new publication - recall PublicationsController method newPublication()");
             return "content/publications/new";
         }
         publicationsService.save(convertToPublication(publicationDTO));
         Publication publication = publicationsService.findByTitle(publicationDTO.getTitle())
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"));
-        log.info("Go to redirect:/publications/" + publication.getId());
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация " + publicationDTO.getTitle() + " не найдена"));
+        log.info("Create new publication with ID=" + publication.getId() + " - redirect to PublicationsController method show()");
         return "redirect:/publications/" + publication.getId();
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация не найдена"))));
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"))));
 //        Use DTO parameters because they store into PublicationDTO for update
         addParametersDTOToModelAttribute(model);
-        log.info("Go to content/publications/edit");
+        log.info("Show view for edit publication with ID=" + id + " - call PublicationsController method edit()");
         return "content/publications/edit";
     }
 
@@ -98,26 +98,26 @@ public class PublicationsController {
 //        Use DTO parameters because they store into PublicationDTO for update
             addParametersDTOToModelAttribute(model);
             checkNotNullParameters(publicationDTO);
-            log.info("Go to content/publications/edit");
+            log.info("Catch error for update publication with ID=" + id + " - recall PublicationsController method edit()");
             return "content/publications/edit";
         }
 
         publicationsService.update(id, convertToPublication(publicationDTO));
-        log.info("Go to redirect:/publications/" + id);
+        log.info("Update publication with ID=" + id + " - redirect to PublicationsController method show()");
         return "redirect:/publications/" + id;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Integer id) {
         publicationsService.delete(id);
-        log.info("Go to redirect:/publications");
+        log.info("Delete publication with ID=" + id + " - redirect to PublicationsController method getAll()");
         return "redirect:/publications";
     }
 
     @GetMapping("/search")
     public String search(@ModelAttribute("searchPublication")SearchPublication searchPublication, Model model) {
         addParametersToModelAttribute(model);
-        log.info("Go to content/publications/search");
+        log.info("Show view for search publication - call PublicationsController method search()");
         return "content/publications/search";
     }
 
@@ -125,17 +125,18 @@ public class PublicationsController {
     public String showSearchResult(Model model, @ModelAttribute("searchPublication") SearchPublication searchPublication,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("Go to content/publications/search");
+            log.info("Catch error for search publication - recall PublicationsController method search()");
             return "content/publications/search";
         }
 
         model.addAttribute("result", publicationsService.search(searchPublication));
-        log.info("Go to content/publications/result");
+        log.info("Show view for search publication result - call PublicationsController method showSearchResult()");
         return "content/publications/result";
     }
 
     @ExceptionHandler
     private String handleException(PublicationNotFoundException e) {
+        log.info("Catch PublicationNotFoundException: " + e.getMessage());
         return "content/publications/not_found";
     }
 

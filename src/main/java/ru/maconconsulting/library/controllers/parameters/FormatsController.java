@@ -37,15 +37,15 @@ public class FormatsController {
     }
 
     @GetMapping
-    public String getAllFormats(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
-        log.info("Go to parameters/formats/manage");
+        log.info("Show manage formats view - call FormatsController method getAll()");
         return "parameters/formats/manage";
     }
 
     @GetMapping("/new")
     public String newFormat(@ModelAttribute("format") FormatDTO formatDTO) {
-        log.info("Go to parameters/formats/new");
+        log.info("Show view for create new format - call FormatsController method newFormat()");
         return "parameters/formats/new";
     }
 
@@ -53,20 +53,22 @@ public class FormatsController {
     public String create(@ModelAttribute("format") @Valid FormatDTO formatDTO, BindingResult bindingResult) {
         formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to parameters/formats/new");
+            log.info("Catch error for create new format - recall FormatsController method newFormat()");
             return "parameters/formats/new";
         }
 
         formatsService.save(convertToFormat(formatDTO));
-        log.info("Go to redirect:/formats");
+        Format format = formatsService.findByName(formatDTO.getName())
+                .orElseThrow(() -> new FormatNotFoundException("Формат " + formatDTO.getName() + "не найден"));
+        log.info("Create new format with ID=" + format.getId() + " - redirect to FormatsController method show()");
         return "redirect:/formats";
     }
 
     @GetMapping("/{name}/edit")
     public String edit(Model model, @PathVariable("name") String name) {
         model.addAttribute("format", convertToFormatDTO(formatsService.findByName(name)
-                .orElseThrow(() -> new FormatNotFoundException("Формат отчета " + name + " не найден"))));
-        log.info("Go to parameters/formats/edit");
+                .orElseThrow(() -> new FormatNotFoundException("Формат " + name + " не найден"))));
+        log.info("Show view for edit format with name=" + name + " - call FormatsController method edit()");
         return "parameters/formats/edit";
     }
 
@@ -75,12 +77,12 @@ public class FormatsController {
                          @PathVariable("name") String name) {
         formatValidator.validate(formatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            log.info("Go to parameters/formats/edit");
+            log.info("Catch error for update format with name=" + name + " - recall FormatsController method edit()");
             return "parameters/formats/edit";
         }
 
         formatsService.update(name, convertToFormat(formatDTO));
-        log.info("Go to redirect:/formats");
+        log.info("Update format with name=" + name + " - redirect to FormatsController method show()");
         return "redirect:/formats";
     }
 
@@ -89,17 +91,18 @@ public class FormatsController {
         if (formatsService.findByName(name).isPresent() && (!formatsService.findByName(name).get().getProjects().isEmpty() || !formatsService.findByName(name).get().getPublications().isEmpty())) {
             model.addAttribute("projects", formatsService.findByName(name).get().getProjects().stream().sorted(Comparator.comparing(Project::getTitle)).collect(Collectors.toList()));
             model.addAttribute("publications", formatsService.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("Go to parameters/delete_error");
+            log.info("Catch error for delete format with name=" + name + " - show delete parameter page");
             return "parameters/delete_error";
         }
 
         formatsService.delete(name);
-        log.info("Go to redirect:/formats");
+        log.info("Delete format with name=" + name + " - redirect to FormatsController method getAll()");
         return "redirect:/formats";
     }
 
     @ExceptionHandler
     private String handleException(FormatNotFoundException e) {
+        log.info("Catch FormatNotFoundException: " + e.getMessage());
         return "parameters/formats/not_found";
     }
 
