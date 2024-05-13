@@ -47,7 +47,11 @@
             <p th:text="${project.getTitle()}">title</p>
             </a>
         </td>
-        <td th:text="${project.getMethodology()}">location</td>
+        <td>
+            <ul>
+                <li th:each="methodology : ${project.getMethodologyInList()}" th:text="${methodology}">Value</li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -42,7 +42,7 @@
     <br/>
 
     <label for="types">Выберете типы исследования (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
-    <select id="types" name="types" multiple="multiple" class="select-checkbox">
+    <select id="types" name="types" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"
                 th:selected="${project.types.contains(type)}"></option>
     </select>
@@ -51,7 +51,7 @@
     <br/>
 
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
-    <select id="segments" name="segments" multiple="multiple" class="select-checkbox">
+    <select id="segments" name="segments" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
         th:selected="${project.segments.contains(segment)}"></option>
     </select>
@@ -60,7 +60,7 @@
     <br/>
 
     <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
-    <select id="formats" name="formats" multiple="multiple" class="select-checkbox">
+    <select id="formats" name="formats" multiple="multiple" class="select-checkbox" style="height: 100px">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
                 th:selected="${project.formats.contains(format)}"></option>
     </select>
@@ -92,14 +92,18 @@
     <br/>
 
     <label for="keyWords">Введите ключевые слова: </label>
-    <input type="text" th:field="*{keyWords}" id="keyWords"
-           placeholder="Пример: 'Доверительное управление, Эксплуатируемая кровля'">
+    <br/>
+    <textarea th:field="*{keyWords}" id="keyWords" rows="5" cols="100">
+        Пример: 'Доверительное управление, Эксплуатируемая кровля'
+    </textarea>
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
     <br/>
 
     <label for="methodology">Введите методологию: </label>
-    <input type="text" th:field="*{methodology}" id="methodology"
-           placeholder="Пример: 'Анализ на основе оценок параметров ЕРЗ'">
+    <br/>
+    <textarea th:field="*{methodology}" id="methodology" rows="5" cols="100">
+        Пример: 'Анализ на основе оценок параметров ЕРЗ (с. 50-60)'
+    </textarea>
     <div style="color: red" th:if="${#fields.hasErrors('methodology')}" th:errors="*{methodology}">methodology error</div>
     <br/>
 

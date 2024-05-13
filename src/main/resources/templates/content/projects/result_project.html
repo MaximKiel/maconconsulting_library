@@ -49,7 +49,11 @@
             </a>
         </td>
         <td th:text="${project.getLocation()}">location</td>
-        <td th:text="${project.getKeyWords()}">keyWords</td>
+        <td>
+            <ul>
+                <li th:each="keyWord : ${project.getKeyWordsInList()}" th:text="${keyWord}">Value</li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -142,12 +144,20 @@ public class Project extends AbstractBasedEntity {
         return keyWords;
     }
 
+    public List<String> getKeyWordsInList() {
+        return Arrays.stream(keyWords.split("\n")).toList();
+    }
+
     public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
 
     public String getMethodology() {
         return methodology;
+    }
+
+    public List<String> getMethodologyInList() {
+        return Arrays.stream(methodology.split("\n")).toList();
     }
 
     public void setMethodology(String methodology) {
