@@ -89,7 +89,7 @@
         <td><b>Ключевые слова:</b></td>
         <td>
             <ul>
-                <li th:each="keyWord : ${project.getKeyWordsInList()}" th:text="${keyWord}">Value</li>
+                <li th:each="keyWord : ${project.getKeyWordsToList()}" th:text="${keyWord}">Value</li>
             </ul>
         </td>
     </tr>
@@ -97,7 +97,7 @@
         <td><b>Особенности методологии:</b></td>
         <td>
             <ul>
-                <li th:each="methodology : ${project.getMethodologyInList()}" th:text="${methodology}">Value</li>
+                <li th:each="methodology : ${project.getMethodologyToList()}" th:text="${methodology}">Value</li>
             </ul>
         </td>
     </tr>

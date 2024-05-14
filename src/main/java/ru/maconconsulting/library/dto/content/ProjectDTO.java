@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import ru.maconconsulting.library.dto.parameters.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -128,8 +129,8 @@ public class ProjectDTO {
         return keyWords;
     }
 
-    public List<String> getKeyWordsInList() {
-        return Arrays.stream(keyWords.split("\n")).toList();
+    public List<String> getKeyWordsToList() {
+        return keyWords != null ? Arrays.stream(keyWords.split("\n")).toList() : new ArrayList<>();
     }
 
     public void setKeyWords(String keyWords) {
@@ -140,8 +141,8 @@ public class ProjectDTO {
         return methodology;
     }
 
-    public List<String> getMethodologyInList() {
-        return Arrays.stream(methodology.split("\n")).toList();
+    public List<String> getMethodologyToList() {
+        return methodology != null ? Arrays.stream(methodology.split("\n")).toList() : new ArrayList<>();
     }
 
     public void setMethodology(String methodology) {
