@@ -35,4 +35,5 @@ build/
 ### Local Properties ###
 src/main/resources/*.properties
 src/main/resources/*.sql
+src/main/resources/*.dump
 *.log
