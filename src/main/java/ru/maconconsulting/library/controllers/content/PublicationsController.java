@@ -93,7 +93,7 @@ public class PublicationsController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("publication") @Valid PublicationDTO publicationDTO, BindingResult bindingResult,
                          @PathVariable("id") Integer id, Model model) {
-        publicationValidator.checkTitleForUpdate(publicationDTO, bindingResult);
+        publicationValidator.checkUniqueForUpdate(publicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
 //        Use DTO parameters because they store into PublicationDTO for update
             addParametersDTOToModelAttribute(model);
