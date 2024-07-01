@@ -6,6 +6,9 @@ import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.models.parameters.Segment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -136,6 +139,10 @@ public class Publication extends AbstractBasedEntity {
         return keyWords;
     }
 
+    public List<String> getKeyWordsToList() {
+        return keyWords != null ? Arrays.stream(keyWords.split("\n")).toList() : new ArrayList<>();
+    }
+
     public void setKeyWords(String keyWords) {
         this.keyWords = keyWords;
     }
@@ -156,10 +163,11 @@ public class Publication extends AbstractBasedEntity {
                 ", source='" + source + '\'' +
                 ", year=" + year +
                 ", relevance='" + relevance + '\'' +
+                ", path='" + path + '\'' +
                 ", location='" + location + '\'' +
                 ", segments=" + segments +
                 ", formats=" + formats +
-                ", keyWords=" + keyWords +
+                ", keyWords='" + keyWords + '\'' +
                 '}';
     }
 }

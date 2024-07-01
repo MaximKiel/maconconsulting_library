@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class PublicationDTO {
@@ -114,6 +117,10 @@ public class PublicationDTO {
 
     public String getKeyWords() {
         return keyWords;
+    }
+
+    public List<String> getKeyWordsToList() {
+        return keyWords != null ? Arrays.stream(keyWords.split("\n")).toList() : new ArrayList<>();
     }
 
     public void setKeyWords(String keyWords) {
