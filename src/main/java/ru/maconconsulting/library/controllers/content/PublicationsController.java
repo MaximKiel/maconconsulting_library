@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class PublicationsController {
 
     public static final Logger log = LoggerFactory.getLogger(PublicationsController.class);
+    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/COLLECTOR/MACON_LIBRARY";
     private final PublicationsService publicationsService;
     private final PublicationValidator publicationValidator;
     private final SegmentsService segmentsService;
@@ -50,8 +51,10 @@ public class PublicationsController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("publication", convertToPublicationDTO(publicationsService.findById(id)
-                .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"))));
+        Publication publication = publicationsService.findById(id)
+                .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"));
+        model.addAttribute("publication", convertToPublicationDTO(publication));
+        model.addAttribute("link", YANDEX_DISK_LINK + "/" + publication.getTitle());
         log.info("Show publication with ID=" + id + " page view - call PublicationsController method show()");
         return "content/publications/show";
     }
@@ -115,7 +118,7 @@ public class PublicationsController {
     }
 
     @GetMapping("/search")
-    public String search(@ModelAttribute("searchPublication")SearchPublication searchPublication, Model model) {
+    public String search(@ModelAttribute("searchPublication") SearchPublication searchPublication, Model model) {
         addParametersToModelAttribute(model);
         log.info("Show view for search publication - call PublicationsController method search()");
         return "content/publications/search";
@@ -128,7 +131,6 @@ public class PublicationsController {
             log.info("Catch error for search publication - recall PublicationsController method search()");
             return "content/publications/search";
         }
-
         model.addAttribute("result", publicationsService.search(searchPublication));
         log.info("Show view for search publication result - call PublicationsController method showSearchResult()");
         return "content/publications/result";
