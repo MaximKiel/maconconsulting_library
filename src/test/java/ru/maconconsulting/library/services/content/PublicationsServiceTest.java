@@ -51,23 +51,23 @@ class PublicationsServiceTest {
     }
 
     @Test
-    void findByTitle() {
-        String title = PUBLICATION_1.getTitle();
-        Mockito.when(publicationsRepository.findByTitle(title)).thenReturn(Optional.of(PUBLICATION_1));
-        Optional<Publication> actualPublication = publicationsService.findByTitle(title);
-
-        Mockito.verify(publicationsRepository, Mockito.times(1)).findByTitle(title);
-        Assertions.assertNotNull(actualPublication.orElse(null));
-        Assertions.assertEquals(PUBLICATION_1, actualPublication.orElse(null));
-    }
-
-    @Test
     void findById() {
         Integer id = PUBLICATION_1.getId();
         Mockito.when(publicationsRepository.findById(id)).thenReturn(Optional.of(PUBLICATION_1));
         Optional<Publication> actualPublication = publicationsService.findById(id);
 
         Mockito.verify(publicationsRepository, Mockito.times(1)).findById(id);
+        Assertions.assertNotNull(actualPublication.orElse(null));
+        Assertions.assertEquals(PUBLICATION_1, actualPublication.orElse(null));
+    }
+
+    @Test
+    void findByTitle() {
+        String title = PUBLICATION_1.getTitle();
+        Mockito.when(publicationsRepository.findByTitle(title)).thenReturn(Optional.of(PUBLICATION_1));
+        Optional<Publication> actualPublication = publicationsService.findByTitle(title);
+
+        Mockito.verify(publicationsRepository, Mockito.times(1)).findByTitle(title);
         Assertions.assertNotNull(actualPublication.orElse(null));
         Assertions.assertEquals(PUBLICATION_1, actualPublication.orElse(null));
     }
@@ -119,7 +119,7 @@ class PublicationsServiceTest {
     @Test
     void search() {
         SearchPublication searchPublication = new SearchPublication("", "",
-                "", 2024, "", "", SEGMENT_DTO_1, FORMAT_DTO_1, "");
+                null, 2024, null, "", SEGMENT_DTO_1, FORMAT_DTO_1, "");
         List<Publication> expectedPublications = List.of(PUBLICATION_1, PUBLICATION_2);
         Mockito.when(publicationsRepository.findAll()).thenReturn(expectedPublications);
         List<Publication> actualPublications = publicationsService.search(searchPublication);

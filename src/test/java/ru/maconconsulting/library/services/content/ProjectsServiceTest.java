@@ -55,7 +55,7 @@ class ProjectsServiceTest {
     }
 
     @Test
-    void findByNumber() {
+    void findById() {
         Integer id = PROJECT_1.getId();
         Mockito.when(projectsRepository.findById(id)).thenReturn(Optional.of(PROJECT_1));
         Optional<Project> actualProject = projectsService.findById(id);
