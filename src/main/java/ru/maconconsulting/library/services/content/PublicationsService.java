@@ -78,7 +78,7 @@ public class PublicationsService {
         if (searchPublication.getSource() != null && !searchPublication.getSource().trim().equals("")) {
             result = searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(searchPublication.getSource().trim().toLowerCase()));
         }
-        if (searchPublication.getYear() != 0) {
+        if (searchPublication.getYear() != null && searchPublication.getYear() != 0) {
             result = searchElement(result, p -> p.getYear() != null && p.getYear().equals(searchPublication.getYear()));
         }
         if (searchPublication.getRelevance() != null && !searchPublication.getRelevance().trim().equals("")) {
