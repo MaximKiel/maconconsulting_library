@@ -63,6 +63,10 @@ public class PublicationDTO {
         return annotation;
     }
 
+    public List<String> getAnnotationToList() {
+        return annotation != null ? Arrays.stream(annotation.split("\n")).toList() : new ArrayList<>();
+    }
+
     public void setAnnotation(String annotation) {
         this.annotation = annotation;
     }
