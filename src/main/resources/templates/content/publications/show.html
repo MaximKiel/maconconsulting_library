@@ -21,7 +21,7 @@
                 </button>
                 <ul class="nav__wrapper">
                     <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
-                    <li class="nav__item"><a href="/publications">Полезные материалы (демо)</a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
                     <li class="nav__item"><a href="/users">Управление пользователями</a></li>
                 </ul>
             </nav>
@@ -47,10 +47,14 @@
     </tr>
     <tr>
         <td><b>Аннотация:</b></td>
-        <td><p th:text="${publication.getAnnotation()}">Value</p></td>
+        <td>
+            <ul>
+                <li th:each="annotation : ${publication.getAnnotationToList()}" th:text="${annotation}">Value</li>
+            </ul>
+        </td>
     </tr>
     <tr>
-        <td><b>Издатель / источник:</b></td>
+        <td><b>Издатель / автор / источник:</b></td>
         <td><p th:text="${publication.getSource()}">Value</p></td>
     </tr>
     <tr>
@@ -60,10 +64,6 @@
     <tr>
         <td><b>Актуальность данных:</b></td>
         <td><p th:text="${publication.getRelevance()}">Value</p></td>
-    </tr>
-    <tr>
-        <td><b>Путь к файлу:</b></td>
-        <td><p th:text="${publication.getPath()}">Value</p></td>
     </tr>
     <tr>
         <td><b>Локация:</b></td>
@@ -87,7 +87,11 @@
     </tr>
     <tr>
         <td><b>Ключевые слова:</b></td>
-        <td><p th:text="${publication.getKeyWords()}">Value</p></td>
+        <td>
+            <ul>
+                <li th:each="keyWord : ${publication.getKeyWordsToList()}" th:text="${keyWord}">Value</li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -95,9 +99,11 @@
 
 <a class="btn" th:href="@{/publications/{id}/edit(id=${publication.getId()})}">Редактировать</a>
 <br/>
+<a class="btn" style="background-color: darkblue" th:href="${link}" th:target="_blank">Перейти к материалу на Яндекс Диск</a>
+<br/>
 <form th:method="DELETE" th:action="@{/publications/{id}(id=${publication.getId()})}"
       onclick="return confirm('Вы подтверждаете удаление?')">
-    <input class="rm_btn" type="submit" value="Удалить">
+    <input class="rm_btn" style="background-color: darkred" type="submit" value="Удалить">
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
 </body>

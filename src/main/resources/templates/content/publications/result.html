@@ -21,7 +21,7 @@
                 </button>
                 <ul class="nav__wrapper">
                     <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
-                    <li class="nav__item"><a href="/publications">Полезные материалы (демо)</a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
                     <li class="nav__item"><a href="/users">Управление пользователями</a></li>
                 </ul>
             </nav>
@@ -40,6 +40,7 @@
         <th>Год публикации</th>
         <th>Локация</th>
         <th>Аннотация</th>
+        <th>Ключевые слова</th>
     </tr>
     </thead>
     <tbody>
@@ -51,7 +52,16 @@
         </td>
         <td th:text="${publication.getYear()}">year</td>
         <td th:text="${publication.getLocation()}">location</td>
-        <td th:text="${publication.getAnnotation()}">annotation</td>
+        <td>
+            <ul>
+                <li th:each="annotation : ${publication.getAnnotationToList()}" th:text="${annotation}">Value</li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li th:each="keyWord : ${publication.getKeyWordsToList()}" th:text="${keyWord}">Value</li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>

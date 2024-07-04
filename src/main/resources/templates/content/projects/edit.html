@@ -21,7 +21,7 @@
                 </button>
                 <ul class="nav__wrapper">
                     <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
-                    <li class="nav__item"><a href="/publications">Полезные материалы (демо)</a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
                     <li class="nav__item"><a href="/users">Управление пользователями</a></li>
                 </ul>
             </nav>
@@ -53,14 +53,14 @@
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="segments" name="segments" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
-        th:selected="${project.segments.contains(segment)}"></option>
+                th:selected="${project.segments.contains(segment)}"></option>
     </select>
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
 
     <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
-    <select id="formats" name="formats" multiple="multiple" class="select-checkbox" style="height: 100px">
+    <select id="formats" name="formats" multiple="multiple" class="select-checkbox" style="height: 150px">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"
                 th:selected="${project.formats.contains(format)}"></option>
     </select>

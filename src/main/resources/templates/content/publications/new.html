@@ -21,7 +21,7 @@
                 </button>
                 <ul class="nav__wrapper">
                     <li class="nav__item"><a href="/projects">Проекты MACON<br/></a></li>
-                    <li class="nav__item"><a href="/publications">Полезные материалы (демо)</a></li>
+                    <li class="nav__item"><a href="/publications">Полезные материалы</a></li>
                     <li class="nav__item"><a href="/users">Управление пользователями</a></li>
                 </ul>
             </nav>
@@ -36,12 +36,13 @@
 <form class="custom_form" th:method="POST" th:action="@{/publications/create}" th:object="${publication}">
 
     <label for="title">Введите название (обязательное поле): </label>
-    <input type="text" th:field="*{title}" id="title" required>
+    <input type="text" th:field="*{title}" id="title" required
+           placeholder="Название должно совпадать с названием файла на сервере">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
-    <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox">
+    <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
@@ -49,7 +50,7 @@
     <br/>
 
     <label for="formats">Выберете форматы (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
-    <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox">
+    <select th:field="*{formats}" id="formats" multiple="multiple" class="select-checkbox" style="height: 150px">
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
     <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">formats error</div>
@@ -57,11 +58,12 @@
     <br/>
 
     <label for="annotation">Введите аннотацию (краткое описание материала): </label>
-    <input type="text" th:field="*{annotation}" id="annotation">
+    <br/>
+    <textarea th:field="*{annotation}" id="annotation" rows="5" cols="100"></textarea>
     <div style="color: red" th:if="${#fields.hasErrors('annotation')}" th:errors="*{annotation}">annotation error</div>
     <br/>
 
-    <label for="source">Введите издательство / источник материала: </label>
+    <label for="source">Введите издательство / автора / источник материала: </label>
     <input type="text" th:field="*{source}" id="source">
     <div style="color: red" th:if="${#fields.hasErrors('source')}" th:errors="*{source}">source error</div>
     <br/>
@@ -77,11 +79,6 @@
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
 
-    <label for="path">Введите путь к файлу: </label>
-    <input type="text" th:field="*{path}" id="path">
-    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
-    <br/>
-
     <label for="location">Введите локацию: </label>
     <input type="text" th:field="*{location}" id="location"
            placeholder="Например: 'Россия, Краснодарский край, Сочи'">
@@ -89,8 +86,10 @@
     <br/>
 
     <label for="keyWords">Введите ключевые слова: </label>
-    <input type="text" th:field="*{keyWords}" id="keyWords"
-           placeholder="Пример: 'Доверительное управление, Эксплуатируемая кровля'">
+    <br/>
+    <textarea th:field="*{keyWords}" id="keyWords" rows="5" cols="100">
+        Пример: 'Доверительное управление, Эксплуатируемая кровля'
+    </textarea>
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
     <br/>
 
