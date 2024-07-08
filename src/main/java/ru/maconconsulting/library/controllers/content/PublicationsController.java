@@ -11,8 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maconconsulting.library.dto.content.PublicationDTO;
 import ru.maconconsulting.library.dto.parameters.*;
+import ru.maconconsulting.library.models.content.Project;
 import ru.maconconsulting.library.models.content.Publication;
 import ru.maconconsulting.library.models.parameters.*;
+import ru.maconconsulting.library.services.content.ProjectsService;
 import ru.maconconsulting.library.services.content.PublicationsService;
 import ru.maconconsulting.library.services.parameters.*;
 import ru.maconconsulting.library.utils.search.SearchPublication;
@@ -34,14 +36,16 @@ public class PublicationsController {
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
     private final ModelMapper modelMapper;
+    private final ProjectsService projectsService;
 
     @Autowired
-    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper) {
+    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectsService projectsService) {
         this.publicationsService = publicationsService;
         this.publicationValidator = publicationValidator;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
         this.modelMapper = modelMapper;
+        this.projectsService = projectsService;
     }
     @GetMapping
     public String getAll() {
@@ -55,6 +59,10 @@ public class PublicationsController {
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"));
         model.addAttribute("publication", convertToPublicationDTO(publication));
         model.addAttribute("link", YANDEX_DISK_LINK + "/" + publication.getTitle());
+        Project relatedProject = projectsService.findByTitle(publication.getRelatedProjectTitle()).orElse(null);
+        model.addAttribute("relatedProjectId",
+                relatedProject != null ? relatedProject.getId() : -1
+        );
         log.info("Show publication with ID=" + id + " page view - call PublicationsController method show()");
         return "content/publications/show";
     }

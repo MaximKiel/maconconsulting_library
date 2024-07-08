@@ -41,6 +41,12 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
+    <label for="relatedProjectTitle">Введите название связанного проекта: </label>
+    <input type="text" th:field="*{relatedProjectTitle}" id="relatedProjectTitle"
+           placeholder="Название должно совпадать с названием проектной папки на сервере">
+    <div style="color: red" th:if="${#fields.hasErrors('relatedProjectTitle')}" th:errors="*{relatedProjectTitle}">relatedProjectTitle error</div>
+    <br/>
+
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select id="segments" name="segments" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"
