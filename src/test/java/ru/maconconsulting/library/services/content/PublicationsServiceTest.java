@@ -118,7 +118,7 @@ class PublicationsServiceTest {
 
     @Test
     void search() {
-        SearchPublication searchPublication = new SearchPublication("", "",
+        SearchPublication searchPublication = new SearchPublication("", "relatedProjectTitle", "",
                 null, 2024, null, "", SEGMENT_DTO_1, FORMAT_DTO_1, "");
         List<Publication> expectedPublications = List.of(PUBLICATION_1, PUBLICATION_2);
         Mockito.when(publicationsRepository.findAll()).thenReturn(expectedPublications);

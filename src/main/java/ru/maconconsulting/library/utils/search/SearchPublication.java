@@ -6,6 +6,8 @@ public class SearchPublication {
 
     private String title;
 
+    private String relatedProjectTitle;
+
     private String annotation;
 
     private String source;
@@ -25,8 +27,9 @@ public class SearchPublication {
     public SearchPublication() {
     }
 
-    public SearchPublication(String title, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, String keyWord) {
+    public SearchPublication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, String keyWord) {
         this.title = title;
+        this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
@@ -43,6 +46,14 @@ public class SearchPublication {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getRelatedProjectTitle() {
+        return relatedProjectTitle;
+    }
+
+    public void setRelatedProjectTitle(String relatedProjectTitle) {
+        this.relatedProjectTitle = relatedProjectTitle;
     }
 
     public String getAnnotation() {

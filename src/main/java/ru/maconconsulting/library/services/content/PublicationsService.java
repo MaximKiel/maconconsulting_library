@@ -72,6 +72,9 @@ public class PublicationsService {
         if (searchPublication.getTitle() != null && !searchPublication.getTitle().trim().equals("")) {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().trim().toLowerCase()));
         }
+        if (searchPublication.getRelatedProjectTitle() != null && !searchPublication.getRelatedProjectTitle().trim().equals("")) {
+            result = searchElement(result, p -> p.getRelatedProjectTitle() != null && !p.getRelatedProjectTitle().equals("") && p.getRelatedProjectTitle().toLowerCase().contains(searchPublication.getRelatedProjectTitle().trim().toLowerCase()));
+        }
         if (searchPublication.getAnnotation() != null && !searchPublication.getAnnotation().trim().equals("")) {
             result = searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(searchPublication.getAnnotation().trim().toLowerCase()));
         }
