@@ -16,6 +16,8 @@ public class PublicationDTO {
     @NotBlank(message = "Название не должно быть пустым!")
     private String title;
 
+    private String relatedProjectTitle;
+
     private String annotation;
 
     private String source;
@@ -37,9 +39,10 @@ public class PublicationDTO {
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String annotation, String source, Integer year, String relevance, String path, String location, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
+    public PublicationDTO(Integer id, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
         this.id = id;
         this.title = title;
+        this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
@@ -57,6 +60,14 @@ public class PublicationDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getRelatedProjectTitle() {
+        return relatedProjectTitle;
+    }
+
+    public void setRelatedProjectTitle(String relatedProjectTitle) {
+        this.relatedProjectTitle = relatedProjectTitle;
     }
 
     public String getAnnotation() {

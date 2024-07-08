@@ -9,15 +9,15 @@ import static ru.maconconsulting.library.util.parameters.SegmentsTestData.SEGMEN
 
 public class PublicationsTestData {
 
-    public static final Publication PUBLICATION_1 = new Publication("Тестовый материал 1", "test annotation",
+    public static final Publication PUBLICATION_1 = new Publication("Тестовый материал 1", "relatedProjectTitle", "test annotation",
             "test source", 2024, "01.2024", "/test/publ/1", "Россия, Краснодарский край, Краснодар",
             Set.of(SEGMENT_1), Set.of(FORMAT_1), "Доверительное управление");
 
-    public static final Publication PUBLICATION_2 = new Publication("Тестовый материал 2", "test annotation",
+    public static final Publication PUBLICATION_2 = new Publication("Тестовый материал 2", "relatedProjectTitle", "test annotation",
             "test source", 2024, "01.2024", "/test/publ/2", "Россия, Краснодарский край, Краснодар",
             Set.of(SEGMENT_1), Set.of(FORMAT_1), "Доверительное управление");
 
-    public static final Publication PUBLICATION_3 = new Publication("Тестовый материал 3", "test annotation",
+    public static final Publication PUBLICATION_3 = new Publication("Тестовый материал 3", "relatedProjectTitle", "test annotation",
             "test source", 2023, "12.2023", "/test/publ/3", "Россия, Краснодарский край, Краснодар",
             Set.of(SEGMENT_1), Set.of(FORMAT_1), "Доверительное управление");
 }

@@ -74,7 +74,7 @@ class PublicationsServiceTest {
 
     @Test
     void save() {
-        Publication newPublication = new Publication("Новый материал", "new annotation",
+        Publication newPublication = new Publication("Новый материал", "relatedProjectTitle", "new annotation",
                 "new source", 2024, "01.2024", "/test/publ/new",
                 "Россия, Краснодарский край, Краснодар",
                 Set.of(SEGMENT_1), Set.of(FORMAT_1),  "Доверительное управление");

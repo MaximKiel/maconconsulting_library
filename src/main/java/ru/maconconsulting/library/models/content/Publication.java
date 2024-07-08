@@ -19,6 +19,9 @@ public class Publication extends AbstractBasedEntity {
     @NotBlank(message = "Название не должно быть пустым!")
     private String title;
 
+    @Column(name = "related_project_title")
+    private String relatedProjectTitle;
+
     @Column(name = "annotation")
     private String annotation;
 
@@ -58,8 +61,9 @@ public class Publication extends AbstractBasedEntity {
     public Publication() {
     }
 
-    public Publication(String title, String annotation, String source, Integer year, String relevance, String path, String location, Set<Segment> segments, Set<Format> formats, String keyWords) {
+    public Publication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<Segment> segments, Set<Format> formats, String keyWords) {
         this.title = title;
+        this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
         this.source = source;
         this.year = year;
@@ -77,6 +81,14 @@ public class Publication extends AbstractBasedEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getRelatedProjectTitle() {
+        return relatedProjectTitle;
+    }
+
+    public void setRelatedProjectTitle(String relatedProjectTitle) {
+        this.relatedProjectTitle = relatedProjectTitle;
     }
 
     public String getAnnotation() {
@@ -163,6 +175,7 @@ public class Publication extends AbstractBasedEntity {
     public String toString() {
         return "Publication{" +
                 "title='" + title + '\'' +
+                "relatedProjectTitle='" + relatedProjectTitle + '\'' +
                 ", annotation='" + annotation + '\'' +
                 ", source='" + source + '\'' +
                 ", year=" + year +
