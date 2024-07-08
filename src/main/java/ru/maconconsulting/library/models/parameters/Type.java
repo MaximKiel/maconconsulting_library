@@ -31,8 +31,6 @@ public class Type extends AbstractParameterEntity {
 
     @Override
     public String toString() {
-        return "Chapter{" +
-                "projects=" + projects +
-                '}';
+        return super.toString();
     }
 }
