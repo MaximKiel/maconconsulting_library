@@ -26,6 +26,7 @@ public class PublicationDTO {
 
     private String relevance;
 
+    @NotBlank(message = "Путь не должен быть пустым!")
     private String path;
 
     private String location;
