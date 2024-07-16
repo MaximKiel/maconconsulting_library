@@ -58,7 +58,7 @@ public class PublicationsController {
         Publication publication = publicationsService.findById(id)
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"));
         model.addAttribute("publication", convertToPublicationDTO(publication));
-        model.addAttribute("link", YANDEX_DISK_LINK + publication.getPath() + "/" + publication.getTitle());
+        model.addAttribute("link", YANDEX_DISK_LINK + publication.getPath());
         Project relatedProject = projectsService.findByTitle(publication.getRelatedProjectTitle()).orElse(null);
         model.addAttribute("relatedProjectId",
                 relatedProject != null ? relatedProject.getId() : -1
