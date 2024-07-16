@@ -41,6 +41,12 @@
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
 
+    <label for="path">Введите путь к папке с файлом на сервере после '//172.16.1.200/mrg/' (обязательное поле): </label>
+    <input type="text" th:field="*{path}" id="path" required
+           placeholder="Например: 'COLLECTOR/MACON-Collector' или 'Проекты/2023. Проекты/23061Р. Ереван. Концепция. Валенсиа/23061Р. Финальные документы'">
+    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
+    <br/>
+
     <label for="relatedProjectTitle">Введите название связанного проекта: </label>
     <input type="text" th:field="*{relatedProjectTitle}" id="relatedProjectTitle"
            placeholder="Название должно совпадать с названием проектной папки на сервере">
