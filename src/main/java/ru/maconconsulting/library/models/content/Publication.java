@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.models.AbstractBasedEntity;
 import ru.maconconsulting.library.models.parameters.Format;
 import ru.maconconsulting.library.models.parameters.Segment;
+import ru.maconconsulting.library.models.parameters.TypeOfPublication;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +44,13 @@ public class Publication extends AbstractBasedEntity {
 
     @ManyToMany
     @JoinTable(
+            name = "publication_type",
+            joinColumns = @JoinColumn(name = "publication_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_of_publication_id"))
+    private Set<TypeOfPublication> typesOfPublication;
+
+    @ManyToMany
+    @JoinTable(
             name = "publication_segment",
             joinColumns = @JoinColumn(name = "publication_id"),
             inverseJoinColumns = @JoinColumn(name = "segment_id"))
@@ -62,7 +70,7 @@ public class Publication extends AbstractBasedEntity {
     public Publication() {
     }
 
-    public Publication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<Segment> segments, Set<Format> formats, String keyWords) {
+    public Publication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublication> typesOfPublication, Set<Segment> segments, Set<Format> formats, String keyWords) {
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
@@ -71,6 +79,7 @@ public class Publication extends AbstractBasedEntity {
         this.relevance = relevance;
         this.path = path;
         this.location = location;
+        this.typesOfPublication = typesOfPublication;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -136,6 +145,14 @@ public class Publication extends AbstractBasedEntity {
         this.location = location;
     }
 
+    public Set<TypeOfPublication> getTypesOfPublication() {
+        return typesOfPublication;
+    }
+
+    public void setTypesOfPublication(Set<TypeOfPublication> typesOfPublication) {
+        this.typesOfPublication = typesOfPublication;
+    }
+
     public Set<Segment> getSegments() {
         return segments;
     }
@@ -176,13 +193,14 @@ public class Publication extends AbstractBasedEntity {
     public String toString() {
         return "Publication{" +
                 "title='" + title + '\'' +
-                "relatedProjectTitle='" + relatedProjectTitle + '\'' +
+                ", relatedProjectTitle='" + relatedProjectTitle + '\'' +
                 ", annotation='" + annotation + '\'' +
                 ", source='" + source + '\'' +
                 ", year=" + year +
                 ", relevance='" + relevance + '\'' +
                 ", path='" + path + '\'' +
                 ", location='" + location + '\'' +
+                ", typesOfPublication=" + typesOfPublication +
                 ", segments=" + segments +
                 ", formats=" + formats +
                 ", keyWords='" + keyWords + '\'' +
