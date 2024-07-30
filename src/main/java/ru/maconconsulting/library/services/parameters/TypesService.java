@@ -34,18 +34,18 @@ public class TypesService implements CommonParametersService<Type> {
     @Override
     @Transactional
     public void save(Type entity) {
-        enrichProjectFieldEntity(entity);
+        enrichParameterFieldEntity(entity);
         typesRepository.save(entity);
     }
 
     @Override
     @Transactional
     public void update(String name, Type updatedEntity) {
-        Optional<Type> currentChapter = findByName(name);
-        if (currentChapter.isPresent()) {
-            updatedEntity.setId(currentChapter.get().getId());
-            updatedEntity.setCreatedAt(currentChapter.get().getCreatedAt());
-            updatedEntity.setProjects(currentChapter.get().getProjects());
+        Optional<Type> currentType = findByName(name);
+        if (currentType.isPresent()) {
+            updatedEntity.setId(currentType.get().getId());
+            updatedEntity.setCreatedAt(currentType.get().getCreatedAt());
+            updatedEntity.setProjects(currentType.get().getProjects());
         }
         typesRepository.save(updatedEntity);
     }

@@ -18,7 +18,7 @@ public interface CommonParametersService<E extends AbstractParameterEntity> {
 
     void delete(String name);
 
-    default void enrichProjectFieldEntity(AbstractParameterEntity entity) {
+    default void enrichParameterFieldEntity(AbstractParameterEntity entity) {
         entity.setCreatedAt(LocalDateTime.now());
     }
 }

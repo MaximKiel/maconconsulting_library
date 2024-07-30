@@ -33,7 +33,7 @@ public class FormatsService implements CommonParametersService<Format> {
     @Override
     @Transactional
     public void save(Format entity) {
-        enrichProjectFieldEntity(entity);
+        enrichParameterFieldEntity(entity);
         formatsRepository.save(entity);
     }
 

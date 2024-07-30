@@ -33,7 +33,7 @@ public class SegmentsService implements CommonParametersService<Segment> {
     @Override
     @Transactional
     public void save(Segment entity) {
-        enrichProjectFieldEntity(entity);
+        enrichParameterFieldEntity(entity);
         segmentsRepository.save(entity);
     }
 
