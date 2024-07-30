@@ -3,6 +3,7 @@ package ru.maconconsulting.library.dto.content;
 import jakarta.validation.constraints.NotBlank;
 import ru.maconconsulting.library.dto.parameters.FormatDTO;
 import ru.maconconsulting.library.dto.parameters.SegmentDTO;
+import ru.maconconsulting.library.dto.parameters.TypeOfPublicationDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,8 @@ public class PublicationDTO {
 
     private String location;
 
+    private Set<TypeOfPublicationDTO> typesOfPublication;
+
     private Set<SegmentDTO> segments;
 
     private Set<FormatDTO> formats;
@@ -40,7 +43,7 @@ public class PublicationDTO {
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
+    public PublicationDTO(Integer id, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublicationDTO> typesOfPublication, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
         this.id = id;
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
@@ -50,6 +53,7 @@ public class PublicationDTO {
         this.relevance = relevance;
         this.path = path;
         this.location = location;
+        this.typesOfPublication = typesOfPublication;
         this.segments = segments;
         this.formats = formats;
         this.keyWords = keyWords;
@@ -113,6 +117,14 @@ public class PublicationDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Set<TypeOfPublicationDTO> getTypesOfPublication() {
+        return typesOfPublication;
+    }
+
+    public void setTypesOfPublication(Set<TypeOfPublicationDTO> typesOfPublication) {
+        this.typesOfPublication = typesOfPublication;
     }
 
     public Set<SegmentDTO> getSegments() {
