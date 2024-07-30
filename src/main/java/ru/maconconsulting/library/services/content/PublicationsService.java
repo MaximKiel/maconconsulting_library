@@ -19,12 +19,14 @@ import java.util.stream.Collectors;
 public class PublicationsService {
 
     private final PublicationsRepository publicationsRepository;
+    private final TypesOfPublicationService typesOfPublicationService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
 
     @Autowired
-    public PublicationsService(PublicationsRepository publicationsRepository, SegmentsService segmentsService, FormatsService formatsService) {
+    public PublicationsService(PublicationsRepository publicationsRepository, TypesOfPublicationService typesOfPublicationService, SegmentsService segmentsService, FormatsService formatsService) {
         this.publicationsRepository = publicationsRepository;
+        this.typesOfPublicationService = typesOfPublicationService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
     }
@@ -44,6 +46,7 @@ public class PublicationsService {
     @Transactional
     public void save(Publication publication) {
         publication.setCreatedAt(LocalDateTime.now());
+        publication.setTypesOfPublication(enrichTypesOfPublication(typesOfPublicationService, publication));
         publication.setSegments(enrichSegments(segmentsService, publication));
         publication.setFormats(enrichFormats(formatsService, publication));
         publicationsRepository.save(publication);
@@ -54,6 +57,8 @@ public class PublicationsService {
         if (findById(id).isPresent()) {
             updatedPublication.setId(findById(id).get().getId());
             updatedPublication.setCreatedAt(findById(id).get().getCreatedAt());
+            updatedPublication.setTypesOfPublication(updatedPublication.getTypesOfPublication() != null ?
+                    enrichTypesOfPublication(typesOfPublicationService, updatedPublication) : null);
             updatedPublication.setSegments(updatedPublication.getSegments() != null ?
                     enrichSegments(segmentsService, updatedPublication) : null);
             updatedPublication.setFormats(updatedPublication.getFormats() != null ?
@@ -69,6 +74,17 @@ public class PublicationsService {
 
     public List<Publication> search(SearchPublication searchPublication) {
         List<Publication> result = findAll().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList());
+        if (searchPublication.getGeneralSearch() != null && !searchPublication.getGeneralSearch().trim().equals("")) {
+//            TODO: general search for publications
+            result = searchElement(result, p -> {
+                boolean resultTitle = false;
+                boolean resultAnnotation = false;
+                boolean resultSource = false;
+                boolean resultLocation = false;
+                boolean resultKeyWord = false;
+                return resultTitle || resultAnnotation || resultSource || resultLocation || resultKeyWord;
+            });
+        }
         if (searchPublication.getTitle() != null && !searchPublication.getTitle().trim().equals("")) {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().trim().toLowerCase()));
         }
@@ -90,6 +106,12 @@ public class PublicationsService {
         if (searchPublication.getLocation() != null && !searchPublication.getLocation().trim().equals("")) {
             result = searchElement(result, p -> p.getLocation() != null && !p.getLocation().equals("") && p.getLocation().toLowerCase().contains(searchPublication.getLocation().trim().toLowerCase()));
         }
+        if (searchPublication.getTypeOfPublication() != null && !searchPublication.getTypeOfPublication().getName().equals("")) {
+            result = searchElement(result, p -> {
+                List<String> typeNames = p.getTypesOfPublication().stream().map(AbstractParameterEntity::getName).toList();
+                return typeNames.stream().anyMatch(n -> n.equals(searchPublication.getTypeOfPublication().getName()));
+            });
+        }
         if (searchPublication.getSegment() != null && !searchPublication.getSegment().getName().equals("")) {
             result = searchElement(result, p -> {
                 List<String> segmentNames = p.getSegments().stream().map(AbstractParameterEntity::getName).toList();
@@ -110,6 +132,14 @@ public class PublicationsService {
 
     private List<Publication> searchElement(List<Publication> source, Predicate<Publication> predicate) {
         return source.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    private Set<TypeOfPublication> enrichTypesOfPublication(TypesOfPublicationService service, Publication publication) {
+        Set<TypeOfPublication> entities = new HashSet<>();
+        for (TypeOfPublication t : publication.getTypesOfPublication()) {
+            entities.add(service.findByName(t.getName()).orElseThrow());
+        }
+        return entities;
     }
 
     private Set<Segment> enrichSegments(SegmentsService service, Publication publication) {
