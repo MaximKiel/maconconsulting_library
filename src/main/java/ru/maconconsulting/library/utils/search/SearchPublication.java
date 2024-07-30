@@ -4,6 +4,8 @@ import ru.maconconsulting.library.dto.parameters.*;
 
 public class SearchPublication {
 
+    private String generalSearch;
+
     private String title;
 
     private String relatedProjectTitle;
@@ -18,6 +20,8 @@ public class SearchPublication {
 
     private String location;
 
+    private TypeOfPublicationDTO typeOfPublication;
+
     private SegmentDTO segment;
 
     private FormatDTO format;
@@ -27,7 +31,8 @@ public class SearchPublication {
     public SearchPublication() {
     }
 
-    public SearchPublication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String location, SegmentDTO segment, FormatDTO format, String keyWord) {
+    public SearchPublication(String generalSearch, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String location, TypeOfPublicationDTO typeOfPublication, SegmentDTO segment, FormatDTO format, String keyWord) {
+        this.generalSearch = generalSearch;
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
@@ -35,9 +40,18 @@ public class SearchPublication {
         this.year = year;
         this.relevance = relevance;
         this.location = location;
+        this.typeOfPublication = typeOfPublication;
         this.segment = segment;
         this.format = format;
         this.keyWord = keyWord;
+    }
+
+    public String getGeneralSearch() {
+        return generalSearch;
+    }
+
+    public void setGeneralSearch(String generalSearch) {
+        this.generalSearch = generalSearch;
     }
 
     public String getTitle() {
@@ -94,6 +108,14 @@ public class SearchPublication {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public TypeOfPublicationDTO getTypeOfPublication() {
+        return typeOfPublication;
+    }
+
+    public void setTypeOfPublication(TypeOfPublicationDTO typeOfPublication) {
+        this.typeOfPublication = typeOfPublication;
     }
 
     public SegmentDTO getSegment() {
