@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 import ru.maconconsulting.library.models.parameters.TypeOfPublication;
 
 @Repository
-public interface TypeOfPublicationRepository extends CommonParametersRepository<TypeOfPublication> {
+public interface TypesOfPublicationRepository extends CommonParametersRepository<TypeOfPublication> {
 }
