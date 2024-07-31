@@ -52,6 +52,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.PATCH, "/formats/{name}").hasAnyRole("MANAGER", "ADMIN")
 
+                                .requestMatchers("/types_of_publication/new", "/types_of_publication/create", "/types_of_publication/{name}/edit").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/types_of_publication/{name}").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/types_of_publication/{name}").hasAnyRole("MANAGER", "ADMIN")
+
                                 .anyRequest().hasAnyRole("USER", "MANAGER", "ADMIN")
                 )
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
