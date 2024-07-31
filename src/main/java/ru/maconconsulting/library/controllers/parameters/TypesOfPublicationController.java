@@ -43,13 +43,13 @@ public class TypesOfPublicationController {
     }
 
     @GetMapping("/new")
-    public String newTypeOfPublication(@ModelAttribute("types_of_publication") TypeOfPublicationDTO typeOfPublicationDTO) {
+    public String newTypeOfPublication(@ModelAttribute("type_of_publication") TypeOfPublicationDTO typeOfPublicationDTO) {
         log.info("Show view for create new type_of_publication - call TypesOfPublicationController method newTypeOfPublication()");
         return "parameters/types_of_publication/new";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("types_of_publication") @Valid TypeOfPublicationDTO typeOfPublicationDTO,
+    public String create(@ModelAttribute("type_of_publication") @Valid TypeOfPublicationDTO typeOfPublicationDTO,
                          BindingResult bindingResult) {
         validator.validate(typeOfPublicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -60,20 +60,20 @@ public class TypesOfPublicationController {
         service.save(convertToTypeOfPublication(typeOfPublicationDTO));
         TypeOfPublication type = service.findByName(typeOfPublicationDTO.getName())
                 .orElseThrow(() -> new TypeOfPublicationNotFoundException("Тип " + typeOfPublicationDTO.getName() + " не найден"));
-        log.info("Create new types_of_publication with ID=" + type.getId() + " - redirect to TypesOfPublicationController method show()");
+        log.info("Create new type_of_publication with ID=" + type.getId() + " - redirect to TypesOfPublicationController method show()");
         return "redirect:/types_of_publication";
     }
 
     @GetMapping("/{name}/edit")
     public String edit(Model model, @PathVariable("name") String name) {
-        model.addAttribute("types_of_publication", convertToTypeOfPublicationDTO(service.findByName(name)
+        model.addAttribute("type_of_publication", convertToTypeOfPublicationDTO(service.findByName(name)
                 .orElseThrow(() -> new TypeOfPublicationNotFoundException("Тип " + name + " не найден"))));
-        log.info("Show view for edit types_of_publication with name=" + name + " - call TypesOfPublicationController method edit()");
+        log.info("Show view for edit type_of_publication with name=" + name + " - call TypesOfPublicationController method edit()");
         return "parameters/types_of_publication/edit";
     }
 
     @PatchMapping("/{name}")
-    public String update(@ModelAttribute("types_of_publication") @Valid TypeOfPublicationDTO typeOfPublicationDTO,
+    public String update(@ModelAttribute("type_of_publication") @Valid TypeOfPublicationDTO typeOfPublicationDTO,
                          BindingResult bindingResult, @PathVariable("name") String name) {
         validator.validate(typeOfPublicationDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -82,7 +82,7 @@ public class TypesOfPublicationController {
         }
 
         service.update(name, convertToTypeOfPublication(typeOfPublicationDTO));
-        log.info("Update types_of_publication with name=" + name + " - redirect to TypesOfPublicationController method show()");
+        log.info("Update type_of_publication with name=" + name + " - redirect to TypesOfPublicationController method show()");
         return "redirect:/types_of_publication";
     }
 
@@ -90,12 +90,12 @@ public class TypesOfPublicationController {
     public String delete(@PathVariable("name") String name, Model model) {
         if (service.findByName(name).isPresent() && !service.findByName(name).get().getPublications().isEmpty()) {
             model.addAttribute("publications", service.findByName(name).get().getPublications().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList()));
-            log.info("Catch error for delete types_of_publication with name=" + name + " - show delete parameter page");
+            log.info("Catch error for delete type_of_publication with name=" + name + " - show delete parameter page");
             return "parameters/delete_error";
         }
 
         service.delete(name);
-        log.info("Delete types_of_publication with name=" + name + " - redirect to TypesOfPublicationController method getAll()");
+        log.info("Delete type_of_publication with name=" + name + " - redirect to TypesOfPublicationController method getAll()");
         return "redirect:/types_of_publication";
     }
 
