@@ -21,6 +21,8 @@ import java.util.Set;
 import static ru.maconconsulting.library.util.content.PublicationsTestData.*;
 import static ru.maconconsulting.library.util.parameters.FormatsTestData.*;
 import static ru.maconconsulting.library.util.parameters.SegmentsTestData.*;
+import static ru.maconconsulting.library.util.parameters.TypesOfPublicationTestData.TYPE_OF_PUBLICATION_1;
+import static ru.maconconsulting.library.util.parameters.TypesOfPublicationTestData.TYPE_OF_PUBLICATION_DTO_1;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,6 +30,9 @@ class PublicationsServiceTest {
 
     @InjectMocks
     private PublicationsService publicationsService;
+
+    @Mock
+    private TypesOfPublicationService typesOfPublicationService;
 
     @Mock
     private SegmentsService segmentsService;
@@ -77,7 +82,8 @@ class PublicationsServiceTest {
         Publication newPublication = new Publication("Новый материал", "relatedProjectTitle", "new annotation",
                 "new source", 2024, "01.2024", "/test/publ/new",
                 "Россия, Краснодарский край, Краснодар",
-                Set.of(SEGMENT_1), Set.of(FORMAT_1),  "Доверительное управление");
+                Set.of(TYPE_OF_PUBLICATION_1), Set.of(SEGMENT_1), Set.of(FORMAT_1),  "Доверительное управление");
+        Mockito.when(typesOfPublicationService.findByName(TYPE_OF_PUBLICATION_1.getName())).thenReturn(Optional.of(TYPE_OF_PUBLICATION_1));
         Mockito.when(segmentsService.findByName(SEGMENT_1.getName())).thenReturn(Optional.of(SEGMENT_1));
         Mockito.when(formatsService.findByName(FORMAT_1.getName())).thenReturn(Optional.of(FORMAT_1));
         Mockito.when(publicationsRepository.save(newPublication)).thenReturn(newPublication);
@@ -94,6 +100,9 @@ class PublicationsServiceTest {
         PUBLICATION_1.setTitle("Updated PUBLICATION_1");
         Mockito.when(publicationsRepository.findById(id)).thenReturn(Optional.of(PUBLICATION_1));
         Mockito.when(publicationsRepository.findByTitle("Updated PUBLICATION_1")).thenReturn(Optional.of(updatedPublication));
+        for (TypeOfPublication type : updatedPublication.getTypesOfPublication()) {
+            Mockito.when(typesOfPublicationService.findByName(type.getName())).thenReturn(Optional.of(type));
+        }
         for (Segment segment : updatedPublication.getSegments()) {
             Mockito.when(segmentsService.findByName(segment.getName())).thenReturn(Optional.of(segment));
         }
@@ -118,8 +127,8 @@ class PublicationsServiceTest {
 
     @Test
     void search() {
-        SearchPublication searchPublication = new SearchPublication("", "relatedProjectTitle", "",
-                null, 2024, null, "", SEGMENT_DTO_1, FORMAT_DTO_1, "");
+        SearchPublication searchPublication = new SearchPublication("", "", "relatedProjectTitle", "",
+                null, 2024, null, "", TYPE_OF_PUBLICATION_DTO_1, SEGMENT_DTO_1, FORMAT_DTO_1, "");
         List<Publication> expectedPublications = List.of(PUBLICATION_1, PUBLICATION_2);
         Mockito.when(publicationsRepository.findAll()).thenReturn(expectedPublications);
         List<Publication> actualPublications = publicationsService.search(searchPublication);
