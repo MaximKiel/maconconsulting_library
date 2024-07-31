@@ -33,15 +33,17 @@ public class PublicationsController {
     public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/";
     private final PublicationsService publicationsService;
     private final PublicationValidator publicationValidator;
+    private final TypesOfPublicationService typesOfPublicationService;
     private final SegmentsService segmentsService;
     private final FormatsService formatsService;
     private final ModelMapper modelMapper;
     private final ProjectsService projectsService;
 
     @Autowired
-    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectsService projectsService) {
+    public PublicationsController(PublicationsService publicationsService, PublicationValidator publicationValidator, TypesOfPublicationService typesOfPublicationService, SegmentsService segmentsService, FormatsService formatsService, ModelMapper modelMapper, ProjectsService projectsService) {
         this.publicationsService = publicationsService;
         this.publicationValidator = publicationValidator;
+        this.typesOfPublicationService = typesOfPublicationService;
         this.segmentsService = segmentsService;
         this.formatsService = formatsService;
         this.modelMapper = modelMapper;
@@ -152,17 +154,22 @@ public class PublicationsController {
 
 //    For new, create and search methods
     private void addParametersToModelAttribute(Model model) {
+        model.addAttribute("types_of_publication", typesOfPublicationService.findAll().stream().sorted(Comparator.comparing(TypeOfPublication::getName)).collect(Collectors.toList()));
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).collect(Collectors.toList()));
     }
 
 //    For edit and update methods
     private void addParametersDTOToModelAttribute(Model model) {
+        model.addAttribute("types_of_publication", typesOfPublicationService.findAll().stream().sorted(Comparator.comparing(TypeOfPublication::getName)).map(this::convertToTypeOfPublicationDTO).collect(Collectors.toList()));
         model.addAttribute("segments", segmentsService.findAll().stream().sorted(Comparator.comparing(Segment::getName)).map(this::convertToSegmentDTO).collect(Collectors.toList()));
         model.addAttribute("formats", formatsService.findAll().stream().sorted(Comparator.comparing(Format::getName)).map(this::convertToFormatDTO).collect(Collectors.toList()));
     }
 
     private void checkNotNullParameters(PublicationDTO publicationDTO) {
+        if (publicationDTO.getTypesOfPublication() == null) {
+            publicationDTO.setTypesOfPublication(new HashSet<>());
+        }
         if (publicationDTO.getSegments() == null) {
             publicationDTO.setSegments(new HashSet<>());
         }
@@ -177,6 +184,10 @@ public class PublicationsController {
 
     private Publication convertToPublication(PublicationDTO publicationDTO) {
         return modelMapper.map(publicationDTO, Publication.class);
+    }
+
+    private TypeOfPublicationDTO convertToTypeOfPublicationDTO(TypeOfPublication typeOfPublication) {
+        return modelMapper.map(typeOfPublication, TypeOfPublicationDTO.class);
     }
 
     private SegmentDTO convertToSegmentDTO(Segment segment) {
