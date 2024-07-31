@@ -75,15 +75,14 @@ public class PublicationsService {
     public List<Publication> search(SearchPublication searchPublication) {
         List<Publication> result = findAll().stream().sorted(Comparator.comparing(Publication::getTitle)).collect(Collectors.toList());
         if (searchPublication.getGeneralSearch() != null && !searchPublication.getGeneralSearch().trim().equals("")) {
-//            TODO: general search for publications
-            result = searchElement(result, p -> {
-                boolean resultTitle = false;
-                boolean resultAnnotation = false;
-                boolean resultSource = false;
-                boolean resultLocation = false;
-                boolean resultKeyWord = false;
-                return resultTitle || resultAnnotation || resultSource || resultLocation || resultKeyWord;
-            });
+            String generalSearch = searchPublication.getGeneralSearch().trim().toLowerCase();
+            Set<Publication> generalSearchResult = new HashSet<>(result);
+            generalSearchResult.addAll(searchElement(result, p -> p.getTitle().toLowerCase().contains(generalSearch.trim().toLowerCase())));
+            generalSearchResult.addAll(searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(generalSearch)));
+            generalSearchResult.addAll(searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(generalSearch)));
+            generalSearchResult.addAll(searchElement(result, p -> p.getLocation() != null && !p.getLocation().equals("") && p.getLocation().toLowerCase().contains(generalSearch)));
+            generalSearchResult.addAll(searchElement(result, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(generalSearch)));
+            result = generalSearchResult.stream().toList();
         }
         if (searchPublication.getTitle() != null && !searchPublication.getTitle().trim().equals("")) {
             result = searchElement(result, p -> p.getTitle().toLowerCase().contains(searchPublication.getTitle().trim().toLowerCase()));
