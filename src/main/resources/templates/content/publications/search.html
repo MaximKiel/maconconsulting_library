@@ -35,6 +35,10 @@
 </header>
 <form class="custom_form" th:method="POST" th:action="@{/publications/search-result}" th:object="${searchPublication}">
 
+    <label for="generalSearch">Введите строку для генерального поиска (включает поиск по названию, аннотации, источнику, локации и ключевым словам): </label>
+    <input type="text" th:field="*{generalSearch}" id="generalSearch">
+    <br/>
+
     <label for="title">Введите строку для поиска в названии материала: </label>
     <input type="text" th:field="*{title}" id="title">
     <br/>
@@ -64,6 +68,12 @@
     <label for="location">Введите локацию: </label>
     <input type="text" th:field="*{location}" id="location">
     <br/>
+
+    <label for="typeOfPublication">Выберете тип полезного материала: </label>
+    <select th:field="*{typeOfPublication}" id="typeOfPublication">
+        <option value=""></option>
+        <option th:each="typeOfPublication : ${types_of_publication}" th:value="${typeOfPublication.getName()}" th:text="${typeOfPublication.getName()}"></option>
+    </select>
 
     <label for="segment">Выберете сегмент рынка: </label>
     <select th:field="*{segment}" id="segment">

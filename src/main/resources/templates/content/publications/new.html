@@ -53,6 +53,14 @@
     <div style="color: red" th:if="${#fields.hasErrors('relatedProjectTitle')}" th:errors="*{relatedProjectTitle}">relatedProjectTitle error</div>
     <br/>
 
+    <label for="types_of_publication">Выберете тип полезного материала (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
+    <select th:field="*{typesOfPublication}" id="types_of_publication" multiple="multiple" class="select-checkbox" style="height: 200px">
+        <option th:each="typeOfPublication : ${types_of_publication}" th:value="${typeOfPublication.getName()}" th:text="${typeOfPublication.getName()}"></option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('typesOfPublication')}" th:errors="*{typesOfPublication}">typesOfPublication error</div>
+    <a style="color: gray; font-style: italic" href="/types_of_publication">Редактировать список типов</a><br/>
+    <br/>
+
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command): </label>
     <select th:field="*{segments}" id="segments" multiple="multiple" class="select-checkbox" style="height: 200px">
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>

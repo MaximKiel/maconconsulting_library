@@ -82,6 +82,14 @@
         <td><p th:text="${publication.getLocation()}">Value</p></td>
     </tr>
     <tr>
+        <td><b>Тип полезного материала:</b></td>
+        <td>
+            <ul>
+                <li th:each="typesOfPublication : ${publication.getTypesOfPublication()}" th:text="${typesOfPublication.getName()}">Value</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
         <td><b>Сегменты рынка:</b></td>
         <td>
             <ul>
