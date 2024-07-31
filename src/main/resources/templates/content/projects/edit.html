@@ -40,6 +40,7 @@
            placeholder="Название должно совпадать с названием проектной папки на сервере">
     <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
+    <br/>
 
     <label for="types">Выберете типы исследования (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="types" name="types" multiple="multiple" class="select-checkbox" style="height: 200px">
@@ -48,6 +49,7 @@
     </select>
     <div style="color: red" th:if="${#fields.hasErrors('types')}" th:errors="*{types}">types error</div>
     <a style="color: gray; font-style: italic" href="/types">Редактировать список типов</a><br/>
+    <br/>
     <br/>
 
     <label for="segments">Выберете сегменты рынка (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
@@ -58,6 +60,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('segments')}" th:errors="*{segments}">segments error</div>
     <a style="color: gray; font-style: italic" href="/segments">Редактировать список сегментов</a><br/>
     <br/>
+    <br/>
 
     <label for="formats">Выберете форматы отчета проекта (чтобы выбрать несколько или снять выделение, зажмите клавишу Control/Command):</label>
     <select id="formats" name="formats" multiple="multiple" class="select-checkbox" style="height: 150px">
@@ -67,10 +70,12 @@
     <div style="color: red" th:if="${#fields.hasErrors('formats')}" th:errors="*{formats}">type error</div>
     <a style="color: gray; font-style: italic" href="/formats">Редактировать список форматов</a><br/>
     <br/>
+    <br/>
 
     <label for="year">Введите год проекта (обязательное поле): </label>
     <input type="number" th:field="*{year}" id="year" required>
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
+    <br/>
     <br/>
 
     <label for="relevance">Введите актуальность данных: </label>
@@ -78,17 +83,20 @@
            placeholder="В формате месяц.год: '12.2023'">
     <div style="color: red" th:if="${#fields.hasErrors('relevance')}" th:errors="*{relevance}">relevance error</div>
     <br/>
+    <br/>
 
     <label for="client">Введите заказчика: </label>
     <input type="text" th:field="*{client}" id="client"
            placeholder="Указывать название без указания организационно-правовой формы и кавычек: 'Интерком, СберРешения'">
     <div style="color: red" th:if="${#fields.hasErrors('client')}" th:errors="*{client}">client error</div>
     <br/>
+    <br/>
 
     <label for="location">Введите локацию (обязательное поле): </label>
     <input type="text" th:field="*{location}" id="location" required
            placeholder="Пример: 'Россия, Краснодарский край, Сочи'">
     <div style="color: red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">location error</div>
+    <br/>
     <br/>
 
     <label for="keyWords">Введите ключевые слова: </label>
@@ -98,6 +106,7 @@
     </textarea>
     <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
     <br/>
+    <br/>
 
     <label for="methodology">Введите методологию: </label>
     <br/>
@@ -105,6 +114,7 @@
         Пример: 'Анализ на основе оценок параметров ЕРЗ (с. 50-60)'
     </textarea>
     <div style="color: red" th:if="${#fields.hasErrors('methodology')}" th:errors="*{methodology}">methodology error</div>
+    <br/>
     <br/>
 
     <input type="submit" value="Изменить"/>

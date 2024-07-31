@@ -38,9 +38,11 @@
     <label for="title">Введите строку для поиска в названии проекта: </label>
     <input type="text" th:field="*{title}" id="title">
     <br/>
+    <br/>
 
     <label for="year">Введите год проекта: </label>
     <input type="number" th:field="*{year}" id="year">
+    <br/>
     <br/>
 
     <label for="relevance">Введите актуальность данных: </label>
@@ -48,13 +50,16 @@
     <br/>
     <p style="color: gray; font-style: italic">В формате месяц год: '12.2023'</p>
     <br/>
+    <br/>
 
     <label for="client">Введите наименование заказчика: </label>
     <input type="text" th:field="*{client}" id="client">
     <br/>
+    <br/>
 
     <label for="location">Введите локацию: </label>
     <input type="text" th:field="*{location}" id="location">
+    <br/>
     <br/>
 
     <label for="type">Выберете тип исследования: </label>
@@ -62,25 +67,33 @@
         <option value=""></option>
         <option th:each="type : ${types}" th:value="${type.getName()}" th:text="${type.getName()}"></option>
     </select>
+    <br/>
+    <br/>
 
     <label for="segment">Выберете сегмент рынка: </label>
     <select th:field="*{segment}" id="segment">
         <option value=""></option>
         <option th:each="segment : ${segments}" th:value="${segment.getName()}" th:text="${segment.getName()}"></option>
     </select>
+    <br/>
+    <br/>
 
     <label for="format">Выберите формат отчета: </label>
     <select th:field="*{format}" id="format">
         <option value=""></option>
         <option th:each="format : ${formats}" th:value="${format.getName()}" th:text="${format.getName()}"></option>
     </select>
+    <br/>
+    <br/>
 
     <label for="keyWord">Введите ключевое слово: </label>
     <input type="text" th:field="*{keyWord}" id="keyWord">
     <br/>
+    <br/>
 
     <label for="methodology">Введите методологию: </label>
     <input type="text" th:field="*{methodology}" id="methodology">
+    <br/>
     <br/>
 
     <input type="submit" value="Найти"/>

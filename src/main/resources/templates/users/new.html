@@ -34,24 +34,34 @@
     </div>
 </header>
 <form class="custom_form" th:method="POST" th:action="@{/users/create}" th:object="${maconUser}">
+
     <label for="name">Введите имя: </label>
     <input type="text" th:field="*{name}" id="name">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
     <br/>
+    <br/>
+
     <label for="email">Введите email: </label>
     <input type="text" th:field="*{email}" id="email">
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
     <br/>
+    <br/>
+
     <label for="password">Введите пароль: </label>
     <input type="text" th:field="*{password}" id="password">
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
     <br/>
+    <br/>
+
     <label for="role">Выберете роль: </label>
     <select th:field="*{role}" id="role">
         <option th:value="ROLE_USER">User</option>
         <option th:value="ROLE_MANAGER">Manager</option>
         <option th:value="ROLE_ADMIN">Admin</option>
     </select>
+    <br/>
+    <br/>
+
     <input type="submit" value="Добавить"/>
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>
