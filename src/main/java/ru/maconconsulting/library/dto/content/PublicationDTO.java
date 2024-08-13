@@ -38,12 +38,10 @@ public class PublicationDTO {
 
     private Set<FormatDTO> formats;
 
-    private String keyWords;
-
     public PublicationDTO() {
     }
 
-    public PublicationDTO(Integer id, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublicationDTO> typesOfPublication, Set<SegmentDTO> segments, Set<FormatDTO> formats, String keyWords) {
+    public PublicationDTO(Integer id, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublicationDTO> typesOfPublication, Set<SegmentDTO> segments, Set<FormatDTO> formats) {
         this.id = id;
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
@@ -56,7 +54,6 @@ public class PublicationDTO {
         this.typesOfPublication = typesOfPublication;
         this.segments = segments;
         this.formats = formats;
-        this.keyWords = keyWords;
     }
 
     public String getTitle() {
@@ -141,18 +138,6 @@ public class PublicationDTO {
 
     public void setFormats(Set<FormatDTO> formats) {
         this.formats = formats;
-    }
-
-    public String getKeyWords() {
-        return keyWords;
-    }
-
-    public List<String> getKeyWordsToList() {
-        return keyWords != null ? Arrays.stream(keyWords.split("\n")).toList() : new ArrayList<>();
-    }
-
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
     }
 
     public Integer getId() {

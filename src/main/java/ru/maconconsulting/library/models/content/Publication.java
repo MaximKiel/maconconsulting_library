@@ -64,13 +64,10 @@ public class Publication extends AbstractBasedEntity {
     )
     private Set<Format> formats;
 
-    @Column(name = "key_words")
-    private String keyWords;
-
     public Publication() {
     }
 
-    public Publication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublication> typesOfPublication, Set<Segment> segments, Set<Format> formats, String keyWords) {
+    public Publication(String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String path, String location, Set<TypeOfPublication> typesOfPublication, Set<Segment> segments, Set<Format> formats) {
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
         this.annotation = annotation;
@@ -82,7 +79,6 @@ public class Publication extends AbstractBasedEntity {
         this.typesOfPublication = typesOfPublication;
         this.segments = segments;
         this.formats = formats;
-        this.keyWords = keyWords;
     }
 
     public String getTitle() {
@@ -169,18 +165,6 @@ public class Publication extends AbstractBasedEntity {
         this.formats = formats;
     }
 
-    public String getKeyWords() {
-        return keyWords;
-    }
-
-    public List<String> getKeyWordsToList() {
-        return keyWords != null ? Arrays.stream(keyWords.split("\n")).toList() : new ArrayList<>();
-    }
-
-    public void setKeyWords(String keyWords) {
-        this.keyWords = keyWords;
-    }
-
     public String getPath() {
         return path;
     }
@@ -203,7 +187,6 @@ public class Publication extends AbstractBasedEntity {
                 ", typesOfPublication=" + typesOfPublication +
                 ", segments=" + segments +
                 ", formats=" + formats +
-                ", keyWords='" + keyWords + '\'' +
                 '}';
     }
 }
