@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class PublicationsController {
 
     public static final Logger log = LoggerFactory.getLogger(PublicationsController.class);
-    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/";
+    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/Проекты/Внутренние%20проекты/0017В.%20Полезная%20информация%20и%20шаблоны/Информация/";
     private final PublicationsService publicationsService;
     private final PublicationValidator publicationValidator;
     private final TypesOfPublicationService typesOfPublicationService;
