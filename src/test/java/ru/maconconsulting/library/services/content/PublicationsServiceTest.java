@@ -82,7 +82,7 @@ class PublicationsServiceTest {
         Publication newPublication = new Publication("Новый материал", "relatedProjectTitle", "new annotation",
                 "new source", 2024, "01.2024", "/test/publ/new",
                 "Россия, Краснодарский край, Краснодар",
-                Set.of(TYPE_OF_PUBLICATION_1), Set.of(SEGMENT_1), Set.of(FORMAT_1),  "Доверительное управление");
+                Set.of(TYPE_OF_PUBLICATION_1), Set.of(SEGMENT_1), Set.of(FORMAT_1));
         Mockito.when(typesOfPublicationService.findByName(TYPE_OF_PUBLICATION_1.getName())).thenReturn(Optional.of(TYPE_OF_PUBLICATION_1));
         Mockito.when(segmentsService.findByName(SEGMENT_1.getName())).thenReturn(Optional.of(SEGMENT_1));
         Mockito.when(formatsService.findByName(FORMAT_1.getName())).thenReturn(Optional.of(FORMAT_1));
@@ -128,7 +128,7 @@ class PublicationsServiceTest {
     @Test
     void search() {
         SearchPublication searchPublication = new SearchPublication("", "", "relatedProjectTitle", "",
-                null, 2024, null, "", TYPE_OF_PUBLICATION_DTO_1, SEGMENT_DTO_1, FORMAT_DTO_1, "");
+                null, 2024, null, "", TYPE_OF_PUBLICATION_DTO_1, SEGMENT_DTO_1, FORMAT_DTO_1);
         List<Publication> expectedPublications = List.of(PUBLICATION_1, PUBLICATION_2);
         Mockito.when(publicationsRepository.findAll()).thenReturn(expectedPublications);
         List<Publication> actualPublications = publicationsService.search(searchPublication);

@@ -26,12 +26,10 @@ public class SearchPublication {
 
     private FormatDTO format;
 
-    private String keyWord;
-
     public SearchPublication() {
     }
 
-    public SearchPublication(String generalSearch, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String location, TypeOfPublicationDTO typeOfPublication, SegmentDTO segment, FormatDTO format, String keyWord) {
+    public SearchPublication(String generalSearch, String title, String relatedProjectTitle, String annotation, String source, Integer year, String relevance, String location, TypeOfPublicationDTO typeOfPublication, SegmentDTO segment, FormatDTO format) {
         this.generalSearch = generalSearch;
         this.title = title;
         this.relatedProjectTitle = relatedProjectTitle;
@@ -43,7 +41,6 @@ public class SearchPublication {
         this.typeOfPublication = typeOfPublication;
         this.segment = segment;
         this.format = format;
-        this.keyWord = keyWord;
     }
 
     public String getGeneralSearch() {
@@ -132,13 +129,5 @@ public class SearchPublication {
 
     public void setFormat(FormatDTO format) {
         this.format = format;
-    }
-
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
     }
 }

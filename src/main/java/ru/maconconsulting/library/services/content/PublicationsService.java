@@ -81,7 +81,6 @@ public class PublicationsService {
             generalSearchResult.addAll(searchElement(result, p -> p.getAnnotation() != null && !p.getAnnotation().equals("") && p.getAnnotation().toLowerCase().contains(generalSearch)));
             generalSearchResult.addAll(searchElement(result, p -> p.getSource() != null && !p.getSource().equals("") && p.getSource().toLowerCase().contains(generalSearch)));
             generalSearchResult.addAll(searchElement(result, p -> p.getLocation() != null && !p.getLocation().equals("") && p.getLocation().toLowerCase().contains(generalSearch)));
-            generalSearchResult.addAll(searchElement(result, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(generalSearch)));
             result = generalSearchResult.stream().toList();
         }
         if (searchPublication.getTitle() != null && !searchPublication.getTitle().trim().equals("")) {
@@ -122,9 +121,6 @@ public class PublicationsService {
                 List<String> formatNames = p.getFormats().stream().map(AbstractParameterEntity::getName).toList();
                 return formatNames.stream().anyMatch(n -> n.equals(searchPublication.getFormat().getName()));
             });
-        }
-        if (searchPublication.getKeyWord() != null && !searchPublication.getKeyWord().trim().equals("")) {
-            result = searchElement(result, p -> p.getKeyWords() != null && !p.getKeyWords().equals("") && p.getKeyWords().toLowerCase().contains(searchPublication.getKeyWord().trim().toLowerCase()));
         }
         return result;
     }
