@@ -119,15 +119,6 @@
     <br/>
     <br/>
 
-    <label for="keyWords">Введите ключевые слова: </label>
-    <br/>
-    <textarea th:field="*{keyWords}" id="keyWords" rows="5" cols="100">
-        Пример: 'Доверительное управление, Эксплуатируемая кровля'
-    </textarea>
-    <div style="color: red" th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}">keyWords error</div>
-    <br/>
-    <br/>
-
     <input type="submit" value="Изменить"/>
 </form>
 <script src="/js/header.js" type="jscript" th:src="@{/js/header.js}"></script>

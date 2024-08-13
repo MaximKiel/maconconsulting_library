@@ -57,11 +57,6 @@
                 <li th:each="annotation : ${publication.getAnnotationToList()}" th:text="${annotation}">Value</li>
             </ul>
         </td>
-        <td>
-            <ul>
-                <li th:each="keyWord : ${publication.getKeyWordsToList()}" th:text="${keyWord}">Value</li>
-            </ul>
-        </td>
     </tr>
     </tbody>
 </table>
