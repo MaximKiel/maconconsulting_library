@@ -77,9 +77,6 @@ public class SecurityConfig {
                         .rememberMeCookieName("remember-me-cookie")
                         .tokenValiditySeconds(31536000)
                 );
-        /*
-        key("uniqueAndSecret").tokenValiditySeconds(31536000)
-         */
         return http.build();
     }
 
