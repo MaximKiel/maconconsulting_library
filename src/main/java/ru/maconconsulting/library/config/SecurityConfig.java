@@ -71,7 +71,15 @@ public class SecurityConfig {
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/auth/login")
+                )
+                .rememberMe(rememberMe -> rememberMe
+                        .rememberMeParameter("remember-me-new")
+                        .rememberMeCookieName("remember-me-cookie")
+                        .tokenValiditySeconds(31536000)
                 );
+        /*
+        key("uniqueAndSecret").tokenValiditySeconds(31536000)
+         */
         return http.build();
     }
 
