@@ -42,13 +42,6 @@
     <br/>
     <br/>
 
-    <label for="path">Введите название папки, где находится файл, начиная от папки "Информация". Если есть подпапки, указывать их через слэш '/' (обязательное поле): </label>
-    <input type="text" th:field="*{path}" id="path" required
-           placeholder="Например: 'Архитектура и проектирование' или 'Статистика/2024'">
-    <div style="color: red" th:if="${#fields.hasErrors('path')}" th:errors="*{path}">path error</div>
-    <br/>
-    <br/>
-
     <label for="relatedProjectTitle">Введите название связанного проекта: </label>
     <input type="text" th:field="*{relatedProjectTitle}" id="relatedProjectTitle"
            placeholder="Название должно совпадать с названием проектной папки на сервере">
