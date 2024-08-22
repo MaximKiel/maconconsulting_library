@@ -36,7 +36,6 @@ public class Publication extends AbstractBasedEntity {
     private String relevance;
 
     @Column(name = "path")
-    @NotBlank(message = "Путь не должен быть пустым!")
     private String path;
 
     @Column(name = "location")
