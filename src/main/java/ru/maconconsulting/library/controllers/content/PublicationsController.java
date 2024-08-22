@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class PublicationsController {
 
     public static final Logger log = LoggerFactory.getLogger(PublicationsController.class);
-    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/Проекты/Внутренние%20проекты/0017В.%20Полезная%20информация%20и%20шаблоны/Информация/";
+    public static final String YANDEX_DISK_LINK = "https://disk.yandex.ru/client/disk/MRG/MACON%20LIBRARY/";
     private final PublicationsService publicationsService;
     private final PublicationValidator publicationValidator;
     private final TypesOfPublicationService typesOfPublicationService;
@@ -60,7 +60,7 @@ public class PublicationsController {
         Publication publication = publicationsService.findById(id)
                 .orElseThrow(() -> new PublicationNotFoundException("Публикация с ID=" + id + " не найдена"));
         model.addAttribute("publication", convertToPublicationDTO(publication));
-        model.addAttribute("link", YANDEX_DISK_LINK + publication.getPath());
+        model.addAttribute("link", YANDEX_DISK_LINK);
         Project relatedProject = projectsService.findByTitle(publication.getRelatedProjectTitle()).orElse(null);
         model.addAttribute("relatedProjectId",
                 relatedProject != null ? relatedProject.getId() : -1
