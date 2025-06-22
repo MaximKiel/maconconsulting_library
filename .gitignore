@@ -34,6 +34,6 @@ build/
 
 ### Local Properties ###
 src/main/resources/*.properties
-src/main/resources/*.sql
+src/main/resources/notgit
 src/main/resources/*.dump
 *.log
