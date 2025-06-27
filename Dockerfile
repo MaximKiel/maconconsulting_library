@@ -1,10 +1,10 @@
-FROM maven:3.8.4-openjdk-17 as builder
+FROM maven:3.9.8-eclipse-temurin AS builder
 WORKDIR /app
-COPY . /app/.
+COPY ./pom.xml /app/pom.xml
 RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
 
-FROM eclipse-temurin:17-jre-alpine
+FROM builder
 WORKDIR /app
-COPY --from=builder /app/target/*.jar /app/*.jar
+COPY --from=builder /app/target/library-0.0.1-SNAPSHOT.jar /app/library-0.0.1-SNAPSHOT.jar
 EXPOSE 8181
-ENTRYPOINT ["java", "-jar", "/app/*.jar"]
+ENTRYPOINT ["java", "-jar", "/app/library-0.0.1-SNAPSHOT.jar"]
