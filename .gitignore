@@ -37,3 +37,4 @@ src/main/resources/*.properties
 src/main/resources/notgit
 src/main/resources/*.dump
 *.log
+/docker/data/
